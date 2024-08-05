@@ -1,0 +1,230 @@
+.hero-img{
+    width: 100%;
+    max-height:80%;
+  }
+
+  .info-section > h1{
+    font-weight:300;
+  }
+  .info-section > p{
+    color: #7b7583;
+  }
+
+.home_abt{
+  background-image: url("../Images/Home_abt_img.jpg");
+  min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.home_abt_last_row{
+  background: rgb(255,215,33);
+background: linear-gradient(143deg, rgba(255,215,33,1) 8%, rgba(255,198,7,1) 21%, rgba(255,202,1,1) 32%, rgba(255,175,0,1) 51%, rgba(255,181,40,1) 70%, rgba(255,163,0,1) 81%);
+}
+.home_abt_last_row > div{
+  height: 1rem;
+}
+
+.expoter{
+  background-color: #fffbeb;
+  height: 41.8rem;
+  margin-top: 10rem;
+}
+
+.review_img{
+  width: 5px; 
+  height: 5px;
+}
+
+
+
+
+
+
+
+
+
+@media only screen   
+and (min-device-width : 320px)   
+and (max-device-width : 640px)  
+{ 
+  
+
+}
+
+
+
+
+
+
+
+
+
+
+@media only screen   
+and (min-width: 1030px)   
+and (max-width: 1605px)  
+{ 
+  .home-abt-row > h1{
+    margin-left: 7rem;
+    font-size: 3.5rem;
+    width: 600px;
+  }
+  .home-abt-row > p{
+    margin-left: 7rem;
+    font-size: 1rem;
+    width: 600px;
+    word-spacing: 1px;
+  }
+  .home-abt-logo{
+    margin-top: 7rem;
+    margin-left: 7rem;
+    width: 20%;
+    height: 70%
+  }
+  .categories-row-first > h1{
+    font-size: 3.5rem;
+    margin-top: 4rem;
+  }
+  .categories-row-first > p{
+    font-size: 1.25rem;
+    color: #9e9e9e;
+  }
+  
+  .card {
+    width: 343px;
+    height: 457px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background-color: white; /* To ensure the background is white */
+}
+.card img {
+    width: 100%;
+    padding: 15px; 
+    box-sizing: border-box; /* Ensures padding is included in the element's total width and height */
+    background-color: white; /* Ensures padding area is white */
+}
+.card-content {
+    padding: 1px;
+    background-color: white; /* Ensures the content background is white */
+}
+.card-title {
+  margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: 0.7s;
+}
+.card-button {
+  font-size: 1rem;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: orange;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    text-align: center;
+}
+.card-button:hover{
+  background-color: #fff;
+  border: 1PX solid orange;
+  color: orange;
+  transition: 0.7s;
+}
+.Home_Categories_img{
+  display: inline-block;
+  margin-top: -10rem;
+}
+
+.home-expoter-logo{
+  margin-top: 7rem;
+  margin-bottom: 2rem;
+  width: 9.6rem;
+  height: 9.7rem;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+em {
+    color: #0d6efd;
+}
+
+/* Controls */
+.carousel-control-next {
+    margin: 0 3em;
+}
+
+i.fa-arrow-right,
+i.fa-arrow-left {
+  background: none;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+  padding: 10px;
+  border-radius: 100%;
+  transition: background .6s ease;
+}
+
+i.fa-arrow-right:hover,
+i.fa-arrow-left:hover {
+    background: #0d6efd;
+    color: white;
+}
+
+/* Indicators */
+.carousel-indicators {
+    justify-content: flex-start;
+   transform: translate(-40px, 50px);
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    border: 2px solid #0d6efd;
+}
+
+.carousel-indicators .active {
+    opacity: 1;
+    background-color:  #0d6efd;
+}
+
+/* Control buttons */
+.control-btn {
+    position: absolute;
+    top: 8px;
+    right: 10em;
+}
+.carousel-control-next, 
+.carousel-control-prev {
+    top: 1em;
+    left: 3em;
+}
+
+.testimonial-text {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 20px; 
+}
+
+.wow {
+    position: relative;
+    grid-column: span 2;
+}
+
+.carousel-landmark {
+    grid-column: span 3;
+}
+
+
+}
+  
