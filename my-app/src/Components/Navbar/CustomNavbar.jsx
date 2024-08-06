@@ -7,6 +7,7 @@ import logo from "../Images/Logo.jpg";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Products from '../Products/Products';
 
 const CustomNavbar = () => {
   return (
@@ -22,7 +23,7 @@ const CustomNavbar = () => {
               <Nav.Link className="fs-4 fw-2 text-dark" href="/Home">
                 Home
               </Nav.Link>
-              <Nav.Link className="fs-4 fw-2 text-dark" href="/Products">
+              <Nav.Link className="fs-4 fw-2 text-dark" href={Products}>
                 Products
               </Nav.Link>
               <Nav.Link className="fs-4 fw-2 text-dark" href="/Company">
