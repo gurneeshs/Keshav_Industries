@@ -85,6 +85,7 @@ const Home = () => {
       </Container>
 
       <Container fluid>
+        {/* line */}
         <div className="row home_abt_last_row">
           <div className=""></div>
         </div>
@@ -146,17 +147,14 @@ const Home = () => {
 
       <Container fluid className="expoter">
         
-        <Container>
-        <div className="row">
+        
           {/* Indian_spices 
           Grains
           Oils */}
           <Slider />
 
-        </div>
-        </Container>
-
       </Container>
+
 
       <Container >
         <div className="row text-center categories-row-first">
@@ -283,8 +281,15 @@ Lecithin as well as variety of Quality Spices to more than 35 countries since mo
 
 
 
-
-      <Footer />
+      <Container fluid>
+        {/* line */}
+        <div className="row home_abt_last_row mt-5">
+          <div className=""></div>
+        </div>
+        <Container>
+          <Footer />
+        </Container>
+      </Container>
     </div>
   );
 };

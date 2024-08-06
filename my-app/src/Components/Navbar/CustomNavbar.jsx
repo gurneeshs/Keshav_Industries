@@ -5,11 +5,13 @@ import Image from "react-bootstrap/Image";
 import "./CustomNavbar.css";
 import logo from "../Images/Logo.jpg";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 const CustomNavbar = () => {
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" className="bg-body border-bottom border-black">
+      <Navbar collapseOnSelect expand="lg" className="bg-body border-bottom border-black ms-2">
         <Container>
           <Navbar.Brand href="#home">
             <Image src={logo} alt="Logo" className="Navlogo" />
@@ -33,8 +35,18 @@ const CustomNavbar = () => {
                 Contact
               </Nav.Link>
             </Nav>
+            <Form inline>
+                <InputGroup>
+                  <Form.Control
+                    placeholder="Search"
+                    aria-label="Username"
+                    aria-describedby="basic-addon1"
+                  />
+                  <InputGroup.Text id="basic-addon1"><i class="bi bi-search"></i></InputGroup.Text>
+                </InputGroup>
+              </Form>
             <Nav>
-              <Nav.Link href="#deets"><i class="bi bi-cart-check fs-4"></i></Nav.Link>
+              <Nav.Link href="#deets"><i class="bi bi-cart-check fs-3 text-dark"></i></Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
