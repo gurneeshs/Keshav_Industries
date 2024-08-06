@@ -148,17 +148,11 @@ const Home = () => {
         
         <Container>
         <div className="row">
-          <div className="col-6 expoter_right">
-          <Image src={logo_removebg} alt="Logo" className="home-expoter-logo" />
-            <h1 className="">Trusted Exorter of <br />
-              Products</h1>
-            <p>We are leading manufacturer & Exporter of Soya Refined Oil, Mustard Oil, Non-GMO Lecithin (Soya, Sunflower & Rice)</p>
-          </div>
-
-          
-          <div className="col-6">
+          {/* Indian_spices 
+          Grains
+          Oils */}
           {/* <Slider /> */}
-          </div>
+
         </div>
         </Container>
 
