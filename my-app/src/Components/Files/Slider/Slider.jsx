@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Slider.css';
-import img1 from '../Images/Indian_Spices.png';
-import img2 from '../Images/Grains.png';
-import img3 from '../Images/Oils.png';
+import img1 from '../../Images/Indian_Spices.png';
+import img2 from '../../Images/Grains.png';
+import img3 from '../../Images/Oils.png';
 
 const images = [
   { src: img1, caption: 'Indian Spices' },

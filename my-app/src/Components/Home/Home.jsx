@@ -1,7 +1,7 @@
 import Navbar from "../Navbar/CustomNavbar";
 import Footer from "../Footer/CustomFooter";
-import Slider from "../Slider/Slider";
-import Certification_Slider from "../Certification_Slider/Certification_Slider"
+import Slider from "../Files/Slider/Slider";
+import Certification_Slider from "../Files/Certification_Slider/Certification_Slider"
 import "./Home.css";
 import React, { useEffect } from "react";
 import AOS from "aos";
@@ -32,7 +32,8 @@ const Home = () => {
       </h1> */}
 
       <Container fluid>
-        <div className="row">
+        <div className="row" data-aos="fade-up"
+     data-aos-duration="2000"> {/* dekh teko is div me dalna hai na to isme vo website se attribute uthana and yaha div tag me daal dena ok */}
           <Image src={Soya_Homepage_scaled} alt="Logo" className="hero-img p-0" />
         </div>
       </Container>
@@ -196,15 +197,15 @@ Lecithin as well as variety of Quality Spices to more than 35 countries since mo
 
       <Container>
         <main>
-        <div className="row">
+        <div className="">
         <div class="container-xxl py-5">
     <div class="container py-5">
         <div class="testimonial-text g-5">
             <div class="wow fadeIn" data-wow-delay="0.1s">
-                <button class="btn btn-sm border rounded-pill text-primary px-3 mb-3">Testimonial</button>
+                <button class="btn btn-sm border rounded-pill text-primary px-3 mb-3 fs-5">Our Product Review</button>
                 <h1 class="mb-4">LambdaTest Reviews</h1>
                     <p class="mb-4">Our Unified Testing Cloud enables you to deliver world class digital experience with quality releases and help accelerate your release velocity.</p>
-                    <a class="btn btn-primary rounded-pill px-4" href="https://www.lambdatest.com/reviews">Contact Sales</a>
+                    <a class="btn btn-primary rounded-pill px-4" href="">Contact Sales</a>
             </div>
         
 

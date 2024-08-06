@@ -3,14 +3,14 @@ import './Certification_Slider.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import APEDA_pic from '../Images/APEDA_pic.png';
-import Fssai_pic from '../Images/Fssai_pic.png';
-import Healthy_Food_pic from '../Images/Healthy_Food_pic.png';
-import India_Organic_pic from '../Images/India_Organic_pic.png';
-import Spices_Board_pic from '../Images/Spices_Board_pic.png';
-import ISO_pic from '../Images/ISO_pic.png';
-import Kosher_pic from '../Images/Kosher_pic.png';
-import USDA_pic from '../Images/USDA_pic.png';
+import APEDA_pic from '../../Images/APEDA_pic.png';
+import Fssai_pic from '../../Images/Fssai_pic.png';
+import Healthy_Food_pic from '../../Images/Healthy_Food_pic.png';
+import India_Organic_pic from '../../Images/India_Organic_pic.png';
+import Spices_Board_pic from '../../Images/Spices_Board_pic.png';
+import ISO_pic from '../../Images/ISO_pic.png';
+import Kosher_pic from '../../Images/Kosher_pic.png';
+import USDA_pic from '../../Images/USDA_pic.png';
 
 const CertificationSlider = () => {
     const settings = {
