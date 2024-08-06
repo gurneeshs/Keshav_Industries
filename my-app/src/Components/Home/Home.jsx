@@ -151,7 +151,7 @@ const Home = () => {
           {/* Indian_spices 
           Grains
           Oils */}
-          {/* <Slider /> */}
+          <Slider />
 
         </div>
         </Container>
