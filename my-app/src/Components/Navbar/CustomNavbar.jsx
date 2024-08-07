@@ -22,7 +22,7 @@ const CustomNavbar = () => {
               <Nav.Link className="fs-4 fw-2 text-dark" href="/Home">
                 Home
               </Nav.Link>
-              <Nav.Link className="fs-4 fw-2 text-dark" href="">
+              <Nav.Link className="fs-4 fw-2 text-dark" href="../Products/Products.jsx">
                 Products
               </Nav.Link>
               <Nav.Link className="fs-4 fw-2 text-dark" href="/Company">
