@@ -19,10 +19,10 @@ const CustomNavbar = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mx-auto custom-nav">
-              <Nav.Link className="fs-4 fw-2 text-dark" href="/Home">
+              <Nav.Link className="fs-4 fw-2 text-dark" href="/">
                 Home
               </Nav.Link>
-              <Nav.Link className="fs-4 fw-2 text-dark" href="../Products/Products.jsx">
+              <Nav.Link className="fs-4 fw-2 text-dark" href="/Products">
                 Products
               </Nav.Link>
               <Nav.Link className="fs-4 fw-2 text-dark" href="/Company">
