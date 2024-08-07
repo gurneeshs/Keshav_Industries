@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Container from "react-bootstrap/Container";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './Products.css';
+import './Products.module.css';
 import Navbar from '../Navbar/CustomNavbar';
 import Footer from '../Footer/CustomFooter';
 import Image from "react-bootstrap/Image";
@@ -35,7 +35,9 @@ const Products = () => {
       .map((product, index) => (
         <div className="col-4" key={index}>
           <div className="card mx-auto">
-            <div className="card-image"></div>
+            <div className="card-image">
+              <Image />
+            </div>
             <div className="category">{selectedCategory}</div>
             <div className="heading">{product}
               <div className="author">Price: $X<span className="name"> Updated</span> X days ago</div>
@@ -46,8 +48,8 @@ const Products = () => {
   };
 
   return (
-    <div className='products-div'> 
-      <Container fluid>
+    <div className='products-div p-0 m-0'> 
+      <Container fluid className='p-0'>
         <Navbar />
       </Container>
 
@@ -83,7 +85,7 @@ const Products = () => {
         </div>
       </Container>
 
-      <Container fluid>
+       <Container fluid>{/* agr check krna ho na hua ki nhi alg css then ye home_abt_last_row isko hata dena ye home.css se juda hai */}
         <div className="row home_abt_last_row mt-5">
           <div className=""></div>
         </div>
