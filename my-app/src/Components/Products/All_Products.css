@@ -1,0 +1,156 @@
+:root {
+    --primary-color: #ff4d4f;
+    --secondary-color: #1890ff;
+    --success-color: #52c41a;
+    --warning-color: #faad14;
+    --danger-color: #f5222d;
+    --info-color: #13c2c2;
+    --light-color: #f0f0f0;
+    --font-family: 'Arial, sans-serif';
+  }
+  
+  body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .product-page {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .product-gallery {
+    flex: 1 1 50%;
+    padding: 10px;
+  }
+  
+  .product-gallery img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .product-details {
+    flex: 1 1 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .product-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-description {
+    margin-bottom: 20px;
+  }
+  
+  .product-price {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .previous-price {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #999;
+  }
+  
+  .product-colors {
+    margin-bottom: 10px;
+  }
+  
+  .product-colors span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+  }
+  
+  .color-blue {
+    background-color: blue;
+  }
+  
+  .color-green {
+    background-color: green;
+  }
+  
+  .color-red {
+    background-color: red;
+  }
+  
+  .discount-badge {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .products-sold {
+    color: var(--danger-color);
+    margin-bottom: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .button-group button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .buy-now-btn {
+    background-color: #000;
+    color: white;
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .tabs button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: var(--light-color);
+    border-radius: 5px;
+  }
+  
+  .tab-content {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--light-color);
+  }
+  

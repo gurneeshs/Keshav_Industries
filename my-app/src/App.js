@@ -6,12 +6,14 @@ import {BrowserRouter,Route,Routes} from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Home from "./Components/Home/Home";
 import Products from "./Components/Products/Products";
+import MustardOil from "./Components/Products/Mustard_Product/MustardOil";
 const Routing = ()=>{
 
   return(
     <Routes>
       <Route exact path="/" element = {<Home />} />
       <Route exact path="/Products" element = {<Products />} />
+      <Route exact path="/MustardOil" element = {<MustardOil />} />
     </Routes>
   )
 }

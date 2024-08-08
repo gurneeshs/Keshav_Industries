@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Container from "react-bootstrap/Container";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './Products.module.css';
+import './Products.css';
 import Navbar from '../Navbar/CustomNavbar';
 import Footer from '../Footer/CustomFooter';
 import Image from "react-bootstrap/Image";
@@ -33,14 +33,14 @@ const Products = () => {
     return products
       .filter(product => !selectedSubcategory || product.includes(selectedSubcategory))
       .map((product, index) => (
-        <div className="col-4" key={index}>
-          <div className="card mx-auto">
-            <div className="card-image">
+        <div className="col-5" key={index}>
+          <div className="product_categorie mx-auto">
+            <div className="product_categorie_card-image">
               <Image />
             </div>
-            <div className="category">{selectedCategory}</div>
-            <div className="heading">{product}
-              <div className="author">Price: $X<span className="name"> Updated</span> X days ago</div>
+            <a className="product_category" href="/MustardOil">{selectedCategory}</a>
+            <div className="product_heading">{product}
+              <div className="product_author">Price: $X<span className="product_name"> Updated</span> X days ago</div>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@ const Products = () => {
 
       <Container className='custom-container'>
         <div className="row m-5">
-          <div className="col-3 border-end border-dark shop-by-categories">
+          <div className="col-4 border-end border-dark shop-by-categories">
             <div className="row my-5">
               <h3>Shop By Categories</h3>
             </div>
@@ -74,8 +74,6 @@ const Products = () => {
               </div>
             ))}
           </div>
-
-          <div className="col-1"></div>
 
           <div className="col-8">
             <div className="row">
