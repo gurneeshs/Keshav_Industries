@@ -24,7 +24,7 @@ const Home = () => {
 
   return (
     <div>
-      <Container fluid>
+      <Container fluid className="p-0">
         <Navbar />
       </Container>
       {/* <h1 className="hero-h1 text-center">

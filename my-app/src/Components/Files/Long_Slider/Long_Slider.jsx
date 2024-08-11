@@ -1,6 +1,5 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Image from "react-bootstrap/Image";
-import keshav_all_products from "../../Images/keshav_all_products";
 
 function Long_Slider() {
   return (
@@ -8,7 +7,7 @@ function Long_Slider() {
       <Carousel.Item interval={1000}>
         <Image
           className="d-block w-100"
-          src={keshav_all_products}
+          src=""
           alt="First slide"
         />
         <Carousel.Caption>
