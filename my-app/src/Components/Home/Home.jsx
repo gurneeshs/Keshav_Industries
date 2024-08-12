@@ -1,6 +1,7 @@
 import Navbar from "../Navbar/CustomNavbar";
 import Footer from "../Footer/CustomFooter";
 import Slider from "../Files/Slider/Slider";
+import Long_Slider from "../Files/Long_Slider/Long_Slider";
 import Certification_Slider from "../Files/Certification_Slider/Certification_Slider"
 import "./Home.css";
 import React, { useEffect } from "react";
@@ -23,7 +24,7 @@ const Home = () => {
 
   return (
     <div>
-      <Container fluid>
+      <Container fluid className="p-0">
         <Navbar />
       </Container>
       {/* <h1 className="hero-h1 text-center">
