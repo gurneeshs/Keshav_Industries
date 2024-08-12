@@ -65,13 +65,13 @@ const CustomNavbar = () => {
                         <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
                             <ul class="navbar-nav text-uppercase ps-3">
                                 <li class="nav-item">
-                                    <a class="nav-link active pe-3" aria-current="page" href="">Home</a>
+                                    <a class="nav-link active pe-3" aria-current="page" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link px-lg-3" href="#">The Company</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link px-lg-3" href="">Products</a>
+                                    <a class="nav-link px-lg-3" href="/Products">Products</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link px-lg-3" href="#">Export</a>
