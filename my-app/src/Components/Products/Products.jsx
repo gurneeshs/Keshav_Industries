@@ -57,21 +57,22 @@ const Products = () => {
     return products
       .filter(product => !selectedSubcategory || product.name.includes(selectedSubcategory))
       .map((product, index) => (
-        <div className="col-5" key={index}>
-          <div className="product_categorie mx-auto">
-            <div className="product_categorie_card-image">
-              <Image src={product.imgSrc} alt={product.name} fluid />
-            </div>
-            <a className="product_category" href="/kmm">{selectedCategory}</a>
-            <div className="product_heading">
-              {product.name}
-              <div className="product_author">
-                Price: ₹{product.price} <br />
-                MRP: ₹{product.mrp}
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className="col-4 mt-5" key={index}>
+  <div className="custom_card mx-auto h-100">
+    <div className="custom_card-image">
+      <Image src={product.imgSrc} alt={product.name} fluid />
+    </div>
+    <a className="product_category" href="/kmm">{selectedCategory}</a>
+    <div className="product_heading">
+      {product.name}
+      <div className="product_author">
+        Price: ₹{product.price} <br />
+        MRP: ₹{product.mrp}
+      </div>
+    </div>
+  </div>
+</div>
+
       ));
   };
 
@@ -104,7 +105,7 @@ const Products = () => {
           </div>
 
           <div className="col-8">
-            <div className="row">
+            <div className="row ms-2">
               {renderProducts()}
             </div>
           </div>
