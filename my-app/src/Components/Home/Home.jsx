@@ -32,10 +32,12 @@ const Home = () => {
         KASH & PRIDE
       </h1> */}
 
+      <Long_Slider />
       <Container fluid>
         <div className="row" data-aos="fade-up"
-          data-aos-duration="2000"> {/* dekh teko is div me dalna hai na to isme vo website se attribute uthana and yaha div tag me daal dena ok */}
-          <Image src={Soya_Homepage_scaled} alt="Logo" className="hero-img p-0" />
+          data-aos-duration="2000"> 
+          {/* <Image src={Soya_Homepage_scaled} alt="Logo" className="hero-img p-0" /> */}
+
         </div>
       </Container>
 
@@ -146,12 +148,7 @@ const Home = () => {
       </Container>
 
 
-      <Container fluid className="expoter">
-
-
-        {/* Indian_spices 
-          Grains
-          Oils */}
+      <Container fluid className="expoter p-0">
         <Slider />
 
       </Container>
