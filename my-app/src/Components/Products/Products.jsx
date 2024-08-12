@@ -62,7 +62,7 @@ const Products = () => {
             <div className="product_categorie_card-image">
               <Image src={product.imgSrc} alt={product.name} fluid />
             </div>
-            <a className="product_category" href="/MustardOil">{selectedCategory}</a>
+            <a className="product_category" href="/kmm">{selectedCategory}</a>
             <div className="product_heading">
               {product.name}
               <div className="product_author">
