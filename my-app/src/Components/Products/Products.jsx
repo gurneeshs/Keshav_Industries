@@ -36,7 +36,7 @@ const Products = () => {
         <div className="col-5" key={index}>
           <div className="product_categorie mx-auto">
             <div className="product_categorie_card-image">
-              <Image />
+              <Image alt="Product Image" />
             </div>
             <a className="product_category" href="/MustardOil">{selectedCategory}</a>
             <div className="product_heading">{product}

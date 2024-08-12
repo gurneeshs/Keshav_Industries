@@ -50,40 +50,40 @@ const MustardOil = () => {
   return (
 
     <div>
-        <Container fluid className='p-0'>
+      <Container fluid className='p-0'>
         <Navbar />
       </Container>
 
-        <div className="container product-page">
-      <div className="product-gallery">
-        <ReactImageGallery items={productDetailItem.images} showPlayButton={false} />
+      <div className="container product-page">
+        <div className="product-gallery">
+          <ReactImageGallery items={productDetailItem.images} showPlayButton={false} />
+        </div>
+        <div className="product-details">
+          <h1 className="product-title">{productDetailItem.title}</h1>
+          <p className="product-description">{productDetailItem.description}</p>
+          <div className="product-price">
+            ${productDetailItem.price} <span className="previous-price">${productDetailItem.previousPrice}</span>
+          </div>
+          <div className="product-colors">
+            Colors:
+            <span className="color-blue"></span>
+            <span className="color-green"></span>
+            <span className="color-red"></span>
+          </div>
+          <div className="discount-badge">20% Discount</div>
+          <div className="products-sold">52 Products Sold</div>
+          <div className="button-group">
+            <button className="add-to-cart-btn">
+              <BiShoppingBag className="icon" /> Add to Cart
+            </button>
+            <button className="buy-now-btn">
+              Buy Now
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="product-details">
-        <h1 className="product-title">{productDetailItem.title}</h1>
-        <p className="product-description">{productDetailItem.description}</p>
-        <div className="product-price">
-          ${productDetailItem.price} <span className="previous-price">${productDetailItem.previousPrice}</span>
-        </div>
-        <div className="product-colors">
-          Colors:
-          <span className="color-blue"></span>
-          <span className="color-green"></span>
-          <span className="color-red"></span>
-        </div>
-        <div className="discount-badge">20% Discount</div>
-        <div className="products-sold">52 Products Sold</div>
-        <div className="button-group">
-          <button className="add-to-cart-btn">
-            <BiShoppingBag className="icon" /> Add to Cart
-          </button>
-          <button className="buy-now-btn">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
 
-    <Container fluid>
+      <Container fluid>
         <div className="row home_abt_last_row mt-5">
           <div className=""></div>
         </div>
