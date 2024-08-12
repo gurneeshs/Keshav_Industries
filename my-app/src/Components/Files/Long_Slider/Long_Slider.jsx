@@ -1,14 +1,10 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Image from "react-bootstrap/Image";
-<<<<<<< HEAD
-import test from "../../Images/keshav_all_product.jpg"
-=======
 import keshav_all_product from "../../Images/keshav_all_product.jpg"
 import masal_pic from "../../Images/masal_pic.jpg"
 import oil_pic from "../../Images/oil_pic.jpg"
 import Review_pic from "../../Images/Review_pic.jpg"
 import sarso_oil_pic from "../../Images/sarso_oil_pic.jpg"
->>>>>>> e21ba35c1f7ec4ab0d57bbd9e9ba03230130e43f
 
 function Long_Slider() {
   return (
