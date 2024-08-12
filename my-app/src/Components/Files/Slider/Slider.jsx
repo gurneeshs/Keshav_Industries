@@ -23,7 +23,7 @@ const Slider = () => {
 
   return (
     <div className="slider">
-      <Container fluid className="custom_export">
+      <Container fluid className="custom_export p-0">
         <main>
           <ul className="slider" ref={sliderRef}>
             <li className="item slider_bg_img_1">

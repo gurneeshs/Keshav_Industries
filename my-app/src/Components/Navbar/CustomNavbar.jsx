@@ -18,7 +18,7 @@ const CustomNavbar = () => {
                 <div class="textColor">
                     <div class="row justify-content-center align-items-center mx-auto">
                         <div class="col-12 col-lg-3 p-0">
-                            <div class="fs-1 fw-bold py-2 text-center text-lg-start d-none d-lg-block">Keshav Industries</div>
+                            <div class="fs-2 fw-bold py-2 text-center text-lg-start d-none d-lg-block">Keshav Industries</div>
                            
                         </div>
                         <div class="col-4 col-lg-3 sideLine">

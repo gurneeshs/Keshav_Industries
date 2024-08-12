@@ -16,7 +16,7 @@ const Footer = () => {
               <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia nemo ratione rerum sit molestias obcaecati alias cum quasi rem, officiis voluptatem nobis aliquam repellendus, quod architecto fugit eum dolores ab.</p>
             </div>
           </div>
-          <div className="col-12 col-sm-6 col-lg-3">
+          <div className="col-12 col-sm-6 col-lg-2">
             <div className="footer-inner-div text-dark">
               <h3 className="">Know US</h3>
               <ul className="footer-list">
@@ -32,7 +32,28 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-          <div className="col-12 col-sm-6 col-lg-3">
+
+          <div className="col-12 col-sm-6 col-lg-2">
+            <div className="footer-inner-div text-dark">
+              <h3 className="">Policy</h3>
+              <ul className="footer-list">
+                <li>
+                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Terms and Conditions</a>
+                </li>
+                <li>
+                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
+                </li>
+                <li>
+                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="col-12 col-sm-6 col-lg-2">
             <div className="footer-inner-div text-dark">
               <h3 className="">Follow US</h3>
               <ul className="footer-list">
@@ -48,6 +69,7 @@ const Footer = () => {
               </ul>
             </div>
           </div>
+          
           <div className="col-12 col-sm-6 col-lg-3">
             <div className="footer-inner-div text-dark">
               <h3 className="ms-3">Address</h3>

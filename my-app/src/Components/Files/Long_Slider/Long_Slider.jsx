@@ -1,66 +1,62 @@
 import Carousel from 'react-bootstrap/Carousel';
 import Image from "react-bootstrap/Image";
+<<<<<<< HEAD
 import test from "../../Images/keshav_all_product.jpg"
+=======
+import keshav_all_product from "../../Images/keshav_all_product.jpg"
+import masal_pic from "../../Images/masal_pic.jpg"
+import oil_pic from "../../Images/oil_pic.jpg"
+import Review_pic from "../../Images/Review_pic.jpg"
+import sarso_oil_pic from "../../Images/sarso_oil_pic.jpg"
+>>>>>>> e21ba35c1f7ec4ab0d57bbd9e9ba03230130e43f
 
 function Long_Slider() {
   return (
-    <Carousel>
-      <Carousel.Item interval={1000}>
-        <Image
-          className="d-block w-100"
-          src=""
-          alt="First slide"
-        />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item interval={500}>
-        <Image
-          className="d-block w-100"
-          src=""
-          alt="Second slide"
-        />
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Image
-          className="d-block w-100"
-          src=""
-          alt="Third slide"
-        />
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Image
-          className="d-block w-100"
-          src=""
-          alt="Fourth slide"
-        />
-        <Carousel.Caption>
-          <h3>Fourth slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Image
-          className="d-block w-100"
-          src=""
-          alt="Fifth slide"
-        />
-        <Carousel.Caption>
-          <h3>Fifth slide label</h3>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    <div>
+      <Carousel>
+
+        <Carousel.Item interval={1000}>
+          <Image
+            className="d-block w-100"
+            src={keshav_all_product}
+            alt="First slide"
+          />
+        </Carousel.Item>
+
+        <Carousel.Item interval={500}>
+          <Image
+            className="d-block w-100"
+            src={masal_pic}
+            alt="Second slide"
+          />
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <Image
+            className="d-block w-100"
+            src={oil_pic}
+            alt="Third slide"
+          />
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <Image
+            className="d-block w-100"
+            src={sarso_oil_pic}
+            alt="Fourth slide"
+          />
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <Image
+            className="d-block w-100"
+            src={Review_pic}
+            alt="Fifth slide"
+          />
+        </Carousel.Item>
+
+      </Carousel>
+    </div>
   );
 }
 
