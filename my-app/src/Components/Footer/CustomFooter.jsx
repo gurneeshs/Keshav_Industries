@@ -38,16 +38,16 @@ const Footer = () => {
               <h3 className="">Policy</h3>
               <ul className="footer-list">
                 <li>
-                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Terms and Conditions</a>
+                  <a href="/terms" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Terms and Conditions</a>
                 </li>
                 <li>
-                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
+                  <a href="/returns" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
+                  <a href="/privacy" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
                 </li>
                 <li>
-                  <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
+                  <a href="/cancellation" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
                 </li>
               </ul>
             </div>
@@ -78,7 +78,7 @@ const Footer = () => {
                   <i className="bi bi-geo-alt-fill"></i> Indore, Madhya Pradesh India
                 </li>
                 <li>
-                  <i className="bi bi-envelope-at"></i> <a href="mailto: " className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Email: Test@gmail.com</a>
+                  <i className="bi bi-envelope-at"></i> <a href="mailto: " className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Email: keshavindustries633@gmail.com</a>
                 </li>
                 <li>
                   <i className="bi bi-phone"></i> <a href="tel:" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Contact us: +91123456789</a>
