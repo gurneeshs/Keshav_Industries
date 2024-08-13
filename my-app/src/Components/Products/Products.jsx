@@ -9,6 +9,7 @@ import Image from "react-bootstrap/Image";
 import keshav_all_product from '../Images/keshav_all_product.jpg';
 import test from '../Images/comming_soon.jpg';
 import axios from 'axios';
+import { BASE_URL } from '../../helper';
 
 const Products = () => {
   const [productData, setProductData] = useState([]);
@@ -19,7 +20,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${category}`);
+        const response = await axios.get(`${BASE_URL}/api/products/${category}`);
         setProductData(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
