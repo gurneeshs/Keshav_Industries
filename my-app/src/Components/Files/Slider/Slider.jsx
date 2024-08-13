@@ -29,42 +29,42 @@ const Slider = () => {
             <li className="item slider_bg_img_1">
               <div className="content">
                 <h2 className="title">Lossless Youths</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>
             <li className="item slider_bg_img_2">
               <div className="content">
                 <h2 className="title">Estrange Bond</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>
             <li className="item slider_bg_img_3">
               <div className="content">
                 <h2 className="title">The Gate Keeper</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>
             <li className="item slider_bg_img_4">
               <div className="content">
                 <h2 className="title">Last Trace Of Us</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>
             <li className="item slider_bg_img_3">
               <div className="content">
                 <h2 className="title">Last Trace Of Us</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>
             <li className="item slider_bg_img_2">
               <div className="content">
                 <h2 className="title">Last Trace Of Us</h2>
-                <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p>
+                {/* <p className="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.</p> */}
                 <button>Read More</button>
               </div>
             </li>

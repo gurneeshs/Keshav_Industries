@@ -1,13 +1,6 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
 import "./CustomNavbar.css";
-import logo from "../Images/Logo.jpg";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Products from "../Products/Products";
 
 const CustomNavbar = () => {
   return (

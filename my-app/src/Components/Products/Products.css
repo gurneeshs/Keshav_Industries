@@ -1,49 +1,103 @@
+body{
+    
+    background-color: #faf7f0;
+}
+.custom-container{
+    background-image: url("../Images/keshav_bg_1.png");
+    min-height: 100vh;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+}
+
+/* Overall Card Styling */
 .custom_card {
-    width: 100%;
-    max-width: 250px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-    text-align: center;
-    padding: 10px;
-    margin: 10px auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f7f9f8;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
 .custom_card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
 }
 
-.custom_card-image {
+/* Image Styling */
+.custom_card-img img {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    overflow: hidden;
+    border-radius: 8px;
+    max-height: 200px;
+    object-fit: cover;
+    margin-bottom: 16px;
 }
 
-.product_heading {
-    padding: 15px 10px;
-    font-size: 18px;
-    color: #4b4b4b;
-    margin: 10px 0;
+/* Title Styling */
+.text-title {
+    font-size: 1.1rem;
+    color: #e4261e;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.product_author {
-    font-size: 16px;
+/* Body Text Styling */
+.text-body {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+/* Footer Styling */
+.custom_card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+/* Price Styling */
+.text-title-price {
+    font-size: 1.4rem;
+    font-weight: bold;
     color: #000;
-    margin: 5px 0;
 }
 
-.product_category {
-    display: block;
-    font-size: 14px;
-    color: #4CAF50;
-    margin: 10px 0;
-    text-decoration: none;
+/* SVG Button Styling */
+.custom_card-button svg {
+    width: 24px;
+    height: 24px;
+    fill: #e4261e;
+    transition: fill 0.3s ease;
 }
 
-.product_category:hover {
-    text-decoration: underline;
+.custom_card-button svg:hover {
+    fill: #ed0101;
+    border: 1px solid #ed0101;
+    border-radius: 100%;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .custom_card {
+        padding: 12px;
+    }
+
+    .text-title {
+        font-size: 1rem;
+    }
+
+    .text-body {
+        font-size: 0.8rem;
+    }
+
+    .text-title-price {
+        font-size: 1.2rem;
+    }
+
+    .custom_card-button svg {
+        width: 20px;
+        height: 20px;
+    }
 }

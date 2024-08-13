@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="col-12 col-sm-6 col-lg-3">
             <div className="footer-inner-div text-dark">
               <h3 className="fs-2">Keshav Industries</h3>
-              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia nemo ratione rerum sit molestias obcaecati alias cum quasi rem, officiis voluptatem nobis aliquam repellendus, quod architecto fugit eum dolores ab.</p>
+              <p>Keshav Industries, founded in 2009, initially specialized in Soya Refined Oil and Non-GMO Soya Lecithin. Now a leading exporter to 35+ countries, we also produce Mustard Oil for the Indian market and export high-quality Spices. Our advanced production unit in Dewas, Madhya Pradesh, holds multiple international certifications.</p>
             </div>
           </div>
           <div className="col-12 col-sm-6 col-lg-2">
@@ -47,7 +47,7 @@ const Footer = () => {
                   <a href="/privacy" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="/cancellation" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
+                  <a href="/cancellation" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Shipping and Cancellation Policy</a>
                 </li>
                 <li>
                   <a href="/returns" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
@@ -84,7 +84,10 @@ const Footer = () => {
               <h3 className="ms-3">Address</h3>
               <ul className="footer-list fs-0">
                 <li>
-                  <i className="bi bi-geo-alt-fill"></i> 101, Industrial Area No. 3, A. B. Road, Dewas 455001
+                   <h4>Factory</h4> <i className="bi bi-geo-alt-fill"></i> Plot No. 101, Industrial Area No: 3, A.B. Road, Dewas, Madhya Pradesh - 455001, India
+                </li>
+                <li>
+                  <h4>Corporate Office</h4><i className="bi bi-geo-alt-fill"></i> 402, Pukhraj Corporate, Navlakha Main Road, Janki Nagar, Indore, Madhya Pradesh-452001, India
                 </li>
                 <li>
                   <i className="bi bi-envelope-at"></i> <a href="mailto:care.customer@keshav.co.in " className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Email: care.customer@keshav.co.in</a>

@@ -98,8 +98,7 @@ const Home = () => {
         <div className="row text-center categories-row-first">
           <h1 className="">Categories</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do <br />
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          We are leading manufacturer & Exporter of Soya Refined Oil, Mustard Oil, Non-GMO Lecithin <br />(Soya, Sunflower & Rice) and variety of Quality Spices with Natural Flavour. 
           </p>
         </div>
 
@@ -158,7 +157,7 @@ const Home = () => {
         <div className="row text-center categories-row-first">
           <h1 className="">Certifications</h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+            More then 8+ Trusted Certificate
           </p>
         </div>
       </Container>
