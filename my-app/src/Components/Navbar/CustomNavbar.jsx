@@ -37,7 +37,7 @@ const CustomNavbar = () => {
                                       <Image class="iconHeight" src="/static_files/svgs5/telephone-inbound.svg" alt="" />
                                     </div>
                                 </a>
-                                <div class="d-none d-lg-block"><span class="fw-medium">Call Us</span><br /> +1-800-123-1234</div>
+                                <div class="d-none d-lg-block"><span class="fw-medium"><i className="bi bi-phone"></i>Call Us</span><br /> +91-91098-84497</div>
                             </div>
                         </div>
                         <div class="col-4 col-lg-3">
@@ -47,7 +47,7 @@ const CustomNavbar = () => {
                                       <Image class="iconHeight" src="/static_files/svgs5/envelope.svg" alt="" />
                                     </div>
                                 </a>
-                                <div class="d-none d-lg-block"><span class="fw-medium">Email Us</span><br /> example@emmail.com</div>
+                                <div class="d-none d-lg-block"><span class="fw-medium"><i className="bi bi-envelope-at"></i> Email Us</span><br /> care.customer@keshav.co.in</div>
                             </div>
                         </div>
                     </div>

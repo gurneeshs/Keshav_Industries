@@ -1,12 +1,19 @@
 import React, { useRef } from 'react';
 import Container from "react-bootstrap/Container";
+import Navbar from "../Navbar/CustomNavbar";
+import Footer from "../Footer/CustomFooter";
 
 const Terms_and_Conditions = () => {
 
     return (
         <div className="">
-            <div class="entry-content">
-                <h1 class="hd1 mb-4 text-center">Terms of Use</h1>
+
+<Container fluid className="p-0">
+        <Navbar />
+      </Container>
+
+            <Container class="entry-content">
+                <h1 class="hd1 mb-4 text-center mt-5">Terms of Use</h1>
                 <div class="static-inner">
                     <p>This website (“Site”) and all its contents are owned and operated by Keshav Industries. Your access to and use of this Site is subject to the terms and conditions of these ‘Terms of Use’ and all applicable laws. The term ‘Affiliated Entities’ means and includes subsidiaries, affiliated companies, authorized associates, or agents.</p>
                 </div>
@@ -73,7 +80,17 @@ const Terms_and_Conditions = () => {
                     <p>These Terms of Use and any contractual obligation between Keshav Industries and you under these Terms of Use shall be governed by the laws of India subject to the exclusive jurisdiction of the Courts in [Your Location] in connection with any action arising under these Terms of Use.</p>
                     <p>All disputes will be subject to arbitration in [Your Location], India in accordance with the provisions of the Arbitration and Conciliation Act, 1996, by a sole arbitrator. The arbitration proceedings shall be in the English language.</p>
                 </div>
-            </div>
+            </Container>
+
+            <Container fluid>
+        {/* line */}
+        <div className="row home_abt_last_row mt-5">
+          <div className=""></div>
+        </div>
+        <Container>
+          <Footer />
+        </Container>
+      </Container>
 
         </div>
     );

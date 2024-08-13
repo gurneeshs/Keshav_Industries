@@ -1,12 +1,19 @@
 import React, { useRef } from 'react';
 import Container from "react-bootstrap/Container";
+import Navbar from "../Navbar/CustomNavbar";
+import Footer from "../Footer/CustomFooter";
 
 const Privacy_Policy = () => {
 
     return (
         <div className="">
-            <div class="entry-content">
-                <h1 class="hd1 mb-4 text-center">Privacy Policy</h1>
+
+<Container fluid className="p-0">
+        <Navbar />
+      </Container>
+
+            <Container class="entry-content">
+                <h1 class="hd1 mb-4 text-center mt-5">Privacy Policy</h1>
                 <p><strong>Last updated on April 1st, 2024</strong></p>
                 <div class="static-inner">
                     <p>This privacy policy sets out how <strong>Keshav Industries</strong> uses and protects any information that you give <strong>Keshav Industries</strong> when you use this website.</p>
@@ -18,7 +25,7 @@ const Privacy_Policy = () => {
                     <h3 class="hd3">What We Collect</h3>
                     <p>We may collect the following information:</p>
                     <ul>
-                        <li>Name and job title</li>
+                        <li>Name</li>
                         <li>Contact information including email address</li>
                         <li>Demographic information such as postcode, preferences, and interests</li>
                         <li>Other information relevant to customer surveys and/or offers</li>
@@ -50,12 +57,22 @@ const Privacy_Policy = () => {
                     <p>You may choose to restrict the collection or use of your personal information in the following ways:</p>
                     <ul>
                         <li>Whenever you are asked to fill in a form on the website, look for the box that you can click to indicate that you do not want the information to be used by anybody for direct marketing purposes.</li>
-                        <li>If you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at <a href="mailto:cc.keshavindustries@gmail.com">cc.keshavindustries@gmail.com</a>.</li>
+                        <li>If you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at <a href="mailto:care.customer@keshav.co.in">care.customer@keshav.co.in</a>.</li>
                     </ul>
                     <p>We will not sell, distribute, or lease your personal information to third parties unless we have your permission or are required by law to do so. We may use your personal information to send you promotional information about third parties which we think you may find interesting if you tell us that you wish this to happen.</p>
                     <p>If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible at the above address. We will promptly correct any information found to be incorrect.</p>
                 </div>
-            </div>
+            </Container>
+
+            <Container fluid>
+        {/* line */}
+        <div className="row home_abt_last_row mt-5">
+          <div className=""></div>
+        </div>
+        <Container>
+          <Footer />
+        </Container>
+      </Container>
 
         </div>
     );

@@ -24,10 +24,13 @@ const Footer = () => {
                   <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Home</a>
                 </li>
                 <li>
-                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">About US</a>
+                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Products</a>
                 </li>
                 <li>
-                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Contact US</a>
+                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Export</a>
+                </li>
+                <li>
+                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Contact</a>
                 </li>
               </ul>
             </div>
@@ -41,13 +44,13 @@ const Footer = () => {
                   <a href="/terms" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Terms and Conditions</a>
                 </li>
                 <li>
-                  <a href="/returns" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
+                  <a href="/privacy" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Privacy Policy</a>
                 </li>
                 <li>
-                  <a href="/privacy" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
+                  <a href="/cancellation" className="link-offset-2 link-underline link-underline-opacity-0 text-dark"> Cancellation Policy</a>
                 </li>
                 <li>
-                  <a href="/cancellation" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
+                  <a href="/returns" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
                 </li>
               </ul>
             </div>
@@ -66,6 +69,12 @@ const Footer = () => {
                 <li>
                   <i className="bi bi-instagram text-dark"></i> <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Instagram</a>
                 </li>
+                <li>
+                  <i className="bi bi-facebook text-dark"></i> <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Facebook</a>
+                </li>
+                <li>
+                  <i className="bi bi-twitter-x text-dark"></i> <a href="#" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Twitter</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -75,13 +84,13 @@ const Footer = () => {
               <h3 className="ms-3">Address</h3>
               <ul className="footer-list fs-0">
                 <li>
-                  <i className="bi bi-geo-alt-fill"></i> Indore, Madhya Pradesh India
+                  <i className="bi bi-geo-alt-fill"></i> 101, Industrial Area No. 3, A. B. Road, Dewas 455001
                 </li>
                 <li>
-                  <i className="bi bi-envelope-at"></i> <a href="mailto: " className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Email: keshavindustries633@gmail.com</a>
+                  <i className="bi bi-envelope-at"></i> <a href="mailto:care.customer@keshav.co.in " className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Email: care.customer@keshav.co.in</a>
                 </li>
                 <li>
-                  <i className="bi bi-phone"></i> <a href="tel:" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Contact us: +91123456789</a>
+                  <i className="bi bi-phone"></i> <a href="tel:+919109884497" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Call us: +91-9109884497</a>
                 </li>
               </ul>
             </div>
