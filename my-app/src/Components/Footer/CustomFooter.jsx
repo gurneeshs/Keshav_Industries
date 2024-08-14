@@ -21,10 +21,10 @@ const Footer = () => {
               <h3 className="">Know US</h3>
               <ul className="footer-list">
                 <li>
-                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Home</a>
+                  <a href="/" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Home</a>
                 </li>
                 <li>
-                  <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Products</a>
+                  <a href="/Products" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Products</a>
                 </li>
                 <li>
                   <a href="" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Export</a>
@@ -51,6 +51,9 @@ const Footer = () => {
                 </li>
                 <li>
                   <a href="/returns" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Returns, Refunds and Replacement Policy</a>
+                </li>
+                <li>
+                  <a href="/Products_and_Service" className="link-offset-2 link-underline link-underline-opacity-0 text-dark">Product\Service Policy</a>
                 </li>
               </ul>
             </div>

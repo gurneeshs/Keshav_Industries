@@ -12,6 +12,7 @@ import Cancellation_Policy from "./Components/Policy/Cancellation_Policy";
 import Privacy_Policy from "./Components/Policy/Privacy_Policy";
 import Returns_Refunds_and_Replacement_Policy from "./Components/Policy/Returns_Refunds_and_Replacement_Policy";
 import Terms_and_Conditions from "./Components/Policy/Terms_and_Conditions";
+import Products_And_Service from "./Components/Policy/Products_And_Service";
 const Routing = ()=>{
 
   return(
@@ -24,6 +25,7 @@ const Routing = ()=>{
       <Route exact path="/returns" element = {<Returns_Refunds_and_Replacement_Policy/>}/>
       <Route exact path="/privacy" element = {<Privacy_Policy/>}/>
       <Route exact path="/cancellation" element = {<Cancellation_Policy/>}/>
+      <Route exact path="/Products_and_Service" element = {<Products_And_Service/>}/>
 
     </Routes>
   )
