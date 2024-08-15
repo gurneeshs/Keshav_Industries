@@ -1,0 +1,28 @@
+.slider-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.slider {
+    display: flex;
+    width: calc(var(--slide-width) * 2 * 8); /* 2 times for seamless loop, 8 items */
+    animation: slide 16s linear infinite;
+}
+
+.slide {
+    flex-shrink: 0;
+    width: var(--slide-width);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
