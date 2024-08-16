@@ -18,9 +18,9 @@ const HomePage = () => {
             <About/>
             <Categories/>
             <HomePageProductCard/>
-            {/* <Carousel/> */}
+            <Carousel/>
             <CertificationSlider/>
-            <Track/>
+            {/* <Track/> */}
        
             <Testimonial/>
         </Layout>
