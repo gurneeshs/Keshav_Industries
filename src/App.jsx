@@ -11,6 +11,7 @@ import CartPage from "./pages/cart/CartPage";
 import AllProduct from "./pages/allProduct/AllProduct";
 import Signup from "./pages/registration/Signup";
 import Login from "./pages/registration/Login";
+import Contact from "./components/Contact/Contact-Us";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProductPage from "./pages/admin/AddProductPage";
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/user-dashboard" element={
             <UserDashboard />
