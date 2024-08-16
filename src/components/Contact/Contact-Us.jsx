@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../layout/Layout';
-
+import contact_us from '../../../public/img/contact-us.png'
 const Contacts = () => {
   return (
     <Layout>
@@ -8,7 +8,7 @@ const Contacts = () => {
         <div className="grid grid-cols-12 gap-4 my-8">
           <div className="col-span-1"></div>
           <div className="col-span-5">
-            <img src="" alt="no" className="w-full h-auto" />
+            <img src={contact_us} alt="no" className="w-full h-auto" />
           </div>
           <div className="col-span-5">
             <h1 className="text-3xl font-bold mb-4">
