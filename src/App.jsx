@@ -28,6 +28,11 @@ import AnalyticsPage from "./pages/admin/AnalyticsPage";
 import SettingsPage from "./pages/admin/SettingsPage";
 import UsersPage from "./pages/admin/UsersPage";
 import OrdersPage from "./pages/admin/OrdersPage";
+import TermsOfUse from "./pages/policy/TermsOfUse";
+import PrivacyPolicy from "./pages/policy/PrivacyPolicy";
+import Shipping from "./pages/policy/Shipping&Cancellation";
+import ReturnsExchangeRefunds from "./pages/policy/ReturnsExchangeRefunds";
+import ProductServicePolicy from "./pages/policy/ProductServicePolicy";
 
 const App = () => {
   return (
@@ -72,6 +77,11 @@ const App = () => {
           <Route path="/adminSettings" element={<SettingsPage />} />
           <Route path="/adminOrders" element={<OrdersPage />} />
 
+          <Route path="/terms" element={<TermsOfUse />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/cancellation" element={<Shipping />} />
+          <Route path="/returns" element={<ReturnsExchangeRefunds />} />
+          <Route path="/Products_and_Service" element={<ProductServicePolicy />} />
 
 
         </Routes>
