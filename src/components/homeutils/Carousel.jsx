@@ -1,73 +1,82 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-const Carousel = () => {
-    return (
-        <div>
-            <div>
-                <ul className='slider'>
-                    <li className='item' style="background-image: url('https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"Lossless Youths"</h2>
-                            <p className='description'> Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
-                                praesentium nisi. Id laboriosam ipsam enim.  </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                    <li className='item' style="background-image: url('https://i.redd.it/tc0aqpv92pn21.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"Estrange Bond"</h2>
-                            <p className='description'> Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
-                                praesentium nisi. Id laboriosam ipsam enim.  </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                    <li className='item' style="background-image: url('https://wharferj.files.wordpress.com/2015/11/bio_north.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"The Gate Keeper"</h2>
-                            <p className='description'> Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
-                                praesentium nisi. Id laboriosam ipsam enim.  </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                    <li className='item' style="background-image: url('https://images7.alphacoders.com/878/878663.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"Last Trace Of Us"</h2>
-                            <p className='description'>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                            </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                    <li className='item' style="background-image: url('https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"Urban Decay"</h2>
-                            <p className='description'>
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore fuga voluptatum, iure corporis inventore praesentium nisi. Id laboriosam ipsam enim.
-                            </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                    <li className='item' style="background-image: url('https://da.se/app/uploads/2015/09/simon-december1994.jpg')">
-                        <div className='content'>
-                            <h2 className='title'>"The Migration"</h2>
-                            <p className='description'> Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Tempore fuga voluptatum, iure corporis inventore
-                                praesentium nisi. Id laboriosam ipsam enim.  </p>
-                            <button>Read More</button>
-                        </div>
-                    </li>
-                </ul>
-                {/* <nav className='nav'>
-                    <ion-icon classNameName='btn prev' name="arrow-back-outline"></ion-icon>
-                    <ion-icon classNameName='btn next' name="arrow-forward-outline"></ion-icon>
-                </nav> */}
+const images = [
+  'https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg',
+  'https://i.redd.it/tc0aqpv92pn21.jpg',
+  'https://wharferj.files.wordpress.com/2015/11/bio_north.jpg',
+  'https://images7.alphacoders.com/878/878663.jpg',
+  'https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg',
+  'https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg',
+  'https://i.redd.it/tc0aqpv92pn21.jpg',
+  'https://wharferj.files.wordpress.com/2015/11/bio_north.jpg',
+  'https://images7.alphacoders.com/878/878663.jpg',
+  'https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg',
+  'https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg',
+  'https://i.redd.it/tc0aqpv92pn21.jpg',
+  'https://wharferj.files.wordpress.com/2015/11/bio_north.jpg',
+  'https://images7.alphacoders.com/878/878663.jpg',
+  'https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg'
+];
+
+const MainScreen = () => {
+  const [queue, setQueue] = useState(images.slice(0, 5));
+  const [backgroundImage, setBackgroundImage] = useState(queue[4]); // Start with the last image of the initial queue
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    setQueue((prevQueue) => {
+      const [firstImage, ...restQueue] = prevQueue;
+      const updatedQueue = [...restQueue, firstImage];
+      setBackgroundImage(updatedQueue[0]); // Update background image to the new first image
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % updatedQueue.length);
+      return updatedQueue;
+    });
+  };
+
+  const handlePrev = () => {
+    setQueue((prevQueue) => {
+      const lastImage = prevQueue[prevQueue.length - 1];
+      const updatedQueue = [lastImage, ...prevQueue.slice(0, -1)];
+      setBackgroundImage(updatedQueue[0]); // Update background image to the new first image
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + updatedQueue.length) % updatedQueue.length);
+      return updatedQueue;
+    });
+  };
+
+  return (
+    <div className="w-full h-screen flex items-center justify-center relative" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="absolute inset-0 flex items-center justify-end p-4">
+        <div className="relative w-1/2 h-full">
+          <div className="overflow-hidden w-full h-full relative">
+            <div className="h-full flex transition-transform ease-out duration-500" style={{ transform: `translateX(-${currentIndex * 4}%)` }}>
+              {queue.map((img, index) => (
+                <div key={index} className="flex-shrink-0 w-1/2 px-2">
+                  <div className="w-full h-2/3 bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src={img} alt={`slide-${index}`} className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              ))}
             </div>
-
+          </div>
         </div>
-    )
-}
+        {/* Buttons positioned at the center bottom of the main screen */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+          <button
+            className="bg-black text-white px-4 py-2"
+            onClick={handlePrev}
+          >
+            Previous
+          </button>
+          <button
+            className="bg-black text-white px-4 py-2"
+            onClick={handleNext}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
-export default Carousel
+export default MainScreen;
