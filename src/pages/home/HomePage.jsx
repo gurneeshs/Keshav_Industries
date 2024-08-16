@@ -9,6 +9,7 @@ import CountUpComponent from "../../components/homeutils/countUp";
 import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
+import Carousel from "../../components/homeutils/Carousel";
 const HomePage = () => {
     return (
         <Layout>
@@ -17,7 +18,7 @@ const HomePage = () => {
             <About/>
             <Categories/>
             <HomePageProductCard/>
-       
+            <Carousel/>
             <CertificationSlider/>
             <Track/>
        
