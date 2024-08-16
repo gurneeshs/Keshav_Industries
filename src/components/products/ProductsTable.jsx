@@ -19,25 +19,25 @@ const PRODUCT_DATA = [
 
 const ProductsTable = () => {
 	const context = useContext(myContext);
-    const { loading, setLoading, getAllProduct, getAllProductFunction } = context;
-    // console.log(getAllProduct)
+	const { loading, setLoading, getAllProduct, getAllProductFunction } = context;
+	// console.log(getAllProduct)
 
-    // navigate 
-    const navigate = useNavigate();
+	// navigate 
+	const navigate = useNavigate();
 
-    // Delete product 
-    const deleteProduct = async (id) => {
-        setLoading(true)
-        try {
-            await deleteDoc(doc(fireDB, 'products', id))
-            toast.success('Product Deleted successfully')
-            getAllProductFunction();
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
-        }
-    }
+	// Delete product 
+	const deleteProduct = async (id) => {
+		setLoading(true)
+		try {
+			await deleteDoc(doc(fireDB, 'products', id))
+			toast.success('Product Deleted successfully')
+			getAllProductFunction();
+			setLoading(false)
+		} catch (error) {
+			console.log(error)
+			setLoading(false)
+		}
+	}
 	const [searchTerm, setSearchTerm] = useState("");
 	console.log(getAllProduct)
 	const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
@@ -75,65 +75,47 @@ const ProductsTable = () => {
 
 			<div className='overflow-x-auto'>
 				<table className='min-w-full divide-y divide-gray-700'>
-					<thead>
+					<tbody>
 						<tr>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Name
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Category
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Price
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Stock
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Sales
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Actions
-							</th>
+							<th scope="col" className="h-12 px-6 text-md text-slate-700 bg-slate-100 font-bold fontPara">S.No.</th>
+							<th scope="col" className="h-12 px-6 text-md text-slate-700 bg-slate-100 font-bold fontPara">Image</th>
+							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Title</th>
+							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Price</th>
+							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Category</th>
+							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Action</th>
 						</tr>
-					</thead>
-
-					<tbody className='divide-y divide-gray-700'>
-						{filteredProducts.map((product) => (
-							<motion.tr
-								key={product.id}
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ duration: 0.3 }}
-							>
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100 flex gap-2 items-center'>
-									<img
-										src='https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww'
-										alt='Product img'
-										className='size-10 rounded-full'
-									/>
-									{product.name}
-								</td>
-
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									{product.category}
-								</td>
-
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									${product.price.toFixed(2)}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{product.stock}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{product.sales}</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>
-										<Edit size={18} />
-									</button>
-									<button className='text-red-400 hover:text-red-300'>
-										<Trash2 size={18} />
-									</button>
-								</td>
-							</motion.tr>
-						))}
+						{getAllProduct.map((item, index) => {
+							const { id, title, price, category, date, productImageUrl } = item
+							return (
+								<tr key={index} className="">
+									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
+										{index + 1}.
+									</td>
+									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+										<div className="flex justify-center">
+											<img className="w-20" src={productImageUrl} alt="" />
+										</div>
+									</td>
+									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+										{title}
+									</td>
+									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+										₹{price}
+									</td>
+									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+										{category}
+									</td>
+									<td  className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 cursor-pointer ">
+										<button onClick={() => navigate(`/updateproduct/${id}`)} className='text-indigo-400 hover:text-indigo-300 mr-2'>
+											<Edit size={18} />
+										</button>
+										<button onClick={() => deleteProduct(id)} className='text-red-400 hover:text-red-300'>
+											<Trash2 size={18} />
+										</button>
+									</td>
+								</tr>
+							)
+						})}
 					</tbody>
 				</table>
 			</div>
