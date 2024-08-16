@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useRef } from 'react';
+import ScrollReveal from "scrollreveal";
+
 import "./certifi.css"
 
 const images = [
@@ -13,6 +15,61 @@ const images = [
 ];
 
 const CertificationSlider = () => {
+    const revealRefBottom = useRef(null);
+    const revealRefLeft = useRef(null);
+    const revealRefTop = useRef(null);
+    const revealRefRight = useRef(null);
+
+    useEffect(() => {
+
+
+        ScrollReveal().reveal(revealRefBottom.current, {
+
+            duration: 1000,
+            delay: 200,
+            distance: '50px',
+            origin: 'bottom',
+            easing: 'ease',
+            reset: 'true',
+        });
+    }, []);
+    useEffect(() => {
+
+
+        ScrollReveal().reveal(revealRefRight.current, {
+
+            duration: 1000,
+            delay: 200,
+            distance: '50px',
+            origin: 'right',
+            easing: 'ease',
+            reset: 'true',
+        });
+    }, []); useEffect(() => {
+
+
+        ScrollReveal().reveal(revealRefLeft.current, {
+
+            duration: 1000,
+            delay: 200,
+            distance: '50px',
+            origin: 'left',
+            easing: 'ease',
+            reset: 'true',
+        });
+    }, []); useEffect(() => {
+
+
+        ScrollReveal().reveal(revealRefTop.current, {
+
+            duration: 1000,
+            delay: 500,
+            distance: '50px',
+            origin: 'top',
+            easing: 'ease',
+            reset: 'true',
+        });
+    }, []);
     useEffect(() => {
         const slider = document.querySelector('.slider');
         const slideWidth = slider.scrollWidth / images.length;
@@ -22,7 +79,7 @@ const CertificationSlider = () => {
     return (
         <div className="relative overflow-hidden">
             <div className="text-center my-8">
-                <h1 className="text-3xl font-bold mb-4">Certifications</h1>
+                <h1  className="text-3xl font-bold mb-4">Certifications</h1>
                 <p className="text-lg text-gray-600">
                     More than 8+ Trusted Certificates
                 </p>

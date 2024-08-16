@@ -51,10 +51,10 @@ const Login = () => {
                     })
                     toast.success("Login Successfully");
                     setLoading(false);
-                    if(user.role === "user") {
-                        navigate('/user-dashboard');
-                    }else{
+                    if(user.role === "admin") {
                         navigate('/admin-dashboard');
+                    }else{
+                        navigate('/user-dashboard');
                     }
                 });
                 return () => data;
@@ -124,10 +124,6 @@ const Login = () => {
                     >
                         Login
                     </button>
-                </div>
-
-                <div>
-                    <h2 className='text-black'>Don't Have an account <Link className=' text-pink-500 font-bold' to={'/signup'}>Signup</Link></h2>
                 </div>
 
             </div>

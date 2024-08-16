@@ -6,6 +6,8 @@ import { fireDB } from "../../firebase/FirebaseConfig";
 import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
 import cloudinary from "../../config/cloudinary";  // Import Cloudinary config
+import AdminLayout from "../../components/layout/AdminLayout";
+import Header from "../../components/common/Header";
 
 const categoryList = [
     { name: 'Kash Products' },
@@ -68,7 +70,7 @@ const AddProductPage = () => {
             const newProduct = {
                 title: product.title,
                 price: product.price,
-                mrp:product.mrp,
+                mrp: product.mrp,
                 productImageUrl, // URL from Cloudinary
                 category: product.category,
                 description: product.description,
@@ -92,94 +94,97 @@ const AddProductPage = () => {
     };
 
     return (
-        <div>
-            <div className='flex justify-center items-center h-screen'>
-                {loading && <Loader />}
-                <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
-                    <div className="mb-5">
-                        <h2 className='text-center text-2xl font-bold text-pink-500 '>
-                            Add Product
-                        </h2>
-                    </div>
+        <AdminLayout>
+            <div className="w-full bg-customBackG py-5 justify-center items-center py-5">
+                <div className='flex justify-center items-center h-screen'>
+                    {loading && <Loader />}
+                    <div className="login_Form bg-customGray bg-opacity-50 backdrop-blur-md px-8 py-6 border border-gray-100 rounded-xl shadow-md">
+                        <div className="mb-5">
+                            <h2 className='text-center text-2xl font-bold text-gray-100 '>
+                                Add Product
+                            </h2>
+                        </div>
 
-                    <div className="mb-3">
-                        <input
-                            type="text"
-                            name="title"
-                            value={product.title}
-                            onChange={(e) => setProduct({ ...product, title: e.target.value })}
-                            placeholder='Product Title'
-                            className='bg-pink-50 border text-pink-300 border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-300'
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <input
+                                type="text"
+                                name="title"
+                                value={product.title}
+                                onChange={(e) => setProduct({ ...product, title: e.target.value })}
+                                placeholder='Product Title'
+                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                            />
+                        </div>
 
-                    <div className="mb-3">
-                        <input
-                            type="number"
-                            name="price"
-                            value={product.price}
-                            onChange={(e) => setProduct({ ...product, price: e.target.value })}
-                            placeholder='Product Price'
-                            className='bg-pink-50 border text-pink-300 border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-300'
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <input
-                            type="number"
-                            name="mrp"
-                            value={product.mrp}
-                            onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
-                            placeholder='Product MRP'
-                            className='bg-pink-50 border text-pink-300 border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-300'
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <input
+                                type="number"
+                                name="price"
+                                value={product.price}
+                                onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                                placeholder='Product Price'
+                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <input
+                                type="number"
+                                name="mrp"
+                                value={product.mrp}
+                                onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
+                                placeholder='Product MRP'
+                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                            />
+                        </div>
 
-                    <div className="mb-3">
-                        <input
-                            type="file"
-                            name="productImageFile"
-                            onChange={handleFileChange}
-                            className='bg-pink-50 border text-pink-300 border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-300'
-                        />
-                    </div>
+                        <div className="mb-3">
+                            <input
+                                type="file"
+                                name="productImageFile"
+                                onChange={handleFileChange}
+                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                            />
+                        </div>
 
-                    <div className="mb-3">
-                        <select
-                            value={product.category}
-                            onChange={(e) => setProduct({ ...product, category: e.target.value })}
-                            className="w-full px-1 py-2 text-pink-300 bg-pink-50 border border-pink-200 rounded-md outline-none  ">
-                            <option disabled>Select Product Category</option>
-                            {categoryList.map((value, index) => (
-                                <option className=" first-letter:uppercase" key={index} value={value.name}>
-                                    {value.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                        <div className="mb-3">
+                            <select
+                                value={product.category}
+                                onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                                className="w-full px-1 py-2 text-gray-300 bg-gray-800 border border-gray-200 rounded-md outline-none  ">
+                                <option disabled>Select Product Category</option>
+                                {categoryList.map((value, index) => (
+                                    <option className=" first-letter:uppercase" key={index} value={value.name}>
+                                        {value.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-                    <div className="mb-3">
-                        <textarea
-                            value={product.description}
-                            onChange={(e) => setProduct({ ...product, description: e.target.value })}
-                            name="description"
-                            placeholder="Product Description"
-                            rows="5"
-                            className=" w-full px-2 py-1 text-pink-300 bg-pink-50 border border-pink-200 rounded-md outline-none placeholder-pink-300 "
-                        ></textarea>
-                    </div>
+                        <div className="mb-3">
+                            <textarea
+                                value={product.description}
+                                onChange={(e) => setProduct({ ...product, description: e.target.value })}
+                                name="description"
+                                placeholder="Product Description"
+                                rows="5"
+                                className=" w-full px-2 py-1 text-gray-300 bg-gray-800 border border-gray-200 rounded-md outline-none placeholder-gray-300 "
+                            ></textarea>
+                        </div>
 
-                    <div className="mb-3">
-                        <button
-                            onClick={addProductFunction}
-                            type='button'
-                            className='bg-pink-500 hover:bg-pink-600 w-full text-white text-center py-2 font-bold rounded-md '
-                        >
-                            Add Product
-                        </button>
+                        <div className="mb-3">
+                            <button
+                                onClick={addProductFunction}
+                                type='button'
+                                className='bg-gray-8000 hover:bg-gray-600 w-full text-white text-center py-2 font-bold rounded-md '
+                            >
+                                Add Product
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </AdminLayout>
+
     );
 }
 
