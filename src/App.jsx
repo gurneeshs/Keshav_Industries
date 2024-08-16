@@ -43,25 +43,34 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/user-dashboard" element={
-              <UserDashboard />
+            <UserDashboard />
           } />
           <Route path="/admin-dashboard" element={
+            <ProtectedRouteForAdmin>
               <OverviewPage />
+            </ProtectedRouteForAdmin>
+
           } />
           <Route path="/addproduct" element={
+            <ProtectedRouteForAdmin>
               <AddProductPage />
+            </ProtectedRouteForAdmin>
+
           } />
           <Route path="/updateproduct/:id" element={
+            <ProtectedRouteForAdmin>
               <UpdateProductPage />
+
+            </ProtectedRouteForAdmin>
           } />
-          <Route path="/adminSalesPage" element={<SalesPage />}/>
-          <Route path="/adminAnalytics" element={<AnalyticsPage />}/>
-          <Route path="/adminProductPage" element={<ProductsPage />}/>
-          <Route path="/adminUserPage" element={<UsersPage/>}/>
-          <Route path="/adminSettings" element={<SettingsPage/>}/>
-          <Route path="/adminOrders" element={<OrdersPage/>}/>
-          
-          
+          <Route path="/adminSalesPage" element={<SalesPage />} />
+          <Route path="/adminAnalytics" element={<AnalyticsPage />} />
+          <Route path="/adminProductPage" element={<ProductsPage />} />
+          <Route path="/adminUserPage" element={<UsersPage />} />
+          <Route path="/adminSettings" element={<SettingsPage />} />
+          <Route path="/adminOrders" element={<OrdersPage />} />
+
+
 
         </Routes>
         <Toaster />
