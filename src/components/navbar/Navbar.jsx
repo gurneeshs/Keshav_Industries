@@ -41,7 +41,7 @@ const Navbar = () => {
             </li>
             {/* Contact */}
             <li>
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>Contact</Link>
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/contact'}>Contact</Link>
             </li>
 
 
