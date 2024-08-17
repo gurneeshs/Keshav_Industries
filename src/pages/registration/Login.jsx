@@ -70,7 +70,7 @@ const Login = () => {
 
     }
     return (
-        <div className='flex justify-center items-center h-screen border border-red-400'>
+        <div className='flex justify-center items-center h-screen'>
         <div className="absolute inset-0 bg-[url('../img/kash_cooking_oil_cover.jfif')] bg-cover bg-center opacity-20"></div>
             {loading && <Loader />}
             {/* Login Form  */}
