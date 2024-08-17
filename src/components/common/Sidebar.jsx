@@ -1,24 +1,26 @@
-import { BarChart2, DollarSign, Menu, Settings, ShoppingBag, ShoppingCart, TrendingUp, Users } from "lucide-react";
+import { BarChart2, DollarSign, Home, LogOut, Menu, Settings, ShoppingBag, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SIDEBAR_ITEMS = [
-	{
-		name: "Overview",
-		icon: BarChart2,
-		color: "#6366f1",
-		href: "/admin-dashboard",
-	},
+	{ name: "Home", icon: Home, color: "#34D399", href: "/" },
+	{ name: "Overview", icon: BarChart2, color: "#6366f1", href: "/admin-dashboard" },
 	{ name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/adminProductPage" },
-	{ name: "Users", icon: Users, color: "#EC4899", href: "/adminUserPage" },
 	{ name: "Sales", icon: DollarSign, color: "#10B981", href: "/adminSalesPage" },
 	{ name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/adminOrders" },
-	{ name: "Analytics", icon: TrendingUp, color: "#3B82F6", href: "/adminAnalytics" },
 	{ name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
 ];
 
 const Sidebar = () => {
+	const navigate = useNavigate();
+
+	// Logout function
+	const logout = () => {
+		localStorage.clear('users');
+		navigate("/");
+	};
+
 	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
 	return (
@@ -59,9 +61,31 @@ const Sidebar = () => {
 							</motion.div>
 						</Link>
 					))}
+
+					{/* Logout Item */}
+					<motion.div
+						className='flex items-center p-4 text-sm font-medium rounded-lg hover:bg-gray-700 transition-colors mb-2 cursor-pointer'
+						onClick={logout}
+					>
+						<LogOut size={20} style={{ color: "#EF4444", minWidth: "20px" }} />
+						<AnimatePresence>
+							{isSidebarOpen && (
+								<motion.span
+									className='ml-4 whitespace-nowrap'
+									initial={{ opacity: 0, width: 0 }}
+									animate={{ opacity: 1, width: "auto" }}
+									exit={{ opacity: 0, width: 0 }}
+									transition={{ duration: 0.2, delay: 0.3 }}
+								>
+									Logout
+								</motion.span>
+							)}
+						</AnimatePresence>
+					</motion.div>
 				</nav>
 			</div>
 		</motion.div>
 	);
 };
+
 export default Sidebar;

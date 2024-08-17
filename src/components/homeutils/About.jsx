@@ -14,7 +14,7 @@ const About = () => {
 
             duration: 1000,
             delay: 200,
-            distance: '50px',
+            distance: '10px',
             origin: 'bottom',
             easing: 'ease',
             reset: 'true',
@@ -27,7 +27,7 @@ const About = () => {
 
             duration: 1000,
             delay: 200,
-            distance: '50px',
+            distance: '10px',
             origin: 'right',
             easing: 'ease',
             reset: 'true',
@@ -39,7 +39,7 @@ const About = () => {
 
             duration: 1000,
             delay: 200,
-            distance: '50px',
+            distance: '10px',
             origin: 'left',
             easing: 'ease',
             reset: 'true',
@@ -51,7 +51,7 @@ const About = () => {
 
             duration: 1000,
             delay: 200,
-            distance: '50px',
+            distance: '10px',
             origin: 'top',
             easing: 'ease',
             reset: 'true',
@@ -59,16 +59,16 @@ const About = () => {
     }, []);
     return (
 
-        <div ref={revealRefLeft} className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center">
+        <div className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center">
             <div className="flex">
                 <div className="w-1/2"></div>
                 <div className="w-1/2">
                     <div className="flex flex-col items-start space-y-4">
-                        <img ref={revealRefRight} className=" h-20" src="../img/Logo_removebg.png" alt="Logo" />
-                        <h1 ref={revealRefRight} className="mt-5 text-4xl font-bold">
+                        <img className=" h-20" src="../img/Logo_removebg.png" alt="Logo" />
+                        <h1 className="mt-5 text-4xl font-bold">
                             Welcome to Keshav <br /> Industry
                         </h1>
-                        <p ref={revealRefRight} className="text-lg">
+                        <p className="text-lg">
                             We, Keshav Industries Private Limited started <br />
                             our journey in 2009 by manufacturing the world's <br />
                             best Soya Refined Oil and Non-GMO Soya<br />
