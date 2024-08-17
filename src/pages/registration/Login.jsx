@@ -70,14 +70,21 @@ const Login = () => {
 
     }
     return (
-        <div className='flex justify-center items-center h-screen'>
+        <div className='flex justify-center items-center h-screen border border-red-400'>
+        <div className="absolute inset-0 bg-[url('../img/kash_cooking_oil_cover.jfif')] bg-cover bg-center opacity-20"></div>
             {loading && <Loader />}
             {/* Login Form  */}
-            <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
+            <div className=" relative login_Form bg-eda72f px-8 py-6 border border-gray-100 rounded-xl shadow-md">
 
                 {/* Top Heading  */}
+                <div className="">
+                    <img src='../img/Logo_removebg.png' alt="logo" class="inline-block w-16 h-16"/>
+                    <h2 className='mx-3 inline-block text-center text-3xl font-bold text-gray-900 '>
+                        Keshav Industries
+                    </h2>
+                </div>
                 <div className="mb-5">
-                    <h2 className='text-center text-2xl font-bold text-pink-500 '>
+                    <h2 className='text-center text-2xl font-bold text-gray-900 '>
                         Login
                     </h2>
                 </div>
@@ -95,7 +102,7 @@ const Login = () => {
                                 email: e.target.value
                             })
                         }}
-                        className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
+                        className='bg-gray-50 border border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500'
                     />
                 </div>
 
@@ -111,7 +118,7 @@ const Login = () => {
                                 password: e.target.value
                             })
                         }}
-                        className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
+                        className='bg-gray-50 border border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-500'
                     />
                 </div>
 
@@ -120,7 +127,7 @@ const Login = () => {
                     <button
                         type='button'
                         onClick={userLoginFunction}
-                        className='bg-pink-500 hover:bg-pink-600 w-full text-white text-center py-2 font-bold rounded-md '
+                        className='bg-customBlue hover:bg-blue-900 w-full text-white text-center py-2 font-bold rounded-md '
                     >
                         Login
                     </button>

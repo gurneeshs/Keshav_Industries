@@ -10,10 +10,21 @@ import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
 import Carousel from "../../components/homeutils/Carousel";
+const slides = [
+    "../img/Soya_Homepage_scaled.jpg",
+    "../img/oil_pic.jpg",
+    "../img/masal_pic.jpg",
+    "../img/Soya_Homepage_scaled.jpg",
+]
 const HomePage = () => {
+
     return (
         <Layout>
-            <ImageSlider/>
+            <ImageSlider>
+                {slides.map((s)=>(
+                    <img className="w-screen" src={s} />
+                ))}
+            </ImageSlider>
             <CountUpComponent/>
             <About/>
             <Categories/>

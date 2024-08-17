@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../layout/Layout';
-import contact_us from '../../../public/img/contact-us.png'
+// import contact_us from '../img/contact-us.png'
 const Contacts = () => {
   return (
     <Layout>
