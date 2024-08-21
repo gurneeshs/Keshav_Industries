@@ -10,6 +10,8 @@ import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
 import Carousel from "../../components/homeutils/Carousel";
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const slides = [
     "../img/Soya_Homepage_scaled.jpg",
     "../img/oil_pic.jpg",
