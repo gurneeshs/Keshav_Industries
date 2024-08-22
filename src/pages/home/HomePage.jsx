@@ -10,6 +10,8 @@ import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
 import Carousel from "../../components/homeutils/Carousel";
+import ScrollAnimation from 'react-animate-on-scroll';
+
 const slides = [
     "../img/Soya_Homepage_scaled.jpg",
     "../img/oil_pic.jpg",
@@ -21,19 +23,22 @@ const HomePage = () => {
     return (
         <Layout>
             <ImageSlider>
-                {slides.map((s)=>(
+                {slides.map((s) => (
                     <img className="w-screen" src={s} />
                 ))}
             </ImageSlider>
-            <CountUpComponent/>
-            <About/>
-            <Categories/>
-            <HomePageProductCard/>
-            <Carousel/>
-            <CertificationSlider/>
+            <ScrollAnimation animateIn="easeIn">
+                <CountUpComponent/>
+            </ScrollAnimation>
+            {/* <CountUpComponent /> */}
+            <About />
+            <Categories />
+            <HomePageProductCard />
+            <Carousel />
+            <CertificationSlider />
             {/* <Track/> */}
-       
-            <Testimonial/>
+
+            <Testimonial />
         </Layout>
     );
 }
