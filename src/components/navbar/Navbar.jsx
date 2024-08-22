@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { Clock, Phone, Mail } from "lucide-react";
+// import { Clock, Phone, Mail } from "lucide-react";
+import { Clock, Phone, Mail, Home, Briefcase, Box, FileText, ShoppingCart, User, Shield } from "lucide-react";
+
 import SearchBar from "../searchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -40,31 +42,56 @@ const Navbar = () => {
     const navList = (
         <ul className="flex flex-col lg:flex-row lg:space-x-3 text-white font-medium text-md px-5">
             <li className="py-2 lg:py-0">
-                <Link className="text-eda72f hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>Home</Link>
+                <Link className="text-eda72f hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>
+                <Home className="inline mr-1" size={18} strokeWidth={2} />
+
+                Home</Link>
+            </li>
+            <li className="py-2 lg:py-0 relative group">
+                <button className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0"><Briefcase className="inline mr-1" size={18} strokeWidth={2} />
+                    Company
+                </button>
+                <ul className="absolute left-0 mt-2 w-48 bg-customBlue shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-10">
+                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
+                        <Link to={'/about'}>About Us</Link>
+                    </li>
+                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
+                        <Link to={'/history'}>History</Link>
+                    </li>
+                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
+                        <Link to={'/direction'}>Mission Vision Value</Link>
+                    </li>
+                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
+                        <Link to={'/mission'}>Director Desk</Link>
+                    </li>
+
+                </ul>
             </li>
             <li className="py-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>Company</Link>
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/allproduct'}><Box className="inline mr-1" size={18} strokeWidth={2} />All Product</Link>
             </li>
             <li className="py-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/allproduct'}>All Product</Link>
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/export'}><FileText className="inline mr-1" size={18} strokeWidth={2} />Export</Link>
             </li>
             <li className="py-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>Export</Link>
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/qualification'}><Shield className="inline mr-1" size={18} strokeWidth={2} />Q&C</Link>
             </li>
+
             <li className="py-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/contact'}>Contact</Link>
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/contact'}><Mail className="inline mr-1" size={18} strokeWidth={2} />Contact</Link>
             </li>
             {user?.role === "user" && (
                 <li className="py-2 lg:py-0">
                     <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/user-dashboard'}>User</Link>
                 </li>
             )}
-            <li className="py-2 lg:py-0">
+            {/* <li className="py-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/admin-dashboard'}>Admin</Link>
-            </li>
+            </li> */}
             <li className="py-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/cart'}>
-                    Cart({cartItems.length})
+                <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
+                    Cart ({cartItems.length})
                 </Link>
             </li>
         </ul>
@@ -107,7 +134,7 @@ const Navbar = () => {
             </div>
             <h1 className="lg:hidden xl:hidden 2xl:hidden font-bold text-3xl py-2 text-center">Keshav Industries</h1>
             <div className="flex flex-col md:flex-row justify-around items-start text-black text-xs md:text-sm space-y-2 md:space-y-0 md:space-x-6 block lg:hidden xl:hidden 2xl:hidden">
-                
+
                 <div className="w-full flex md:flex-row items-center md:space-x-2">
                     <div
                         className="w-1/3 py-2 px-5 flex items-center cursor-pointer lg:border-0 border-r-2 border-black"

@@ -1,11 +1,70 @@
-import React from 'react';
+import { useEffect, React, useRef } from 'react';
+import ScrollReveal from "scrollreveal";
+
 import Layout from '../layout/Layout';
 const Contacts = () => {
+  const revealRefBottom = useRef(null);
+  const revealRefLeft = useRef(null);
+  const revealRefTop = useRef(null);
+  const revealRefRight = useRef(null);
+
+  useEffect(() => {
+
+
+    ScrollReveal().reveal(revealRefBottom.current, {
+
+      duration: 1000,
+      delay: 200,
+      distance: '50px',
+      origin: 'bottom',
+      easing: 'ease',
+      reset: 'true',
+    });
+  }, []);
+  useEffect(() => {
+
+
+    ScrollReveal().reveal(revealRefRight.current, {
+
+      duration: 1000,
+      delay: 200,
+      distance: '50px',
+      origin: 'right',
+      easing: 'ease',
+      reset: 'true',
+    });
+  }, []); 
+  useEffect(() => {
+
+
+    ScrollReveal().reveal(revealRefLeft.current, {
+
+      duration: 1000,
+      delay: 200,
+      distance: '50px',
+      origin: 'left',
+      easing: 'ease',
+      reset: 'true',
+    });
+  }, []); 
+  useEffect(() => {
+
+
+    ScrollReveal().reveal(revealRefTop.current, {
+
+      duration: 1000,
+      delay: 200,
+      distance: '50px',
+      origin: 'top',
+      easing: 'ease',
+      reset: 'true',
+    });
+  }, []);
   return (
     <Layout>
       <div className="container mx-auto px-4">
         {/* Contact Header */}
-        <div className="text-center mt-5 bg-eda72f py-16">
+        <div  ref={revealRefTop} className="text-center mt-5 bg-eda72f py-16">
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
             Contact Us
           </h1>
@@ -17,7 +76,7 @@ const Contacts = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row justify-between py-10 gap-10">
           {/* Contact Form */}
-          <div className="bg-white p-8 shadow-lg rounded-lg flex-1">
+          <div ref={revealRefLeft} className="bg-white p-8 shadow-lg rounded-lg flex-1">
             <h2 className="text-2xl font-bold text-gray-800">Reach out to us!</h2>
             <p className="text-gray-600 mt-4">
               Got a question about Keshav Industries? Are you interested in
@@ -63,7 +122,7 @@ const Contacts = () => {
           </div>
 
           {/* Customer Care Section */}
-          <div className="bg-white p-8 shadow-lg rounded-lg flex-1">
+          <div ref={revealRefRight} className="bg-white p-8 shadow-lg rounded-lg flex-1">
             <h2 className="text-2xl font-bold text-gray-800">Customer Care</h2>
             <p className="text-gray-600 mt-4">
               Not sure where to start? Need help adding that extra mojo to your
@@ -129,21 +188,21 @@ const Contacts = () => {
             </p>
           </div>
         </div>
-        
+
         {/* Google Map */}
         <div className='mt-5'>
-        <h1 className=" text-center text-3xl md:text-5xl lg:text-5xl font-bold text-dark">
+          <h1 className=" text-center text-3xl md:text-5xl lg:text-5xl font-bold text-dark">
             Locat Us on Google maps
           </h1>
         </div>
         <div className="mt-10 rounded-lg mb-8">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57355.06782223527!2d75.8235450432432!3d22.70819496754725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd26aaaaaaa9%3A0xbffeaa955ff2e11a!2sKESHAV%20INDUSTRIES%20(P)%20LTD.!5e1!3m2!1sen!2sin!4v1723885149953!5m2!1sen!2sin" 
-            width="100%" 
-            height="450" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy" 
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57355.06782223527!2d75.8235450432432!3d22.70819496754725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd26aaaaaaa9%3A0xbffeaa955ff2e11a!2sKESHAV%20INDUSTRIES%20(P)%20LTD.!5e1!3m2!1sen!2sin!4v1723885149953!5m2!1sen!2sin"
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
             referrerPolicy="no-referrer-when-downgrade">
           </iframe>
         </div>

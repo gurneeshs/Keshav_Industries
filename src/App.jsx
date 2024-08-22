@@ -3,6 +3,7 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import HomePage from "./pages/home/HomePage";
 import NoPage from "./pages/noPage/NoPage";
 import ProductInfo from "./pages/productInfo/ProductInfo";
@@ -17,7 +18,6 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProductPage from "./pages/admin/AddProductPage";
 import UpdateProductPage from "./pages/admin/UpdateProductPage";
 import MyState from "./context/myState";
-import { Toaster } from "react-hot-toast";
 import { ProtectedRouteForUser } from "./protectedRoute/ProtectedRouteForUser";
 import { ProtectedRouteForAdmin } from "./protectedRoute/ProtectedRouteForAdmin";
 import CategoryPage from "./pages/category/CategoryPage";
@@ -33,7 +33,13 @@ import PrivacyPolicy from "./pages/policy/PrivacyPolicy";
 import Shipping from "./pages/policy/Shipping&Cancellation";
 import ReturnsExchangeRefunds from "./pages/policy/ReturnsExchangeRefunds";
 import ProductServicePolicy from "./pages/policy/ProductServicePolicy";
-
+import AboutUs from "./pages/company/AboutUs";
+import History from "./pages/company/History";
+import Director from "./pages/company/Director";
+import Mission from "./pages/company/Mission";
+import Export from "./pages/export/export";
+import Carrer from "./pages/carrer/Carrer";
+import Qualification from "./pages/q&c/Qualification";
 const App = () => {
   return (
     <MyState>
@@ -42,6 +48,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/director" element={<Director />} />
+          <Route path="/mission" element={<Mission />} />
+          <Route path="/export" element={<Export />} />
+          <Route path="/carrer" element={<Carrer />} />
+          <Route path="/qualification" element={<Qualification />} />
           <Route path="/productinfo/:id" element={<ProductInfo />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/allproduct" element={<AllProduct />} />
@@ -76,7 +89,6 @@ const App = () => {
           <Route path="/adminUserPage" element={<UsersPage />} />
           <Route path="/adminSettings" element={<SettingsPage />} />
           <Route path="/adminOrders" element={<OrdersPage />} />
-
           <Route path="/terms" element={<TermsOfUse />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/cancellation" element={<Shipping />} />

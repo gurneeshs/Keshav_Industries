@@ -23,19 +23,22 @@ const HomePage = () => {
     return (
         <Layout>
             <ImageSlider>
-                {slides.map((s)=>(
+                {slides.map((s) => (
                     <img className="w-screen" src={s} />
                 ))}
             </ImageSlider>
-            <CountUpComponent/>
-            <About/>
-            <Categories/>
-            <HomePageProductCard/>
-            <Carousel/>
-            <CertificationSlider/>
+            <ScrollAnimation animateIn="easeIn">
+                <CountUpComponent/>
+            </ScrollAnimation>
+            {/* <CountUpComponent /> */}
+            <About />
+            <Categories />
+            <HomePageProductCard />
+            <Carousel />
+            <CertificationSlider />
             {/* <Track/> */}
-       
-            <Testimonial/>
+
+            <Testimonial />
         </Layout>
     );
 }
