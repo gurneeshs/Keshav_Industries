@@ -41,13 +41,13 @@ const Navbar = () => {
     // navList Data
     const navList = (
         <ul className="flex flex-col lg:flex-row lg:space-x-3 text-white font-medium text-md px-5">
-            <li className="py-2 lg:py-0">
+            <li className="py-2 px-2 lg:py-0">
                 <Link className="text-eda72f hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>
                 <Home className="inline mr-1" size={18} strokeWidth={2} />
 
                 Home</Link>
             </li>
-            <li className="py-2 lg:py-0 relative group">
+            <li className="py-2 px-2 lg:py-0 relative group">
                 <button className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0"><Briefcase className="inline mr-1" size={18} strokeWidth={2} />
                     Company
                 </button>
@@ -59,36 +59,39 @@ const Navbar = () => {
                         <Link to={'/history'}>History</Link>
                     </li>
                     <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/direction'}>Mission Vision Value</Link>
+                        <Link to={'/mission'}>Mission Vision Value</Link>
                     </li>
                     <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/mission'}>Director Desk</Link>
+                        <Link to={'/director'}>Director Desk</Link>
                     </li>
 
                 </ul>
             </li>
-            <li className="py-2 lg:py-0">
+            <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/allproduct'}><Box className="inline mr-1" size={18} strokeWidth={2} />All Product</Link>
             </li>
-            <li className="py-2 lg:py-0">
+            <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/export'}><FileText className="inline mr-1" size={18} strokeWidth={2} />Export</Link>
             </li>
-            <li className="py-2 lg:py-0">
+            <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/qualification'}><Shield className="inline mr-1" size={18} strokeWidth={2} />Q&C</Link>
             </li>
+            <li className="py-2 px-2 lg:py-0">
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/carrer'}><User className="inline mr-1" size={18} strokeWidth={2} />Carrer</Link>
+            </li>
 
-            <li className="py-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/contact'}><Mail className="inline mr-1" size={18} strokeWidth={2} />Contact</Link>
+            <li className="py-2 px-2 lg:py-0">
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/contact'}><Phone className="inline mr-1" size={18} strokeWidth={2} />Contact</Link>
             </li>
             {user?.role === "user" && (
-                <li className="py-2 lg:py-0">
+                <li className="py-2 px-2 lg:py-0">
                     <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/user-dashboard'}>User</Link>
                 </li>
             )}
             {/* <li className="py-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/admin-dashboard'}>Admin</Link>
             </li> */}
-            <li className="py-2 lg:py-0">
+            <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/cart'}>
                 <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
                     Cart ({cartItems.length})
@@ -98,7 +101,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="px-5 bg-eda72f">
+        <div className="px-5 bg-orange-500">
             {/* Contact Information */}
 
             {/* Contact Information */}
@@ -187,7 +190,7 @@ const Navbar = () => {
 
 
             {/* Main Navigation */}
-            <nav className="bg-customBlue mx-10 sticky top-0 z-50">
+            <nav className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center">
                 {/* Main Content */}
                 <div className="lg:flex lg:justify-between items-center py-3 lg:px-3">
                     {/* Hamburger Menu for Mobile */}
@@ -200,17 +203,17 @@ const Navbar = () => {
                     </div>
 
                     {/* Nav Links and Search Bar */}
-                    <div className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block space-y-3 lg:space-y-0 lg:space-x-3 text-center lg:text-left`}>
+                    <div className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block space-y-3 lg:space-y-0 lg:space-x-3 text-center lg:text-left items-center justify-center mx-auto`}>
                         {navList}
-                        <div className="lg:hidden px-5">
+                        {/* <div className="lg:hidden px-5">
                             <SearchBar />
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Search Bar for Large Screens */}
-                    <div className="hidden lg:block">
+                    {/* <div className="hidden lg:block">
                         <SearchBar />
-                    </div>
+                    </div> */}
                 </div>
             </nav>
         </div>

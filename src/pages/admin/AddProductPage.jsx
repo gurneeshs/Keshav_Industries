@@ -26,7 +26,7 @@ const AddProductPage = () => {
         title: "",
         price: "",
         mrp: "",
-        productImageFile: null,  // File instead of URL
+        productImageFile: null,
         category: "",
         description: "",
         quantity: 1,
@@ -38,7 +38,6 @@ const AddProductPage = () => {
         }),
     });
 
-    // Function to handle file change
     const handleFileChange = (e) => {
         setProduct({
             ...product,
@@ -46,7 +45,6 @@ const AddProductPage = () => {
         });
     };
 
-    // Add Product Function
     const addProductFunction = async () => {
         if (!product.title || !product.price || !product.productImageFile || !product.category || !product.description) {
             return toast.error("All fields are required");
@@ -54,7 +52,6 @@ const AddProductPage = () => {
 
         setLoading(true);
         try {
-            // Upload image to Cloudinary
             const formData = new FormData();
             formData.append("file", product.productImageFile);
             formData.append("upload_preset", "ml_default");
@@ -65,13 +62,12 @@ const AddProductPage = () => {
             });
 
             const data = await response.json();
-            console.log(data.secure_url)
             const productImageUrl = data.secure_url;
             const newProduct = {
                 title: product.title,
                 price: product.price,
                 mrp: product.mrp,
-                productImageUrl, // URL from Cloudinary
+                productImageUrl,
                 category: product.category,
                 description: product.description,
                 quantity: product.quantity,
@@ -79,7 +75,6 @@ const AddProductPage = () => {
                 date: product.date
             };
 
-            // Add product to Firebase with the Cloudinary URL
             const productRef = collection(fireDB, 'products');
             await addDoc(productRef, newProduct);
 
@@ -95,54 +90,49 @@ const AddProductPage = () => {
 
     return (
         <AdminLayout>
-            <div className="w-full bg-customBackG py-5 justify-center items-center py-5">
+            <div className="w-full bg-customBackG py-5 justify-center items-center py-5 ">
                 <div className='flex justify-center items-center h-screen'>
                     {loading && <Loader />}
-                    <div className="login_Form bg-customGray bg-opacity-50 backdrop-blur-md px-8 py-6 border border-gray-100 rounded-xl shadow-md">
+                    <div className="login_Form bg-opacity-50 backdrop-blur-md px-8 py-6 rounded-xl shadow-md w-full ">
                         <div className="mb-5">
                             <h2 className='text-center text-2xl font-bold text-gray-100 '>
                                 Add Product
                             </h2>
                         </div>
 
-                        <div className="mb-3">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
                             <input
                                 type="text"
                                 name="title"
                                 value={product.title}
                                 onChange={(e) => setProduct({ ...product, title: e.target.value })}
                                 placeholder='Product Title'
-                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                             />
-                        </div>
-
-                        <div className="mb-3">
                             <input
                                 type="number"
                                 name="price"
                                 value={product.price}
                                 onChange={(e) => setProduct({ ...product, price: e.target.value })}
                                 placeholder='Product Price'
-                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                             />
                         </div>
-                        <div className="mb-3">
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
                             <input
                                 type="number"
                                 name="mrp"
                                 value={product.mrp}
                                 onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
                                 placeholder='Product MRP'
-                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                             />
-                        </div>
-
-                        <div className="mb-3">
                             <input
                                 type="file"
                                 name="productImageFile"
                                 onChange={handleFileChange}
-                                className='bg-gray-800 border text-gray-300 border-gray-200 px-2 py-2 w-96 rounded-md outline-none placeholder-gray-300'
+                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                             />
                         </div>
 
@@ -150,10 +140,10 @@ const AddProductPage = () => {
                             <select
                                 value={product.category}
                                 onChange={(e) => setProduct({ ...product, category: e.target.value })}
-                                className="w-full px-1 py-2 text-gray-300 bg-gray-800 border border-gray-200 rounded-md outline-none  ">
+                                className="w-full px-1 py-2 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none">
                                 <option disabled>Select Product Category</option>
                                 {categoryList.map((value, index) => (
-                                    <option className=" first-letter:uppercase" key={index} value={value.name}>
+                                    <option className="first-letter:uppercase" key={index} value={value.name}>
                                         {value.name}
                                     </option>
                                 ))}
@@ -167,7 +157,7 @@ const AddProductPage = () => {
                                 name="description"
                                 placeholder="Product Description"
                                 rows="5"
-                                className=" w-full px-2 py-1 text-gray-300 bg-gray-800 border border-gray-200 rounded-md outline-none placeholder-gray-300 "
+                                className="w-full px-2 py-1 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none placeholder-gray-300 "
                             ></textarea>
                         </div>
 
@@ -175,7 +165,7 @@ const AddProductPage = () => {
                             <button
                                 onClick={addProductFunction}
                                 type='button'
-                                className='bg-gray-8000 hover:bg-gray-600 w-full text-white text-center py-2 font-bold rounded-md '
+                                className='bg-customGray hover:bg-gray-600 w-full text-white text-center py-2 font-bold rounded-md'
                             >
                                 Add Product
                             </button>
@@ -184,7 +174,6 @@ const AddProductPage = () => {
                 </div>
             </div>
         </AdminLayout>
-
     );
 }
 
