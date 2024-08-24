@@ -27,7 +27,6 @@ const phases = [
 
 const History = () => {
   return (
-    <Layout>
       <div className="relative container mx-auto w-screen px-4 py-8">
         <div
           className="absolute inset-0 bg-fixed bg-cover bg-center"
@@ -72,7 +71,6 @@ const History = () => {
           </motion.div>
         ))}
       </div>
-    </Layout>
   );
 };
 

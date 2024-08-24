@@ -33,10 +33,6 @@ import PrivacyPolicy from "./pages/policy/PrivacyPolicy";
 import Shipping from "./pages/policy/Shipping&Cancellation";
 import ReturnsExchangeRefunds from "./pages/policy/ReturnsExchangeRefunds";
 import ProductServicePolicy from "./pages/policy/ProductServicePolicy";
-import AboutUs from "./pages/company/AboutUs";
-import History from "./pages/company/History";
-import Director from "./pages/company/Director";
-import Mission from "./pages/company/Mission";
 import Export from "./pages/export/export";
 import Carrer from "./pages/carrer/Carrer";
 import QualificationCertification from "./pages/q&c/Qualification";
@@ -45,6 +41,7 @@ import LecithinProduct from "./pages/allProduct/LecithinProduct";
 import SpicesProductInfo from "./pages/productInfo/SpicesProductInfo";
 import LecithinProductInfo from "./pages/productInfo/LecithinProductInfo";
 import AddExportProduct from "./pages/admin/AddExport";
+import Company from "./pages/company/Company";
 
 const App = () => {
   return (
@@ -54,10 +51,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/director" element={<Director />} />
-          <Route path="/mission" element={<Mission />} />
+          <Route path="/company" element={<Company />} />
           <Route path="/export" element={<Export />} />
           <Route path="/carrer" element={<Carrer />} />
           <Route path="/qualification" element={<QualificationCertification />} />

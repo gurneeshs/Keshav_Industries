@@ -47,25 +47,8 @@ const Navbar = () => {
 
                 Home</Link>
             </li>
-            <li className="py-2 px-2 lg:py-0 relative group">
-                <button className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0"><Briefcase className="inline mr-1" size={18} strokeWidth={2} />
-                    Company
-                </button>
-                <ul className="absolute left-0 mt-2 w-48 bg-customBlue shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out z-10">
-                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/about'}>About Us</Link>
-                    </li>
-                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/history'}>History</Link>
-                    </li>
-                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/mission'}>Mission Vision Value</Link>
-                    </li>
-                    <li className="py-2 px-4 hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0">
-                        <Link to={'/director'}>Director Desk</Link>
-                    </li>
-
-                </ul>
+            <li className="py-2 px-2 lg:py-0">
+                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/company'}><Briefcase className="inline mr-1" size={18} strokeWidth={2} />Company</Link>
             </li>
             <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/allproduct'}><Box className="inline mr-1" size={18} strokeWidth={2} />All Product</Link>

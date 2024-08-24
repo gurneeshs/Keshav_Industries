@@ -15,14 +15,26 @@ const cardVariants = {
 };
 
 const MissionVisionValue = () => {
+  const fadeInDown = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0 },
+  };
+  const fadeInLeft = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+  const fadeInRight = {
+    hidden: { opacity: 0, x:20 },
+    visible: { opacity: 1, x:0 },
+  };
   return (
-    <Layout>
       <div className="container mx-auto px-4 py-8">
         <motion.h2
           className='justify-center text-center text-3xl font-bold my-8'
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount:0.1 }}
           variants={cardVariants}
         >
           Mission, Vision and Values
@@ -33,7 +45,7 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false, amount:0.1 }}
             variants={cardVariants}
           >
             <div className="p-8 flex flex-col justify-center">
@@ -55,7 +67,7 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false, amount:0.1 }}
             variants={cardVariants}
           >
             <img
@@ -74,8 +86,6 @@ const MissionVisionValue = () => {
           {/* Values Card */}
         </div>
       </div>
-
-    </Layout>
   );
 };
 
