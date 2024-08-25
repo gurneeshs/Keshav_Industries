@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 // import { Clock, Phone, Mail } from "lucide-react";
 import { Clock, Phone, Mail, Home, Briefcase, Box, FileText, ShoppingCart, User, Shield } from "lucide-react";
-
+import { motion } from "framer-motion";
 import SearchBar from "../searchBar/SearchBar";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -43,9 +43,9 @@ const Navbar = () => {
         <ul className="flex flex-col lg:flex-row lg:space-x-3 text-white font-medium text-md px-5">
             <li className="py-2 px-2 lg:py-0">
                 <Link className="text-eda72f hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/'}>
-                <Home className="inline mr-1" size={18} strokeWidth={2} />
+                    <Home className="inline mr-1" size={18} strokeWidth={2} />
 
-                Home</Link>
+                    Home</Link>
             </li>
             <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/company'}><Briefcase className="inline mr-1" size={18} strokeWidth={2} />Company</Link>
@@ -76,7 +76,7 @@ const Navbar = () => {
             </li> */}
             <li className="py-2 px-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/cart'}>
-                <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
+                    <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
                     Cart ({cartItems.length})
                 </Link>
             </li>
@@ -84,7 +84,12 @@ const Navbar = () => {
     );
 
     return (
-        <div className="px-5 bg-orange-500">
+        <motion.div
+            initial={{ opacity: 0, y: -20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.5 }}
+            className="px-5 bg-orange-500 z-20"
+        >
             {/* Contact Information */}
 
             {/* Contact Information */}
@@ -97,21 +102,21 @@ const Navbar = () => {
                     </h1>
                 </div>
                 <div className="py-2 flex items-center space-x-2">
-                    <Clock size={40} className="md:h-10" />
+                    <Clock size={30} className="md:h-10" />
                     <div className="flex flex-col items-start">
                         <h3 className="text-base font-semibold">Opening Hours</h3>
-                        <h5 className="text-sm">Mon-Fri: 8:00 - 9:00</h5>
+                        <h5 className="text-sm">Mon-Fri: 8:00 - 21:00</h5>
                     </div>
                 </div>
                 <div className="py-2 flex items-center space-x-2">
-                    <Phone size={40} className="md:h-10" />
+                    <Phone size={30} className="md:h-10" />
                     <div className="flex flex-col items-start">
                         <h3 className="text-base font-semibold">Call Us</h3>
-                        <h5 className="text-sm">+123-456-7890</h5>
+                        <h5 className="text-sm">+91-9109884497</h5>
                     </div>
                 </div>
                 <div className="py-2 flex items-center space-x-2">
-                    <Mail size={40} className="md:h-10" />
+                    <Mail size={30} className="md:h-10" />
                     <div className="flex flex-col items-start">
                         <h3 className="text-base font-semibold">Email Us</h3>
                         <h5 className="text-sm">info@keshavindustries.com</h5>
@@ -126,21 +131,21 @@ const Navbar = () => {
                         className="w-1/3 py-2 px-5 flex items-center cursor-pointer lg:border-0 border-r-2 border-black"
                         onClick={() => toggleInfo('hours')}
                     >
-                        <Clock size={30} className="md:h-6 text-center mx-auto" />
+                        <Clock size={20} className="md:h-6 text-center mx-auto" />
                     </div>
 
                     <div
                         className="w-1/3 py-2 px-5 flex items-center cursor-pointer lg:border-0 border-r-2 border-black"
                         onClick={() => toggleInfo('call')}
                     >
-                        <Phone size={30} className="md:h-6 mx-auto" />
+                        <Phone size={20} className="md:h-6 mx-auto" />
                     </div>
 
                     <div
                         className="w-1/3 py-2 px-5 flex items-center cursor-pointer lg:border-0"
                         onClick={() => toggleInfo('email')}
                     >
-                        <Mail size={30} className="md:h-6 mx-auto" />
+                        <Mail size={20} className="md:h-6 mx-auto" />
                     </div>
                 </div>
 
@@ -148,14 +153,14 @@ const Navbar = () => {
                 {showInfo.hours && (
                     <div className="text-center w-full mt-4">
                         <h3 className="text-base font-semibold">Opening Hours</h3>
-                        <h5 className="text-sm">Mon-Fri: 8:00 - 9:00</h5>
+                        <h5 className="text-sm">Mon-Fri: 8:00 - 21:00</h5>
                     </div>
                 )}
 
                 {showInfo.call && (
                     <div className="mt-4 text-center w-full ">
                         <h3 className="text-base font-semibold">Call Us</h3>
-                        <h5 className="text-sm">+123-456-7890</h5>
+                        <h5 className="text-sm">+91-9109884497</h5>
                     </div>
                 )}
 
@@ -199,7 +204,7 @@ const Navbar = () => {
                     </div> */}
                 </div>
             </nav>
-        </div>
+        </motion.div>
     );
 }
 

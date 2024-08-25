@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "react-feather"
-
+import { motion } from "framer-motion"
 
 export default function ImageSlider({
     children: slides,
@@ -20,7 +20,12 @@ export default function ImageSlider({
         return () => clearInterval(slideInterval)
     }, [])
     return (
-        <div className="overflow-hidden relative">
+        <motion.div
+            initial={{ opacity: 0, x: -20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.5 }}
+            className="overflow-hidden relative z-0"
+        >
             <div
                 className=" flex transition-transform ease-out duration-500"
                 style={{ transform: `translateX(-${curr * 100}%)` }}
@@ -54,6 +59,6 @@ export default function ImageSlider({
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }

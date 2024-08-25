@@ -9,6 +9,7 @@ import { fireDB } from "../../firebase/FirebaseConfig";
 import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
 import { Navigate } from "react-router";
 import CountUp from "react-countup";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
@@ -220,9 +221,15 @@ const CartPage = () => {
                                             />
                                         }
                                     </div>
+                                    <div className="justify-center items-center flex">
+                                        <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>
+
+                                    </div>
+
                                 </div>
                             </div>
-                        </section>                    </form>
+                        </section>
+                    </form>
                 </div>
             </div>
         </Layout>
