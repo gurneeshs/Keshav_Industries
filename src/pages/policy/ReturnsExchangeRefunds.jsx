@@ -13,7 +13,7 @@ const ReturnsExchangeRefunds = () => {
                     <p>
                         Returns, Refunds, and Exchange is the scheme provided by Keshav Industries in relation to specific products. Returns, refund, and exchange policy gives you an option to return or exchange items purchased on our platform, within the specified return/exchange period, as detailed on the product details page, subject to applicable terms and conditions set out under this Policy and/or such other policies as may be applicable from time to time.
                     </p>
-                    
+
                     <p>
                         At the time of purchasing any products that are listed on the Platform, you will be visiting the product description page which will set out whether the product is returnable or not. The products that are explicitly identified as ‘not returnable’ on the product detail page cannot be returned while the products which are identified as ‘returnable’ are eligible for return with the conditions as specified in the product description page and this policy. The Platform at its discretion may not accept returns of any Product for reasons, including but not limited to, the products being sold under any offer, promotion or discount, if the product being returned is not in good condition, etc.
                     </p>
@@ -25,7 +25,7 @@ const ReturnsExchangeRefunds = () => {
                     <p>
                         With respect to products that are identified as ‘non-returnable’ on the product display page, you will be allowed to exchange such products subject to applicable policies of the platform. In the event that a product for which only exchange is available as per the product description page, the user can opt for a ‘call me back’ option and the returns will be enabled for that user if it is found that the return has been initiated for genuine reasons, at the sole discretion of Keshav Industries.
                     </p>
-                    
+
                     <h3 className="text-xl font-semibold mt-6 mb-2">Return Options</h3>
                     <p>Certain products on Keshav Industries will have two return options available: (a) wrong/defective items return option, and (b) all return option. If a product does not have the aforementioned options for return, the return option available for the Product in the product description page will be applicable. All return options are subject to the product being identified as returnable in the product description page.</p>
 
@@ -84,7 +84,7 @@ const ReturnsExchangeRefunds = () => {
                 <section className="mb-8">
                     <h2 className="text-2xl font-bold mb-4">Exchange</h2>
                     <p>You can check whether the product is exchangeable or not after the product has been delivered in the order details page in the ‘My Orders’ section. If the product can be exchanged, you may exchange the product, subject to applicable policies.</p>
-                    
+
                     <p>Eligibility of a product for exchange is subject to various aspects including but not limited to stock availability, address being serviceable, seller rating, catalog quality metric, and such other aspects at the sole discretion of the Platform. Further, the eligibility of the product to be exchanged will depend upon the reason for exchange provided by the customer. The product will not be eligible for exchange if the reason for exchange is either of: (a) the customer is not interested in the product, or (b) quality issues with the product.</p>
 
                     <p>Keshav Industries will not be accepting any exchanges if: (a) the product which is being exchanged is not the same product that was purchased originally, (b) you have not followed the process of initiating returns as provided in this Policy and in other communications to you, (c) in a bad faith or fraudulent manner. Further, in the event of any Abuse of Platform Policies, Keshav Industries shall at its sole discretion not fulfill any exchange initiated by you.</p>
@@ -98,10 +98,10 @@ const ReturnsExchangeRefunds = () => {
                 <section className="mb-8">
                     <h2 className="text-2xl font-bold mb-4">Refunds</h2>
                     <p>Refunds will be processed for any product that is eligible for refunds as per this Policy and as specified on the product detail page. Refunds will be processed based on the original payment method used to purchase the product. The processing of refunds will be subject to verification of the returned product and receipt of the product by the Platform.</p>
-                    
-                    <p>The refund for the product may be subject to deductions as per applicable policies, which will include but not limited to charges related to shipping and handling. The refund will be credited to your account as per the payment method used during the purchase.</p>
+                    <br></br>
+                    <p>Refunds may be subject to deductions as per applicable policies, including but not limited to charges related to shipping and handling. The refund will be credited to your account as per the payment method used during the purchase.</p>
 
-                    <p>If you are eligible for a refund, the refund amount will be credited to your account in the original payment method used during the purchase. In case of any issues with the payment gateway or system, the refund may be delayed. The refund processing time will also depend on the bank or payment provider.</p>
+                    <p>If you are eligible for a refund, the refund amount will be credited to your account using the original payment method within 7-15 business days. In case of any issues with the payment gateway or system, the refund may be delayed. The refund processing time will also depend on the bank or payment provider.</p>
                 </section>
             </div>
         </Layout>
