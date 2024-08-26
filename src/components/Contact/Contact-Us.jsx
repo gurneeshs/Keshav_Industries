@@ -1,82 +1,43 @@
-import { useEffect, React, useRef } from 'react';
-import ScrollReveal from "scrollreveal";
-
+import React from 'react';
+import { motion } from 'framer-motion';
 import Layout from '../layout/Layout';
+
 const Contacts = () => {
-  const revealRefBottom = useRef(null);
-  const revealRefLeft = useRef(null);
-  const revealRefTop = useRef(null);
-  const revealRefRight = useRef(null);
+  // Variants for scroll animations
+  const scrollVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0 },
+  };
 
-  useEffect(() => {
-
-
-    ScrollReveal().reveal(revealRefBottom.current, {
-
-      duration: 1000,
-      delay: 200,
-      distance: '50px',
-      origin: 'bottom',
-      easing: 'ease',
-      reset: 'true',
-    });
-  }, []);
-  useEffect(() => {
-
-
-    ScrollReveal().reveal(revealRefRight.current, {
-
-      duration: 1000,
-      delay: 200,
-      distance: '50px',
-      origin: 'right',
-      easing: 'ease',
-      reset: 'true',
-    });
-  }, []); 
-  useEffect(() => {
-
-
-    ScrollReveal().reveal(revealRefLeft.current, {
-
-      duration: 1000,
-      delay: 200,
-      distance: '50px',
-      origin: 'left',
-      easing: 'ease',
-      reset: 'true',
-    });
-  }, []); 
-  useEffect(() => {
-
-
-    ScrollReveal().reveal(revealRefTop.current, {
-
-      duration: 1000,
-      delay: 200,
-      distance: '50px',
-      origin: 'top',
-      easing: 'ease',
-      reset: 'true',
-    });
-  }, []);
   return (
     <Layout>
       <div className="container mx-auto px-4">
         {/* Contact Header */}
-        <div  ref={revealRefTop} className="text-center mt-5 bg-eda72f py-16">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={scrollVariants}
+          transition={{ duration: 1 }}
+          className="text-center mt-5 bg-eda72f py-16"
+        >
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
             Contact Us
           </h1>
           <p className="text-md md:text-xl lg:text-2xl text-white mt-4">
             Our team of customer care ninjas is ready to hear from you.
           </p>
-        </div>
+        </motion.div>
 
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row justify-between py-10 gap-10">
           {/* Contact Form */}
-          <div ref={revealRefLeft} className="bg-white p-8 shadow-lg rounded-lg flex-1">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={scrollVariants}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="bg-white p-8 shadow-lg rounded-lg flex-1"
+          >
             <h2 className="text-2xl font-bold text-gray-800">Reach out to us!</h2>
             <p className="text-gray-600 mt-4">
               Got a question about Keshav Industries? Are you interested in
@@ -119,52 +80,31 @@ const Contacts = () => {
                 Submit
               </button>
             </form>
-          </div>
+          </motion.div>
 
           {/* Customer Care Section */}
-          <div ref={revealRefRight} className="bg-white p-8 shadow-lg rounded-lg flex-1">
-            <h2 className="text-2xl font-bold text-gray-800">Customer Care</h2>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={scrollVariants}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="bg-white p-8 shadow-lg rounded-lg flex-1"
+          >
+            <h2 className="text-2xl font-bold text-gray-800">Reach Us</h2>
             <p className="text-gray-600 mt-4">
               Not sure where to start? Need help adding that extra mojo to your
               business? Just visit our{' '}
-              <a href="#" className="text-yellow-600 hover:underline">
+              <a href="/" className="text-customBlue hover:underline">
                 help center
               </a>{' '}
               or get in touch with us:
             </p>
 
             <div className="mt-6 space-y-6">
-              <div className="flex items-center">
-                <img
-                  src="profile1.jpg"
-                  alt="Claudio Pierantonio"
-                  className="w-12 h-12 lg:w-16 lg:h-16 rounded-full mr-4"
-                />
-                <div>
-                  <strong>Claudio Pierantonio</strong>
-                  <p className="text-gray-600">
-                    Customer Care
-                    <br />
-                    Toll free +1 855.780.6050
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <img
-                  src="profile2.jpg"
-                  alt="Noelia Rosemberg"
-                  className="w-12 h-12 lg:w-16 lg:h-16 rounded-full mr-4"
-                />
-                <div>
-                  <strong>Noelia Rosemberg</strong>
-                  <p className="text-gray-600">
-                    Customer Care Lead
-                    <br />
-                    +1 210.807.3540 ext. 1046
-                  </p>
-                </div>
-              </div>
+                <h2 className='text-gray-800 font-bold'>Factory</h2>
+                <p  className='text-gray-700'>Plot No. 101 , Industrial Area No: 3, A.B. Road, Dewas, Madhya Pradesh – 455001, India</p>
+                <h2 className='text-gray-800 font-bold'>Corporate Office</h2>
+                <p  className='text-gray-700'>402 , Pukhraj Corporate, Navlakha Main Road, Janki Nagar, Indore, Madhya Pradesh-452001, India</p>
             </div>
 
             <h2 className="text-xl font-bold text-gray-800 mt-8">
@@ -173,7 +113,7 @@ const Contacts = () => {
             <p className="text-gray-600 mt-4">
               Be the first on your block to get product updates, announcements,
               news, and lots of really good content,{' '}
-              <a href="#" className="text-yellow-600 hover:underline">
+              <a href="#" className="text-customBlue hover:underline">
                 like us on Facebook
               </a>{' '}
               today!
@@ -181,18 +121,18 @@ const Contacts = () => {
             <p className="text-gray-600 mt-2">
               Want the best tips on business optimization, marketing strategies,
               and industry insights? Then{' '}
-              <a href="#" className="text-yellow-600 hover:underline">
+              <a href="#" className="text-customBlue hover:underline">
                 follow us on Twitter
               </a>{' '}
               at @keshavindustries
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Google Map */}
         <div className='mt-5'>
-          <h1 className=" text-center text-3xl md:text-5xl lg:text-5xl font-bold text-dark">
-            Locat Us on Google maps
+          <h1 className="text-center text-3xl md:text-5xl lg:text-5xl font-bold text-dark">
+            Locate Us on Google Maps
           </h1>
         </div>
         <div className="mt-10 rounded-lg mb-8">

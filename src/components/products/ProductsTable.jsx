@@ -76,6 +76,9 @@ const ProductsTable = () => {
 						<Link to={'/addproduct'}>
 							<button className="px-5 py-2 ml-3 bg-gray-700 text-gray-400  rounded-lg">Add Product</button>
 						</Link>
+						<Link to={'/addexport'}>
+							<button className="px-5 py-2 ml-3 bg-gray-700 text-gray-400  rounded-lg">Add Export Product</button>
+						</Link>
 
 				</div>
 			</div>
@@ -92,7 +95,7 @@ const ProductsTable = () => {
 							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Action</th>
 						</tr>
 						{getAllProduct.map((item, index) => {
-							const { id, title, price, category, date, productImageUrl } = item
+							const { id, title, price, category, date, productImageUrls } = item
 							return (
 								<tr key={index} className="">
 									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
@@ -100,7 +103,7 @@ const ProductsTable = () => {
 									</td>
 									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
 										<div className="flex justify-center">
-											<img className="w-20" src={productImageUrl} alt="" />
+											<img className="w-20" src={productImageUrls[0]} alt="" />
 										</div>
 									</td>
 									<td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
