@@ -58,7 +58,7 @@ const HomePageProductCard = () => {
 
                     <div className="flex flex-wrap -m-4">
                         {getAllProduct.slice(0, 8).map((item, index) => {
-                            const { id, title, price, productImageUrl } = item;
+                            const { id, title, price, productImageUrls } = item;
 
                             return (
                                 <motion.div
@@ -79,7 +79,7 @@ const HomePageProductCard = () => {
                                         <motion.img
                                             onClick={() => navigate(`/productinfo/${id}`)}
                                             className="lg:h-60 h-96 w-full"
-                                            src={productImageUrl}
+                                            src={productImageUrls[0]}
                                             alt="img"
                                             whileHover={{ scale: 1.1 }}
                                         />

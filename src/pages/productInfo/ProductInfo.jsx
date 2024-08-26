@@ -14,24 +14,27 @@ const ProductInfo = () => {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
 
-    const [product, setProduct] = useState('');
+    const [product, setProduct] = useState(null);
+    const [mainImage, setMainImage] = useState('');
     const { id } = useParams();
 
-    // getProductData
+    const cartItems = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
+    // Fetch product data
     const getProductData = async () => {
         setLoading(true);
         try {
             const productTemp = await getDoc(doc(fireDB, "products", id));
-            setProduct({ ...productTemp.data(), id: productTemp.id });
+            const productData = { ...productTemp.data(), id: productTemp.id };
+            setProduct(productData);
+            setMainImage(productData.productImageUrls[0]);  // Set the first image as the main image
             setLoading(false);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setLoading(false);
         }
     };
-
-    const cartItems = useSelector((state) => state.cart);
-    const dispatch = useDispatch();
 
     const addCart = (item) => {
         dispatch(addToCart(item));
@@ -50,7 +53,16 @@ const ProductInfo = () => {
     // Trigger getProductData whenever id changes
     useEffect(() => {
         getProductData();
-    }, [id]); // Added id as a dependency
+    }, [id]);
+
+    // Handle image thumbnail click
+    const handleImageClick = (index) => {
+        const newImages = [...product.productImageUrls];
+        const temp = newImages[0];
+        newImages[0] = newImages[index];
+        newImages[index] = temp;
+        setMainImage(newImages[0]);
+    };
 
     return (
         <Layout>
@@ -65,10 +77,21 @@ const ProductInfo = () => {
                             <div className="w-full px-4 mb-4 md:w-1/2 md:mb-0">
                                 <div>
                                     <img
-                                        className="w-full lg:h-[30em] rounded-lg"
-                                        src={product?.productImageUrl}
-                                        alt=""
+                                        className="w-full lg:h-[30em] rounded-lg object-cover"
+                                        src={mainImage}
+                                        alt={product?.title}
                                     />
+                                    <div className="flex space-x-2 mt-2 justify-center">
+                                        {product?.productImageUrls.slice(1).map((url, index) => (
+                                            <img
+                                                key={index + 1}
+                                                onClick={() => handleImageClick(index + 1)}
+                                                className="w-16 h-16 object-cover border border-gray-300 rounded-md cursor-pointer"
+                                                src={url}
+                                                alt={`thumbnail-${index + 1}`}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                             <div className="w-full px-4 md:w-1/2">
@@ -89,13 +112,13 @@ const ProductInfo = () => {
                                     </div>
                                     <div className="mb-6">
                                         <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">
-                                            Description :
+                                            Description:
                                         </h2>
                                         <p>{product?.description}</p>
                                     </div>
                                     <div className="mb-6" />
                                     <div className="flex flex-wrap items-center mb-6">
-                                        {cartItems.some((p) => p.id === product.id) ? (
+                                        {cartItems.some((p) => p.id === product?.id) ? (
                                             <button
                                                 onClick={() => deleteCart(product)}
                                                 className="w-full px-4 py-3 text-center text-white bg-red-500 border border--600 hover:bg-red-600 hover:text-gray-100 rounded-xl"
@@ -120,7 +143,7 @@ const ProductInfo = () => {
 
             <section>
                 <h2 className="mx-5 font-bold text-3xl">You May Also Like</h2>
-                <RelatedProduct category={product.category} />
+                <RelatedProduct category={product?.category} />
             </section>
         </Layout>
     );

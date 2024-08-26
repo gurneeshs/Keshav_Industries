@@ -7,7 +7,6 @@ import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
 import cloudinary from "../../config/cloudinary";  // Import Cloudinary config
 import AdminLayout from "../../components/layout/AdminLayout";
-import Header from "../../components/common/Header";
 
 const categoryList = [
     { name: 'Kash Products' },
@@ -26,8 +25,8 @@ const AddProductPage = () => {
         title: "",
         price: "",
         mrp: "",
-        productImageFile: null,
-        category: "",
+        productImages: [], // Array to hold multiple images
+        category: "Kash Products",
         description: "",
         quantity: 1,
         time: Timestamp.now(),
@@ -38,36 +37,70 @@ const AddProductPage = () => {
         }),
     });
 
-    const handleFileChange = (e) => {
-        setProduct({
-            ...product,
-            productImageFile: e.target.files[0],
+    const handleFileChange = (e, index) => {
+        const files = Array.from(e.target.files);
+        setProduct((prevState) => {
+            const newImages = [...prevState.productImages];
+            newImages[index] = files[0]; // Replace or add new image at the specified index
+            return {
+                ...prevState,
+                productImages: newImages,
+            };
+        });
+    };
+
+    const addMoreImages = () => {
+        setProduct((prevState) => ({
+            ...prevState,
+            productImages: [...prevState.productImages, null], // Add a new empty slot for image
+        }));
+    };
+
+    const deleteImage = (index) => {
+        setProduct((prevState) => {
+            const newImages = prevState.productImages.filter((_, imgIndex) => imgIndex !== index);
+            return {
+                ...prevState,
+                productImages: newImages,
+            };
         });
     };
 
     const addProductFunction = async () => {
-        if (!product.title || !product.price || !product.productImageFile || !product.category || !product.description) {
+        if (!product.title || !product.price || !product.productImages.length || !product.category || !product.description) {
             return toast.error("All fields are required");
         }
 
         setLoading(true);
         try {
-            const formData = new FormData();
-            formData.append("file", product.productImageFile);
-            formData.append("upload_preset", "ml_default");
+            const imageUploadPromises = product.productImages.map(async (imageFile) => {
+                if (!imageFile) return null;
 
-            const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/image/upload`, {
-                method: "POST",
-                body: formData,
+                const formData = new FormData();
+                formData.append("file", imageFile);
+                formData.append("upload_preset", "ml_default");
+
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/image/upload`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                // Apply optimizations
+                const optimizedImageUrl = data.secure_url
+                    .replace('/upload/', '/upload/c_scale,w_1000,q_auto,f_auto/');
+
+                return optimizedImageUrl; // Return the optimized URL of the uploaded image
             });
 
-            const data = await response.json();
-            const productImageUrl = data.secure_url;
+            const productImageUrls = (await Promise.all(imageUploadPromises)).filter((url) => url); // Filter out null entries
+
             const newProduct = {
                 title: product.title,
                 price: product.price,
                 mrp: product.mrp,
-                productImageUrl,
+                productImageUrls, // Store the array of optimized image URLs
                 category: product.category,
                 description: product.description,
                 quantity: product.quantity,
@@ -90,10 +123,10 @@ const AddProductPage = () => {
 
     return (
         <AdminLayout>
-            <div className="w-full bg-customBackG py-5 justify-center items-center py-5 ">
-                <div className='flex justify-center items-center h-screen'>
+            <div className="w-full bg-customBackG py-5 justify-center items-center py-5 h-screen">
+                <div className='flex justify-center items-center h-full'>
                     {loading && <Loader />}
-                    <div className="login_Form bg-opacity-50 backdrop-blur-md px-8 py-6 rounded-xl shadow-md w-full ">
+                    <div className="login_Form bg-opacity-50 backdrop-blur-md px-8 py-6 rounded-xl shadow-md w-full max-h-full overflow-y-auto">
                         <div className="mb-5">
                             <h2 className='text-center text-2xl font-bold text-gray-100 '>
                                 Add Product
@@ -128,12 +161,35 @@ const AddProductPage = () => {
                                 placeholder='Product MRP'
                                 className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                             />
-                            <input
-                                type="file"
-                                name="productImageFile"
-                                onChange={handleFileChange}
-                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
-                            />
+                        </div>
+
+                        <div className="mb-3">
+                            {product.productImages.map((image, index) => (
+                                <div key={index} className="mb-3 flex items-center">
+                                    <input
+                                        type="file"
+                                        name={`productImageFile-${index}`}
+                                        onChange={(e) => handleFileChange(e, index)}
+                                        className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                                    />
+                                    {image && (
+                                        <button
+                                            type="button"
+                                            onClick={() => deleteImage(index)}
+                                            className="ml-3 bg-red-500 text-white px-2 py-1 rounded-md"
+                                        >
+                                            Delete
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
+                            <button
+                                type="button"
+                                onClick={addMoreImages}
+                                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-3"
+                            >
+                                Add Image
+                            </button>
                         </div>
 
                         <div className="mb-3">
