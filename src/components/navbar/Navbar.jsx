@@ -37,6 +37,14 @@ const Navbar = () => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+    const fadeInUp = {
+        hidden: { opacity: 0, x: 40 },
+        visible: { opacity: 1, x: 0 },
+    };
+    const fadeInDown = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+    };
 
     // navList Data
     const navList = (
@@ -85,9 +93,11 @@ const Navbar = () => {
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: -20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            variants={fadeInDown}
+            transition={{ duration: 0.9 }}
             className="px-5 bg-orange-500 z-40"
         >
             {/* Contact Information */}
@@ -178,7 +188,14 @@ const Navbar = () => {
 
 
             {/* Main Navigation */}
-            <nav className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center">
+            <motion.nav
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.2 }}
+                variants={fadeInUp}
+                transition={{ duration: 0.9 }}
+                className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center"
+            >
                 {/* Main Content */}
                 <div className="lg:flex lg:justify-between items-center py-3 lg:px-3">
                     {/* Hamburger Menu for Mobile */}
@@ -203,7 +220,7 @@ const Navbar = () => {
                         <SearchBar />
                     </div> */}
                 </div>
-            </nav>
+            </motion.nav>
         </motion.div>
     );
 }

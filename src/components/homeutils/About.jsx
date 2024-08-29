@@ -30,7 +30,7 @@ const About = () => {
             ref={ref}
             initial={{ rotateY: 90, rotateX: 10, opacity: 0 }}
             animate={controls}
-            className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center"
+            className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center border-b-8 border-yellow-800"
             style={{ perspective: 1000 }}
         >
             <div className="flex">

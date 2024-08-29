@@ -30,7 +30,7 @@ const AllProduct = () => {
 
     return (
         <Layout>
-            <div className="py-8">
+            <div className="py-8 bg-customNewBack">
                 <div className="">
                     <h1 className="text-center mb-5 text-2xl font-semibold">All Products</h1>
                 </div>
@@ -73,7 +73,7 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate }) => {
 
     return (
         <div className="p-4 w-full md:w-1/4">
-            <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+            <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer bg-white">
                 <img
                     onClick={() => navigate(`/productinfo/${id}`)}
                     className="lg:h-60 h-96 w-full object-cover"
