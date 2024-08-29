@@ -8,7 +8,8 @@ export default withMT({
         customBlue: '#030F27',
         eda72f: '#EDA72F',
         customBackG:'#111927',
-        customGray:'#1f293780'
+        customGray:'#1f293780',
+        customNewBack: '#faf7f0'
       },
     },
   },

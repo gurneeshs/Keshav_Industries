@@ -19,7 +19,7 @@ const CountUpComponent = () => {
         });
     }, []);
     return (
-        <div className="container mx-auto my-10">
+        <div className="container mx-auto my-10 z-20 bg-customNewBack">
             <div className="flex flex-wrap justify-center">
                 <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-r last:border-r-0 p-4">
                     <h1 className="text-3xl font-bold"><CountUp duration={5.75} end={2200} /></h1>

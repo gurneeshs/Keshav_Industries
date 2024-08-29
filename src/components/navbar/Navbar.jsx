@@ -88,7 +88,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5 }}
-            className="px-5 bg-orange-500 z-20"
+            className="px-5 bg-orange-500 z-40"
         >
             {/* Contact Information */}
 

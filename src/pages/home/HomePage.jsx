@@ -21,23 +21,26 @@ const HomePage = () => {
 
     return (
         <Layout>
-            <ImageSlider>
-                {slides.map((s) => (
-                    <img className="w-screen" src={s} />
-                ))}
-            </ImageSlider>
-            <ScrollAnimation animateIn="easeIn">
-                <CountUpComponent/>
-            </ScrollAnimation>
-            {/* <CountUpComponent /> */}
-            <About />
-            <Categories />
-            <HomePageProductCard />
-            <Carousel />
-            <CertificationSlider />
-            {/* <Track/> */}
-
-            <Testimonial />
+            <div className="bg-customNewBack">
+                <ImageSlider>
+                    {slides.map((s) => (
+                        <img className="w-screen" src={s} />
+                    ))}
+                </ImageSlider>
+                <ScrollAnimation animateIn="easeIn">
+                    <CountUpComponent />
+                </ScrollAnimation>
+                {/* <CountUpComponent /> */}
+                <About />
+                <Categories />
+                <HomePageProductCard />
+                <Carousel />
+                <CertificationSlider />
+                <div className='mt-8 flex justify-center items-center h-screen p-0 border border-red-100'>
+                    <img src="../img/kash_cooking_oil_cover.jpg" className='m-0 w-full h-full'/>
+                </div>
+                {/* <Testimonial /> */}
+            </div>
         </Layout>
     );
 }
