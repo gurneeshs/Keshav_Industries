@@ -9,8 +9,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 import RelatedProduct from "./RelatedProduct";
+import { motion } from "framer-motion";
+
 
 const ProductInfo = () => {
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+    };
+    const fadeInDown = {
+        hidden: { opacity: 0, y: -40 },
+        visible: { opacity: 1, y: 0 },
+    };
+    const fadeInLeft = {
+        hidden: { opacity: 0, x: -10 },
+        visible: { opacity: 1, x: 0 },
+    };
+    const fadeInRight = {
+        hidden: { opacity: 0, x: 10 },
+        visible: { opacity: 1, x: 0 },
+    };
+
     const context = useContext(myContext);
     const { loading, setLoading } = context;
 
@@ -66,15 +85,29 @@ const ProductInfo = () => {
 
     return (
         <Layout>
-            <section className="py-0 lg:py-3 font-poppins dark:bg-customGray">
+            <section className="py-0 lg:py-11 font-poppins dark:bg-customGray bg-customNewBack ">
                 {loading ? (
                     <div className="flex justify-center items-center">
                         <Loader />
                     </div>
                 ) : (
-                    <div className="max-w-6xl px-4 mx-auto">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        variants={fadeInDown}
+                        transition={{ duration: 2 }}
+                        className="max-w-6xl px-4 mx-auto"
+                    >
                         <div className="flex flex-wrap mb-1 -mx-4">
-                            <div className="w-full px-4 mb-4 md:w-1/2 md:mb-0">
+                            <motion.div
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: false, amount: 0.2 }}
+                                variants={fadeInLeft}
+                                transition={{ duration: 2 }}
+                                className="w-full px-4 mb-4 md:w-1/2 md:mb-0"
+                            >
                                 <div>
                                     <img
                                         className="w-full lg:h-[30em] rounded-lg object-cover"
@@ -93,8 +126,15 @@ const ProductInfo = () => {
                                         ))}
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-full px-4 md:w-1/2">
+                            </motion.div>
+                            <motion.div
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: false, amount: 0.2 }}
+                                variants={fadeInRight}
+                                transition={{ duration: 2 }}
+                                className="w-full px-4 md:w-1/2"
+                            >
                                 <div className="lg:pl-20">
                                     <div className="mt-6 mb-6">
                                         <h2 className="max-w-xl mb-6 text-xl font-semibold leading-loose tracking-wide text-gray-800 md:text-2xl dark:text-gray-300">
@@ -128,22 +168,32 @@ const ProductInfo = () => {
                                         ) : (
                                             <button
                                                 onClick={() => addCart(product)}
-                                                className="w-full px-4 py-3 text-center text-customBlue bg-yellow-600 border border-yellow-600 hover:bg-yellow-600 rounded-xl"
+                                                className="w-full px-4 py-3 text-center text-customBlue bg-orange-500 hover:bg-orange-400 rounded-xl"
                                             >
                                                 Add to cart
                                             </button>
                                         )}
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
             </section>
 
-            <section>
-                <h2 className="mx-5 font-bold text-3xl">You May Also Like</h2>
-                <RelatedProduct category={product?.category} />
+            <section className="bg-customNewBack ">
+                <motion.h2
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={fadeInDown}
+                    transition={{ duration: 2 }}
+                    className="mx-5 font-bold text-3xl"
+                >You May Also Like</motion.h2>
+                <RelatedProduct
+                    category={product?.category}
+
+                />
             </section>
         </Layout>
     );

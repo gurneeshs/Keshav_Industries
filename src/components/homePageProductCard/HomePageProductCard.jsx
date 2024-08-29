@@ -63,7 +63,7 @@ const HomePageProductCard = () => {
                             return (
                                 <motion.div
                                     key={index}
-                                    className="p-4 w-full md:w-1/4"
+                                    className="p-4 w-full md:w-1/4 "
                                     whileHover={{
                                         scale: 1.05,
                                         rotateY: 10,
@@ -75,7 +75,7 @@ const HomePageProductCard = () => {
                                     viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
                                     variants={cardVariants}
                                 >
-                                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
+                                    <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer bg-white">
                                         <motion.img
                                             onClick={() => navigate(`/productinfo/${id}`)}
                                             className="lg:h-60 h-96 w-full"
