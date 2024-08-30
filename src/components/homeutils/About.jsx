@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Yellow from '../YellowStrip/Yellow';
 
 const About = () => {
     const controls = useAnimation();
@@ -26,57 +27,60 @@ const About = () => {
     }, [controls, inView]);
 
     return (
-        <motion.div
-            ref={ref}
-            initial={{ rotateY: 90, rotateX: 10, opacity: 0 }}
-            animate={controls}
-            className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center border-b-8 border-yellow-800"
-            style={{ perspective: 1000 }}
-        >
-            <div className="flex">
-                <div className="w-1/2"></div>
-                <motion.div
-                    className="w-1/2"
-                    initial={{ rotateY: -90 }}
-                    animate={controls}
-                    transition={{ duration: 2, type: 'spring', stiffness: 50 }}
-                >
-                    <motion.div className="flex flex-col items-start space-y-4">
-                        <motion.img
-                            className="h-20"
-                            src="../img/Logo_removebg.png"
-                            alt="Logo"
-                            initial={{ scale: 0.5 }}
-                            animate={{ scale: 1 }}
-                            transition={{ duration: 2, ease: 'easeInOut' }}
-                        />
-                        <motion.h1
-                            className="mt-5 text-4xl font-bold"
-                            initial={{ rotateX: 45 }}
-                            animate={{ rotateX: 0 }}
-                            transition={{ duration: 2, ease: 'easeInOut' }}
-                        >
-                            Welcome to Keshav <br /> Industry
-                        </motion.h1>
-                        <motion.p
-                            className="text-lg"
-                            initial={{ rotateX: 45 }}
-                            animate={{ rotateX: 0 }}
-                            transition={{ duration: 2, ease: 'easeInOut' }}
-                        >
-                            We, Keshav Industries Private Limited started <br />
-                            our journey in 2009 by manufacturing the world's <br />
-                            best Soya Refined Oil and Non-GMO Soya<br />
-                            Lecithin.<br /><br />
-                            After the legacy of more than a decade in the Soya<br />
-                            Industry, we have started to manufacture<br />
-                            Mustard Oil and provide our best Mustard Oil<br />
-                            in the Indian Domestic Market.
-                        </motion.p>
+        <div>
+            <motion.div
+                ref={ref}
+                initial={{ rotateY: 90, rotateX: 10, opacity: 0 }}
+                animate={controls}
+                className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center"
+                style={{ perspective: 1000 }}
+            >
+                <div className="flex">
+                    <div className="w-1/2"></div>
+                    <motion.div
+                        className="w-1/2"
+                        initial={{ rotateY: -90 }}
+                        animate={controls}
+                        transition={{ duration: 2, type: 'spring', stiffness: 50 }}
+                    >
+                        <motion.div className="flex flex-col items-start space-y-4">
+                            <motion.img
+                                className="h-20"
+                                src="../img/Logo_removebg.png"
+                                alt="Logo"
+                                initial={{ scale: 0.5 }}
+                                animate={{ scale: 1 }}
+                                transition={{ duration: 2, ease: 'easeInOut' }}
+                            />
+                            <motion.h1
+                                className="mt-5 text-4xl font-bold"
+                                initial={{ rotateX: 45 }}
+                                animate={{ rotateX: 0 }}
+                                transition={{ duration: 2, ease: 'easeInOut' }}
+                            >
+                                Welcome to Keshav <br /> Industry
+                            </motion.h1>
+                            <motion.p
+                                className="text-lg"
+                                initial={{ rotateX: 45 }}
+                                animate={{ rotateX: 0 }}
+                                transition={{ duration: 2, ease: 'easeInOut' }}
+                            >
+                                We, Keshav Industries Private Limited started <br />
+                                our journey in 2009 by manufacturing the world's <br />
+                                best Soya Refined Oil and Non-GMO Soya<br />
+                                Lecithin.<br /><br />
+                                After the legacy of more than a decade in the Soya<br />
+                                Industry, we have started to manufacture<br />
+                                Mustard Oil and provide our best Mustard Oil<br />
+                                in the Indian Domestic Market.
+                            </motion.p>
+                        </motion.div>
                     </motion.div>
-                </motion.div>
-            </div>
-        </motion.div>
+                </div>
+            </motion.div>
+            <Yellow />
+        </div>
     );
 }
 
