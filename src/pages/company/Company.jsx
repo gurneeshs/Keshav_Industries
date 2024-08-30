@@ -8,12 +8,15 @@ import MissionVisionValue from './Mission'
 const Company = () => {
   return (
     <div>
-        <Layout>
-            <AboutUs/>
-            <History/>
-            <Director/>
-            <MissionVisionValue/>
-        </Layout>
+      <Layout>
+        <div className='bg-customNewBack'>
+          <AboutUs />
+          <History />
+          <Director />
+          <MissionVisionValue />
+
+        </div>
+      </Layout>
     </div>
   )
 }

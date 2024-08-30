@@ -13,7 +13,7 @@ const Export = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto p-6">
+      <div className="mx-auto p-6 bg-customNewBack">
         <motion.h1
           className="text-3xl font-bold text-center mt-8 mb-10"
           initial={{ opacity: 0, y: -50 }}

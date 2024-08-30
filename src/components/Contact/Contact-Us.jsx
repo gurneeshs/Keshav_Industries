@@ -11,14 +11,14 @@ const Contacts = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4 py-5 bg-customNewBack">
         {/* Contact Header */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={scrollVariants}
           transition={{ duration: 1 }}
-          className="text-center mt-5 bg-eda72f py-16"
+          className="text-center  bg-eda72f py-16"
         >
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
             Contact Us
