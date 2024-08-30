@@ -1,19 +1,52 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion"
 
 const Footer = () => {
+    const fadeInRight = {
+        hidden: { opacity: 0, x: 30 },
+        visible: { opacity: 1, x: 0 },
+    };
+    const fadeInDown = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+    };
+    const fadeInLeft = {
+        hidden: { opacity: 0, x: -30 },
+        visible: { opacity: 1, x: 0 },
+    };
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
+
+
     return (
         <div>
             {/* footer  */}
             <footer className="text-gray-600 body-font bg-customBlue">
                 {/* main  */}
-                <div className="container px-0 py-5 mx-auto flex items-center sm:flex-row flex-col">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={fadeInDown}
+                    transition={{ duration: 0.9 }}
+                    className="container px-0 py-5 mx-auto flex items-center sm:flex-row flex-col"
+                >
                     <div className="bg-customBlue text-white py-8" id="end">
                         <div className="container mx-auto px-4">
                             <div className="flex flex-wrap justify-center gap-8">
                                 {/* Keshav Industries */}
 
                                 {/* Know Us */}
-                                <div className="w-full sm:w-1/2 lg:w-1/5">
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    variants={fadeInLeft}
+                                    transition={{ duration: 1.3 }}
+                                    className="w-full sm:w-1/2 lg:w-1/5"
+                                >
                                     <div className="text-gray-300">
                                         <h3 className="text-xl font-bold">Know Us</h3>
                                         <ul className="mt-2 space-y-2">
@@ -23,10 +56,17 @@ const Footer = () => {
                                             <li><a href="" className="text-blue-400 hover:underline">Contact</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 {/* Policy */}
-                                <div className="w-full sm:w-1/2 lg:w-1/5">
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    variants={fadeInUp}
+                                    transition={{ duration: 1.2 }}
+
+                                    className="w-full sm:w-1/2 lg:w-1/5">
                                     <div className="text-gray-300">
                                         <h3 className="text-xl font-bold">Policy</h3>
                                         <ul className="mt-2 space-y-2">
@@ -37,10 +77,19 @@ const Footer = () => {
                                             <li><Link to={"/Products_and_Service"} className="text-blue-400 hover:underline">Product/Service Policy</Link></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 {/* Follow Us */}
-                                <div className="w-full sm:w-1/2 lg:w-1/5">
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    variants={fadeInRight}
+                                    transition={{ duration: 1.2 }}
+
+                                    className="w-full sm:w-1/2 lg:w-1/5"
+
+                                >
                                     <div className="text-gray-300">
                                         <h3 className="text-xl font-bold">Follow Us</h3>
                                         <ul className="mt-2 space-y-2">
@@ -51,10 +100,18 @@ const Footer = () => {
                                             <li><i className="bi bi-twitter text-blue-400"></i><a href="#" className="text-blue-400 hover:underline ml-2">Twitter</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 {/* Address */}
-                                <div className="w-full sm:w-1/2 lg:w-1/4">
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    variants={fadeInDown}
+                                    transition={{ duration: 1.2}}
+
+                                    className="w-full sm:w-1/2 lg:w-1/4"
+                                >
                                     <div className="text-gray-300">
                                         <h3 className="text-xl font-bold">Address</h3>
                                         <ul className="mt-2 space-y-2 text-sm">
@@ -64,7 +121,7 @@ const Footer = () => {
                                             <li><i className="bi bi-phone"></i> <a href="tel:+919109884497" className="text-blue-400 hover:underline">Call us: +91-9109884497</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </motion.div>
                             </div>
 
                             <div className="text-center text-gray-400 mt-8">
@@ -72,7 +129,7 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </footer>
         </div>
     );

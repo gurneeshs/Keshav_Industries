@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import RelatedProduct from "./RelatedProduct";
 import { motion } from "framer-motion";
 
-
 const ProductInfo = () => {
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
@@ -40,7 +39,6 @@ const ProductInfo = () => {
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
-    // Fetch product data
     const getProductData = async () => {
         setLoading(true);
         try {
@@ -69,12 +67,10 @@ const ProductInfo = () => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
 
-    // Trigger getProductData whenever id changes
     useEffect(() => {
         getProductData();
     }, [id]);
 
-    // Handle image thumbnail click
     const handleImageClick = (index) => {
         const newImages = [...product.productImageUrls];
         const temp = newImages[0];
@@ -82,6 +78,23 @@ const ProductInfo = () => {
         newImages[index] = temp;
         setMainImage(newImages[0]);
     };
+
+    // Define images for each category
+    const categoryImages = {
+        "kash products": [
+            "../img/ProductInfo/kashimage1.jpeg",
+            "../img/ProductInfo/kashimage2.jpeg",
+            "../img/ProductInfo/kashimage3.jpeg"
+        ],
+        "pride products": [
+            "../img/ProductInfo/prideimage1.jpeg",
+            "../img/ProductInfo/prideimage2.jpeg"
+        ],
+        // Add more categories and images as needed
+    };
+
+    // Determine images to display based on the product category
+    const imagesToDisplay = categoryImages[product?.category?.toLowerCase()] || [];
 
     return (
         <Layout>
@@ -181,7 +194,37 @@ const ProductInfo = () => {
                 )}
             </section>
 
-            <section className="bg-customNewBack ">
+            {/* New Section with Category-Specific Images */}
+            {imagesToDisplay.length > 0 && (
+                <section className="bg-customNewBack py-10 dark:bg-customGray">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        className="max-w-6xl px-4 mx-auto my-2 gap-6"
+                    >
+                        {imagesToDisplay.map((image, index) => (
+                            <motion.div
+                                key={index}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: false, amount: 0.2 }}
+                                variants={fadeInUp}
+                                transition={{ duration: 1}}
+                                className="overflow-hidden rounded-lg shadow-lg h-full cursor-pointer my-6"
+                            >
+                                <img
+                                    src={image}
+                                    alt={`Image ${index + 1}`}
+                                    className="w-full h-full object-cover"
+                                />
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </section>
+            )}
+
+            <section className="bg-customNewBack">
                 <motion.h2
                     initial="hidden"
                     whileInView="visible"
@@ -189,11 +232,10 @@ const ProductInfo = () => {
                     variants={fadeInDown}
                     transition={{ duration: 2 }}
                     className="mx-5 font-bold text-3xl"
-                >You May Also Like</motion.h2>
-                <RelatedProduct
-                    category={product?.category}
-
-                />
+                >
+                    You May Also Like
+                </motion.h2>
+                <RelatedProduct category={product?.category} />
             </section>
         </Layout>
     );

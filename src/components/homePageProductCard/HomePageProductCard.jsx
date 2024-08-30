@@ -24,15 +24,20 @@ const HomePageProductCard = () => {
         dispatch(deleteFromCart(item));
         toast.success("Deleted from cart");
     };
+
     const headingVariants = {
         hidden: { opacity: 0, y: -20 },
         visible: { opacity: 1, y: 0, transition: { duration: 1 } },
     };
+
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, x: 0, transition: { duration: 2} },
+        visible: (i) => ({
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.7},
+        }),
     };
-
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
@@ -43,9 +48,8 @@ const HomePageProductCard = () => {
             <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
+                viewport={{ once: false, amount: 0.1 }}
                 variants={headingVariants}
-
             >
                 <h1 className="text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
             </motion.div>
@@ -63,13 +67,14 @@ const HomePageProductCard = () => {
                             return (
                                 <motion.div
                                     key={index}
-                                    className="p-4 w-full md:w-1/4 "
+                                    className="p-4 w-full md:w-1/4"
                                     whileHover={{
                                         scale: 1.05,
                                         rotateY: 10,
                                         rotateX: 5,
                                     }}
                                     whileTap={{ scale: 0.95 }}
+                                    custom={index} // Pass index to custom prop
                                     initial="hidden"
                                     whileInView="visible"
                                     viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in

@@ -10,6 +10,7 @@ import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
 import Carousel from "../../components/homeutils/Carousel";
 import ScrollAnimation from 'react-animate-on-scroll';
+import { motion } from "framer-motion";
 
 const slides = [
     "../img/Soya_Homepage_scaled.jpg",
@@ -18,6 +19,14 @@ const slides = [
     "../img/Soya_Homepage_scaled.jpg",
 ]
 const HomePage = () => {
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+    };
+    const fadeInDown = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+    };
 
     return (
         <Layout>
@@ -36,9 +45,16 @@ const HomePage = () => {
                 <HomePageProductCard />
                 <Carousel />
                 <CertificationSlider />
-                <div className='mt-8 flex justify-center items-center h-screen p-0 border border-red-100'>
-                    <img src="../img/kash_cooking_oil_cover.jpg" className='m-0 w-full h-full'/>
-                </div>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={fadeInUp}
+                    transition={{ duration: 0.9 }}
+                    className='mt-8 flex justify-center items-center h-screen p-0 border border-red-100'
+                >
+                    <img src="../img/kash_cooking_oil_cover.jpg" className='m-0 w-full h-full' />
+                </motion.div>
                 {/* <Testimonial /> */}
             </div>
         </Layout>
