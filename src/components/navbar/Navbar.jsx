@@ -95,7 +95,7 @@ const Navbar = () => {
         <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={fadeInDown}
             transition={{ duration: 0.9 }}
             className="px-5 bg-orange-500 z-40"

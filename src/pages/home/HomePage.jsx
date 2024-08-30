@@ -45,17 +45,7 @@ const HomePage = () => {
                 <HomePageProductCard />
                 <Carousel />
                 <CertificationSlider />
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={fadeInUp}
-                    transition={{ duration: 0.9 }}
-                    className='mt-8 flex justify-center items-center h-screen p-0 border border-red-100'
-                >
-                    <img src="../img/kash_cooking_oil_cover.jpg" className='m-0 w-full h-full' />
-                </motion.div>
-                {/* <Testimonial /> */}
+                <Testimonial />
             </div>
         </Layout>
     );

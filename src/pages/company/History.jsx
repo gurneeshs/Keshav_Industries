@@ -27,50 +27,60 @@ const phases = [
 
 const History = () => {
   return (
-      <div className="relative  mx-auto w-full px-4 py-8">
-        <div
-          className="absolute inset-0 bg-fixed bg-cover bg-center"
-          style={{ 
-            backgroundImage: 'url(../img/historyimg/back.jpg)', 
-            zIndex: '0',
-            backgroundAttachment: 'fixed',
-            opacity: '0.5' 
-          }}
-        />
-        <h2 className="text-4xl font-bold mb-10 text-center text-gray-900 ">Our History</h2>
-        {phases.map((phase, index) => (
+    <div className="relative  mx-auto w-full px-4 py-8">
+      <div
+        className="absolute inset-0 bg-fixed bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(../img/historyimg/back.jpg)',
+          zIndex: '0',
+          backgroundAttachment: 'fixed',
+          opacity: '0.3'
+        }}
+      />
+      <h2 className="text-4xl font-bold mb-10 text-center text-gray-900 ">Our History</h2>
+      {phases.map((phase, index) => (
+        <motion.div
+          key={index}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4 text-white"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: index * 0.5, ease: "easeOut" }}
+        >
           <motion.div
-            key={index}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4 text-white"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            className="flex flex-col justify-center space-y-4"
+            initial={{ scale: 0.8 }}
+            whileInView={{ scale: 1 }}
             transition={{ duration: 1.5, delay: index * 0.5, ease: "easeOut" }}
+            style={{
+              zIndex: '1',
+              opacity: '1'
+            }}
+
           >
-            <motion.div
-              className="flex flex-col justify-center space-y-4"
-              initial={{ scale: 0.8 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 1.5, delay: index * 0.5, ease: "easeOut" }}
-            >
-              <h3 className="text-3xl font-semibold text-gray-800">{phase.heading}</h3>
-              <p className="text-sm text-justify text-gray-700">{phase.description}</p>
-            </motion.div>
-            <motion.div
-              className="mx-auto flex items-center justify-center w-full h-64 lg:h-auto"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 1.5, delay: index * 0.7, ease: "easeOut" }}
-            >
-              <img
-                src={phase.image}
-                alt={phase.heading}
-                className="rounded-lg shadow-lg w-50 h-2/3 object-cover"
-              />
-            </motion.div>
+            <h3 className="text-3xl font-semibold text-gray-800">{phase.heading}</h3>
+            <p className="text-sm text-justify text-gray-700">{phase.description}</p>
           </motion.div>
-        ))}
-      </div>
+          <motion.div
+            className="mx-auto flex items-center justify-center w-full h-64 lg:h-auto"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 1.5, delay: index * 0.7, ease: "easeOut" }}
+            style={{
+              zIndex: '1',
+              opacity: '1'
+            }}
+
+          >
+            <img
+              src={phase.image}
+              alt={phase.heading}
+              className="rounded-lg shadow-lg w-50 h-2/3 object-cover"
+            />
+          </motion.div>
+        </motion.div>
+      ))}
+    </div>
   );
 };
 
