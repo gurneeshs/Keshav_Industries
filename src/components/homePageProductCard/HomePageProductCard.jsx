@@ -51,7 +51,7 @@ const HomePageProductCard = () => {
                 viewport={{ once: false, amount: 0.1 }}
                 variants={headingVariants}
             >
-                <h1 className="text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
+                <h1 className="text-center text-4xl mb-8 font-semibold">Bestselling Products</h1>
             </motion.div>
 
             <section className="text-gray-600 body-font">

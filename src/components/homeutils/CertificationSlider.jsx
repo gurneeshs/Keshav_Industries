@@ -11,7 +11,6 @@ const images = [
     '../img/USDA_pic.png',
     '../img/India_Organic_pic.png',
     '../img/Spices_Board_pic.png',
-    '../img/Fssai_pic.png',
 ];
 
 const CertificationSlider = () => {
@@ -79,7 +78,7 @@ const CertificationSlider = () => {
     return (
         <div className="relative overflow-hidden">
             <div className="text-center my-8">
-                <h1  className="text-3xl font-bold mb-4">Certifications</h1>
+                <h1  className="text-5xl font-bold mb-4">Certifications</h1>
                 <p className="text-lg text-gray-600">
                     More than 8+ Trusted Certificates
                 </p>

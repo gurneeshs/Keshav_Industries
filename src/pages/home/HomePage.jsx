@@ -8,6 +8,7 @@ import CountUpComponent from "../../components/homeutils/countUp";
 import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
 import CertificationSlider from "../../components/homeutils/CertificationSlider";
+import ExpoterSlider from "../../components/homeutils/ExpoterSlider";
 import Carousel from "../../components/homeutils/Carousel";
 import ScrollAnimation from 'react-animate-on-scroll';
 import { motion } from "framer-motion";
@@ -42,6 +43,7 @@ const HomePage = () => {
                 {/* <CountUpComponent /> */}
                 <About />
                 <Categories />
+                {/* <ExpoterSlider /> */}
                 <HomePageProductCard />
                 <Carousel />
                 <CertificationSlider />

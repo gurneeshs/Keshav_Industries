@@ -24,7 +24,7 @@ const Categories = () => {
                 viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
                 variants={headingVariants}
             >
-                <h1 className="text-3xl font-bold">Categories</h1>
+                <h1 className="text-5xl mb-8 font-bold">Categories</h1>
                 <p className="mt-2 text-lg text-gray-700">
                     We are leading manufacturer & Exporter of Soya Refined Oil, Mustard Oil, Non-GMO Lecithin <br />
                     (Soya, Sunflower & Rice) and a variety of Quality Spices with Natural Flavour.
