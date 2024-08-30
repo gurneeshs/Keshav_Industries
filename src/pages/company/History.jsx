@@ -27,12 +27,12 @@ const phases = [
 
 const History = () => {
   return (
-      <div className="relative container mx-auto w-screen px-4 py-8">
+      <div className="relative  mx-auto w-full px-4 py-8">
         <div
           className="absolute inset-0 bg-fixed bg-cover bg-center"
           style={{ 
             backgroundImage: 'url(../img/historyimg/back.jpg)', 
-            zIndex: '-2',
+            zIndex: '0',
             backgroundAttachment: 'fixed',
             opacity: '0.5' 
           }}

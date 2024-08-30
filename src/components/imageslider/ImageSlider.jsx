@@ -19,11 +19,18 @@ export default function ImageSlider({
         const slideInterval = setInterval(next, autoSlideInterval)
         return () => clearInterval(slideInterval)
     }, [])
+    const fadeInLeft = {
+        hidden: { opacity: 0, x: -20 },
+        visible: { opacity: 1, x: 0 },
+    };
+
     return (
         <motion.div
-            initial={{ opacity: 0, x: -20 }} 
-            animate={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.5 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            variants={fadeInLeft}
+            transition={{ duration: 0.9 }}
             className="overflow-hidden relative z-0"
         >
             <div
