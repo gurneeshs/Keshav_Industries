@@ -20,10 +20,10 @@ const Carrer = () => {
 
   return (
     <Layout>
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4 py-6 bg-customNewBack my-0">
         {/* Contact Header */}
         <motion.div
-          className="text-center mt-5 bg-eda72f py-16"
+          className="text-center bg-eda72f py-16"
           initial="hidden"
           animate="visible"
           variants={animationVariants}

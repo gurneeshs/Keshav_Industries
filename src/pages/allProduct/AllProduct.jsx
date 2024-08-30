@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import Loader from "../../components/loader/Loader";
+import { motion } from "framer-motion";
 
 const AllProduct = () => {
     const navigate = useNavigate();
@@ -28,19 +29,47 @@ const AllProduct = () => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems]);
 
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+    };
+
+    const cardContainer = {
+        hidden: { opacity: 1 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.2,
+                delayChildren: 0.3,
+            },
+        },
+    };
+
     return (
         <Layout>
             <div className="py-8 bg-customNewBack">
-                <div className="">
-                    <h1 className="text-center mb-5 text-2xl font-semibold">All Products</h1>
-                </div>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={fadeInUp}
+                    transition={{ duration: 2 }}
+                    className=""
+                >
+                    <h1 className="text-center my-5 text-4xl font-bold">All Products</h1>
+                </motion.div>
 
                 <section className="text-gray-600 body-font">
                     <div className="container px-5 lg:px-0 py-5 mx-auto">
                         <div className="flex justify-center">
                             {loading && <Loader />}
                         </div>
-                        <div className="flex flex-wrap -m-4">
+                        <motion.div
+                            className="flex flex-wrap -m-4"
+                            variants={cardContainer}
+                            initial="hidden"
+                            animate="visible"
+                        >
                             {getAllProduct.map((item, index) => (
                                 <ProductCard
                                     key={index}
@@ -49,9 +78,10 @@ const AllProduct = () => {
                                     deleteCart={deleteCart}
                                     cartItems={cartItems}
                                     navigate={navigate}
+                                    index={index}
                                 />
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
                 </section>
             </div>
@@ -59,7 +89,7 @@ const AllProduct = () => {
     );
 };
 
-const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate }) => {
+const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate, index }) => {
     const { id, title, price, productImageUrls, mrp } = product;
     const [mainImage, setMainImage] = useState(productImageUrls[0]);
 
@@ -71,8 +101,20 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate }) => {
         setMainImage(newImages[0]);
     };
 
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+    };
+
     return (
-        <div className="p-4 w-full md:w-1/4">
+        <motion.div
+            className="p-4 w-full md:w-1/4"
+            variants={fadeInUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: index * 0.2 }}
+        >
             <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer bg-white">
                 <img
                     onClick={() => navigate(`/productinfo/${id}`)}
@@ -120,7 +162,7 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

@@ -10,6 +10,8 @@ import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
 import { Navigate } from "react-router";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
@@ -97,15 +99,41 @@ const CartPage = () => {
         }
 
     }
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0 },
+    };
+    const fadeInDown = {
+        hidden: { opacity: 0, y: -20 },
+        visible: { opacity: 1, y: 0 },
+    };
+
+
     return (
         <Layout>
-            <div className="container mx-auto px-4 max-w-7xl lg:px-0">
+            <div className="container mx-auto px-4 max-w-7xl lg:px-0 bg-customNewBack">
                 <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
-                    <h1 className="text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl">
+                    <motion.h1
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        variants={fadeInUp}
+                        transition={{ duration: 0.9 }}
+
+                        className="text-3xl text-center font-bold tracking-tight text-gray-900 sm:text-4xl"
+                    >
                         Shopping Cart
-                    </h1>
-                    <form className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
-                        <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-7">
+                    </motion.h1>
+                    <motion.form
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        variants={fadeInUp}
+                        transition={{ duration:1.5}}
+
+                        className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
+                    >
+                        <section aria-labelledby="cart-heading" className="rounded-lg bg-white lg:col-span-7 mx-5">
                             <h2 id="cart-heading" className="sr-only">
                                 Items in your shopping cart
                             </h2>
@@ -229,7 +257,7 @@ const CartPage = () => {
                                 </div>
                             </div>
                         </section>
-                    </form>
+                    </motion.form>
                 </div>
             </div>
         </Layout>
