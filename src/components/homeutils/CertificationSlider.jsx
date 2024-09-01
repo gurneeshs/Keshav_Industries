@@ -87,7 +87,7 @@ const CertificationSlider = () => {
                 <div className="slider">
                     {images.concat(images).map((src, index) => (
                         <div key={index} className="slide">
-                            <img src={src} alt={`Certification ${index}`} className="w-24 h-24" />
+                            <img src={src} alt={`Certification ${index}`} className="w-24 h-24 mx-16" />
                         </div>
                     ))}
                 </div>
