@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
+    console.log(cartItems)
     const dispatch = useDispatch();
 
     const deleteCart = (item) => {
@@ -142,13 +143,13 @@ const CartPage = () => {
 
                                     <>
                                         {cartItems.map((item, index) => {
-                                            const { id, title, price, productImageUrl, quantity, category } = item
+                                            const { id, title, price, productImageUrls , quantity, category } = item
                                             return (
                                                 <div key={index} className="my-2 p-4 ">
                                                     <li className="flex py-6 sm:py-6 ">
                                                         <div className="flex-shrink-0">
                                                             <img
-                                                                src={productImageUrl}
+                                                                src={productImageUrls[0]}
                                                                 alt="img"
                                                                 className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
                                                             />
@@ -241,13 +242,7 @@ const CartPage = () => {
                                 </dl>
                                 <div className="px-2 pb-4 font-medium text-green-700">
                                     <div className="flex gap-4 mb-6">
-                                        {
-                                            <BuyNowModal
-                                                addressInfo={addressInfo}
-                                                setAddressInfo={setAddressInfo}
-                                                buyNowFunction={buyNowFunction}
-                                            />
-                                        }
+                                            <BuyNowModal amounttoPay={cartTotal} />
                                     </div>
                                     <div className="justify-center items-center flex">
                                         <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>
