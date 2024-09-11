@@ -40,7 +40,7 @@ const BuyNowModal = ({amounttoPay}) => {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "http://localhost:5000/orders",
+            url: "https://razorpayserver-4g2y.onrender.com/orders",
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -93,7 +93,7 @@ const BuyNowModal = ({amounttoPay}) => {
 
         const paymentId = e.target.paymentId.value;
 
-        axios.get(`http://localhost:5000/payment/${paymentId}`)
+        axios.get(`https://razorpayserver-4g2y.onrender.com/payment/${paymentId}`)
             .then((response) => {
                 console.log(response.data);
                 setResponseState(response.data)
