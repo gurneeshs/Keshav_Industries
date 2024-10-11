@@ -14,10 +14,9 @@ import ScrollAnimation from 'react-animate-on-scroll';
 import { motion } from "framer-motion";
 
 const slides = [
-    "../img/Soya_Homepage_scaled.jpg",
     "../img/oil_pic.jpg",
     "../img/masal_pic.jpg",
-    "../img/Soya_Homepage_scaled.jpg",
+    "../img/sarso_oil_pic.jpg",
 ]
 const HomePage = () => {
     const fadeInUp = {
@@ -34,7 +33,7 @@ const HomePage = () => {
             <div className="bg-customNewBack">
                 <ImageSlider>
                     {slides.map((s) => (
-                        <img className="w-screen" src={s} />
+                        <img className="w-screen h-2/4" src={s} />
                     ))}
                 </ImageSlider>
                 <ScrollAnimation animateIn="easeIn">

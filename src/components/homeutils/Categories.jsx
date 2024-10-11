@@ -15,7 +15,7 @@ const Categories = () => {
     };
 
     return (
-        <div className="p-16 pb-4 mx-auto">
+        <div className="p-16 pb-5 mx-auto bg-slate-100">
             {/* Categories Section */}
             <motion.div
                 className="text-center mb-8"
