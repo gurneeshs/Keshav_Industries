@@ -32,13 +32,13 @@ const About = () => {
                 ref={ref}
                 initial={{ rotateY: 90, rotateX: 10, opacity: 0 }}
                 animate={controls}
-                className="w-full py-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center"
+                className="w-full pt-20 pb-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center"
                 style={{ perspective: 1000 }}
             >
-                <div className="flex">
+                <div className="flex ps-72 ">
                     <div className="w-1/2"></div>
                     <motion.div
-                        className="w-1/2"
+                        className="w-5/12 ps-5 py-3 h-full bg-white-700 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-40 border border-black-100"
                         initial={{ rotateY: -90 }}
                         animate={controls}
                         transition={{ duration: 2, type: 'spring', stiffness: 50 }}

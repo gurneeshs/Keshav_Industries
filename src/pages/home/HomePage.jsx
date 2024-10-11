@@ -43,10 +43,10 @@ const HomePage = () => {
                 {/* <CountUpComponent /> */}
                 <About />
                 <Categories />
+                <CertificationSlider />
                 {/* <ExpoterSlider /> */}
                 <HomePageProductCard />
-                <Carousel />
-                <CertificationSlider />
+                {/* <Carousel /> */}
                 <Testimonial />
             </div>
         </Layout>
