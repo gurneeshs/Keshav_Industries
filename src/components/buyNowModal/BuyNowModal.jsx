@@ -6,13 +6,23 @@ import {
 } from "@material-tailwind/react";
 import axios from 'axios'
 import React, { useState } from "react";
+import { BASE_URL } from "../../helper";
 
 const BuyNowModal = ({amounttoPay}) => {
+
+    const checkoutHandler = async (amount) => {
+    const { data: { key } } = await axios.get(`${BASE_URL}/api/getkey`)
+    const { data:{order}} = await axios.post(`${BASE_URL}/api/checkout`, {
+      amount
+    }) }
+    console.log(order);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
     const [responseId, setResponseId] = React.useState("");
     const [responseState, setResponseState] = React.useState([]);
+    const [data, setData] = React.useState([]);
 
     const loadScript = (src) => {
         return new Promise((resolve) => {
@@ -40,7 +50,7 @@ const BuyNowModal = ({amounttoPay}) => {
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "https://razorpayserver-4g2y.onrender.com/orders",
+            url: `${BASE_URL}/orders`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -58,7 +68,7 @@ const BuyNowModal = ({amounttoPay}) => {
     }
 
     const handleRazorpayScreen = async (amount) => {
-        const res = await loadScript("https:/checkout.razorpay.com/v1/checkout.js")
+        const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
 
         if (!res) {
             alert("Some error at razorpay screen loading")
@@ -70,11 +80,14 @@ const BuyNowModal = ({amounttoPay}) => {
             amount: amount,
             currency: 'INR',
             name: "Keshav Industries",
-            description: "payment to papaya coders",
+            description: "Payment to Keshav Industries",
             image: "https://papayacoders.com/demo.png",
-            handler: function (response) {
-                setResponseId(response.razorpay_payment_id)
-            },
+            // handler: function (response) {
+            //     setResponseId(response.razorpay_payment_id);
+            //     setData(response);
+                
+            // },
+            callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
                 name: "Keshav Industries",
                 email: "keshavindustries633@gmail.com"
@@ -83,7 +96,7 @@ const BuyNowModal = ({amounttoPay}) => {
                 color: "#030F27"
             }
         }
-
+        console.log(data);
         const paymentObject = new window.Razorpay(options)
         paymentObject.open()
     }
