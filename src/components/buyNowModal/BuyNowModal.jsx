@@ -6,13 +6,23 @@ import {
 } from "@material-tailwind/react";
 import axios from 'axios'
 import React, { useState } from "react";
+import { BASE_URL } from "../../helper";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
 
-const BuyNowModal = ({amounttoPay}) => {
+
+const BuyNowModal = ({ amounttoPay }) => {
+
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
-    const [responseId, setResponseId] = React.useState("");
+    const [orderId, setorderId] = React.useState("");
+    const [payment_Id, setpaymentId] = React.useState("");
+    const [payment_Signature, setSignature] = React.useState("");
+
     const [responseState, setResponseState] = React.useState([]);
+    const [data, setData] = React.useState([]);
 
     const loadScript = (src) => {
         return new Promise((resolve) => {
@@ -32,15 +42,17 @@ const BuyNowModal = ({amounttoPay}) => {
     }
 
     const createRazorpayOrder = (amount) => {
+        console.log("inside create")
         let data = JSON.stringify({
             amount: amount * 100,
+            // amount:1,
             currency: "INR"
         })
 
         let config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: "https://razorpayserver-4g2y.onrender.com/orders",
+            url: `${BASE_URL}/orders`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -50,15 +62,16 @@ const BuyNowModal = ({amounttoPay}) => {
         axios.request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data))
-                handleRazorpayScreen(response.data.amount)
+                handleRazorpayScreen(response.data.amount, response.data.order_id)
             })
             .catch((error) => {
                 console.log("error at", error)
             })
     }
 
-    const handleRazorpayScreen = async (amount) => {
-        const res = await loadScript("https:/checkout.razorpay.com/v1/checkout.js")
+    const handleRazorpayScreen = async (amount, orderid) => {
+        console.log(orderid);
+        const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
 
         if (!res) {
             alert("Some error at razorpay screen loading")
@@ -66,15 +79,22 @@ const BuyNowModal = ({amounttoPay}) => {
         }
 
         const options = {
-            key: 'rzp_test_GcZZFDPP0jHtC4',
+            key: 'rzp_live_w1F1WlXsmUUQMN',
             amount: amount,
             currency: 'INR',
             name: "Keshav Industries",
-            description: "payment to papaya coders",
+            description: "Payment to Keshav Industries",
             image: "https://papayacoders.com/demo.png",
-            handler: function (response) {
-                setResponseId(response.razorpay_payment_id)
+            order_id: orderid,
+            handler: async function (response) {
+                setpaymentId(response.razorpay_payment_id);
+                setorderId(response.razorpay_order_id)
+                setSignature(response.razorpay_signature);
+                const paymentRef = collection(fireDB, 'payments');
+                await addDoc(paymentRef, {payment_Id,orderId, payment_Signature});
+
             },
+            // callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
                 name: "Keshav Industries",
                 email: "keshavindustries633@gmail.com"
@@ -83,17 +103,14 @@ const BuyNowModal = ({amounttoPay}) => {
                 color: "#030F27"
             }
         }
-
-        const paymentObject = new window.Razorpay(options)
+        // console.log(data);
+        var paymentObject = new window.Razorpay(options)
         paymentObject.open()
     }
 
-    const paymentFetch = (e) => {
-        e.preventDefault();
+    const paymentFetch = (paymentId) => {
 
-        const paymentId = e.target.paymentId.value;
-
-        axios.get(`https://razorpayserver-4g2y.onrender.com/payment/${paymentId}`)
+        axios.get(`${BASE_URL}/payment/${paymentId}`)
             .then((response) => {
                 console.log(response.data);
                 setResponseState(response.data)
@@ -101,6 +118,12 @@ const BuyNowModal = ({amounttoPay}) => {
             .catch((error) => {
                 console.log("error occures", error)
             })
+    }
+
+    if (payment_Id) {
+        // console.log(data);
+        console.log(orderId, payment_Id, payment_Signature);
+        // paymentFetch(responseId)
     }
 
     // useEffect(() => {

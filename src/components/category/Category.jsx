@@ -41,7 +41,7 @@ const Category = () => {
     const navigate = useNavigate();
     return (
         <div>
-            <div className="flex flex-col mt-5">
+            <div className="flex flex-col mt-5 ">
                 {/* main 1 */}
                 <div className="flex overflow-x-scroll lg:justify-center  hide-scroll-bar">
                     {/* main 2  */}
