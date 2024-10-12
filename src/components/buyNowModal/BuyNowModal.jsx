@@ -91,7 +91,7 @@ const BuyNowModal = ({ amounttoPay }) => {
                 setorderId(response.razorpay_order_id)
                 setSignature(response.razorpay_signature);
                 const paymentRef = collection(fireDB, 'payments');
-                await addDoc(paymentRef, {payment_Id,orderId, payment_Signature});
+                await addDoc(paymentRef, {payID:payment_Id,Order:orderId, Signature:payment_Signature});
 
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
