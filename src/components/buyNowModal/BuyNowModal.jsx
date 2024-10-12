@@ -90,9 +90,7 @@ const BuyNowModal = ({ amounttoPay }) => {
                 setpaymentId(response.razorpay_payment_id);
                 setorderId(response.razorpay_order_id)
                 setSignature(response.razorpay_signature);
-                const paymentRef = collection(fireDB, 'payments');
-                await addDoc(paymentRef, {payID:payment_Id,Order:orderId, Signature:payment_Signature});
-
+                
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
@@ -123,6 +121,9 @@ const BuyNowModal = ({ amounttoPay }) => {
     if (payment_Id) {
         // console.log(data);
         console.log(orderId, payment_Id, payment_Signature);
+        const paymentRef = collection(fireDB, 'payments');
+        addDoc(paymentRef, {payID:payment_Id,Order:orderId, Signature:payment_Signature});
+
         // paymentFetch(responseId)
     }
 
