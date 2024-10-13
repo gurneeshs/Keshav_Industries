@@ -15,12 +15,11 @@ import { motion } from "framer-motion";
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
-    console.log(cartItems)
     const dispatch = useDispatch();
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Delete cart")
+        toast.success("Item Deleted")
     }
 
     const handleIncrement = (id) => {
@@ -242,7 +241,7 @@ const CartPage = () => {
                                 </dl>
                                 <div className="px-2 pb-4 font-medium text-green-700">
                                     <div className="flex gap-4 mb-6">
-                                            <BuyNowModal amounttoPay={cartTotal} />
+                                            <BuyNowModal amounttoPay={cartTotal} cartItems={cartItems} />
                                     </div>
                                     <div className="justify-center items-center flex">
                                         <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>

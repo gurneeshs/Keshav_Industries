@@ -15,20 +15,35 @@ const OverviewPage = () => {
 	const [totalSalesInINR, setTotalSalesInINR] = useState(0);
 	const [totalSales, setTotalSales] = useState(0);
 
+	// console.log(getAllProduct)
 	useEffect(() => {
 		if (getAllProduct.length > 0) {
-			// Calculate the total sales by summing up the sales field of each product
-			const salesSum = getAllProduct.reduce((acc, product) => acc + product.sales, 0);
+			// Initialize a variable to accumulate the total sales
+			let salesSum = 0;
+			
+			// Iterate over the products and add the totalSales value to salesSum
+			getAllProduct.forEach(product => {
+				if (product.totalSales) {
+					salesSum += Number(product.totalSales) || 0; // Ensure it's a number
+				}
+			});
+	
 			setTotalSales(salesSum);
 		}
 	}, [getAllProduct]);
+
 	useEffect(() => {
 		if (getAllProduct.length > 0) {
-			// Calculate the total sales in INR by summing up sales * price for each product
-			const salesSumInINR = getAllProduct.reduce(
-				(acc, product) => acc + product.sales * product.price,
-				0
-			);
+			// Initialize a variable to accumulate the total sales in INR
+			let salesSumInINR = 0;
+	
+			// Iterate over the products and add (sales * price) to salesSumInINR
+			getAllProduct.forEach(product => {
+				if (product.totalSales && product.price) {
+					salesSumInINR += Number(product.totalSales) * Number(product.price) || 0; // Ensure values are numbers
+				}
+			});
+	
 			setTotalSalesInINR(salesSumInINR);
 		}
 	}, [getAllProduct]);
