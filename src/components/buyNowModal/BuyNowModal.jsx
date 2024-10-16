@@ -5,18 +5,20 @@ import {
     DialogBody,
 } from "@material-tailwind/react";
 import axios from 'axios'
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { BASE_URL } from "../../helper";
 import { fireDB , auth} from "../../firebase/FirebaseConfig";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-
+import myContext from "../../context/myContext";
 
 
 const BuyNowModal = ({ amounttoPay, cartItems }) => {
+    const user = JSON.parse(localStorage.getItem('users'));
 
-    console.log(cartItems)
+    const context = useContext(myContext);
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
@@ -153,7 +155,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
         // console.log(data);
         console.log(orderId, payment_Id, payment_Signature);
         const paymentRef = collection(fireDB, 'payments');
-        addDoc(paymentRef, {payID:payment_Id,Order:orderId, Signature:payment_Signature});
+        addDoc(paymentRef, {UserID:user.uid, UserName: user.name ,payID:payment_Id,Order:orderId, Signature:payment_Signature});
 
         // paymentFetch(responseId)
     }
