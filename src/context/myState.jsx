@@ -51,11 +51,12 @@ function MyState({ children }) {
         setLoading(true);
         try {
             const q = query(
-                collection(fireDB, "order"),
+                collection(fireDB, "user"),
                 orderBy('time')
             );
             const data = onSnapshot(q, (QuerySnapshot) => {
                 let orderArray = [];
+                console.log(QuerySnapshot)
                 QuerySnapshot.forEach((doc) => {
                     orderArray.push({ ...doc.data(), id: doc.id });
                 });
@@ -74,7 +75,7 @@ function MyState({ children }) {
     const orderDelete = async (id) => {
         setLoading(true)
         try {
-            await deleteDoc(doc(fireDB, 'order', id))
+            await deleteDoc(doc(fireDB, 'payments', id))
             toast.success('Order Deleted successfully')
             getAllOrderFunction();
             setLoading(false)

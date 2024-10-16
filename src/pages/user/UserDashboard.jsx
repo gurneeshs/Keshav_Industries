@@ -2,13 +2,21 @@ import { useContext } from "react";
 import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
     // user
     const user = JSON.parse(localStorage.getItem('users'));
+    const navigate = useNavigate();
 
     const context = useContext(myContext);
-    const { loading, getAllOrder } = context
+    const { loading, getAllOrder } = context;
+
+    const userLogout = () =>{
+        localStorage.removeItem('users');
+        navigate('/')
+        
+    }
     // console.log(getAllOrder)
 
     // console.log(user)
@@ -48,6 +56,10 @@ const UserDashboard = () => {
                                 <span className=" font-bold">Role : </span>
                                 {user?.role}
                             </h1>
+
+                            <button onClick={userLogout}>
+                                Logout
+                            </button>
                         </div>
                     </div>
                 </div>

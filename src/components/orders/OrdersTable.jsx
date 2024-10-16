@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import myContext from "../../context/myContext";
 import { motion } from "framer-motion";
 import { Search, Eye } from "lucide-react";
+import { fireDB, auth } from "../../firebase/FirebaseConfig";
+import { getFirestore, doc, updateDoc, increment, collection, getDocs } from 'firebase/firestore';
 
 const orderData = [
 	{ id: "ORD001", customer: "John Doe", total: 235.4, status: "Delivered", date: "2023-07-01" },
@@ -14,8 +17,36 @@ const orderData = [
 ];
 
 const OrdersTable = () => {
+	const context = useContext(myContext);
+	const { getAllProduct, getAllOrder, getAllUser } = context;
+	const [orderData, setOrderData] = useState([]);
+
+
+	useEffect(() => {
+		async function fetchOrders() {
+			try {
+				const paymentsCollection = collection(fireDB, 'payments');
+				const querySnapshot = await getDocs(paymentsCollection);
+
+				const fetchedOrders = querySnapshot.docs.map(doc => ({
+					id: doc.id,
+					...doc.data()
+				}));
+				// console.log(fetchedOrders);
+				setOrderData(fetchedOrders);
+
+			} catch (error) {
+				console.error("Error fetching orders: ", error);
+			}
+		}
+
+		fetchOrders();
+	}, []);
+
+	// console.log(getAllOrder)
+
 	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredOrders, setFilteredOrders] = useState(orderData);
+	const [filteredOrders, setFilteredOrders] = useState([]);
 
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
@@ -52,12 +83,15 @@ const OrdersTable = () => {
 					<thead>
 						<tr>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+								Document ID
+							</th>
+							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Order ID
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Customer
+								PaymentID
 							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+							{/* <th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Total
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
@@ -65,7 +99,7 @@ const OrdersTable = () => {
 							</th>
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Date
-							</th>
+							</th> */}
 							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 								Actions
 							</th>
@@ -73,9 +107,9 @@ const OrdersTable = () => {
 					</thead>
 
 					<tbody className='divide divide-gray-700'>
-						{filteredOrders.map((order) => (
+						{orderData.map((order) => (
 							<motion.tr
-								key={order.id}
+								key={order.Order}
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.3 }}
@@ -84,9 +118,12 @@ const OrdersTable = () => {
 									{order.id}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
-									{order.customer}
+									{order.Order}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
+									{order.payID}
+								</td>
+								{/* <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
 									${order.total.toFixed(2)}
 								</td>
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
@@ -104,7 +141,7 @@ const OrdersTable = () => {
 										{order.status}
 									</span>
 								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{order.date}</td>
+								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{order.date}</td> */}
 								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
 									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>
 										<Eye size={18} />

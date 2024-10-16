@@ -42,6 +42,7 @@ import SpicesProductInfo from "./pages/productInfo/SpicesProductInfo";
 import LecithinProductInfo from "./pages/productInfo/LecithinProductInfo";
 import AddExportProduct from "./pages/admin/AddExport";
 import Company from "./pages/company/Company";
+import UserLogin from "./pages/registration/UserLogin";
 
 const App = () => {
   return (
@@ -58,10 +59,16 @@ const App = () => {
           <Route path="/productinfo/:id" element={<ProductInfo />} />
           <Route path="/spicesproductinfo/:id" element={<SpicesProductInfo />} />
           <Route path="/lecithinproductinfo/:id" element={<LecithinProductInfo />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={
+            <ProtectedRouteForUser>
+              <CartPage />
+            </ProtectedRouteForUser>
+
+          } />
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path={"/userlogin"} element={<UserLogin/>}/>
           <Route path="/contact" element={<Contacts />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/spicesProduct" element={<SpicesProduct />} />
@@ -83,7 +90,7 @@ const App = () => {
           } />
           <Route path="/addexport" element={
             <ProtectedRouteForAdmin>
-              <AddExportProduct/>
+              <AddExportProduct />
             </ProtectedRouteForAdmin>
 
           } />

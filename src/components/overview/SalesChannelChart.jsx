@@ -23,9 +23,9 @@ const SalesChannelChart = () => {
         querySnapshot.forEach((doc) => {
           const product = doc.data();
           if (categories[product.category]) {
-            categories[product.category] += product.sales;
+            categories[product.category] += product.totalSales;
           } else {
-            categories[product.category] = product.sales;
+            categories[product.category] = product.totalSales;
           }
         });
 
