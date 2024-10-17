@@ -107,7 +107,7 @@ const ProductInfo = () => {
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: false, amount: 0.2 }}
+                        viewport={{ once: true, amount: 0.2 }}
                         variants={fadeInDown}
                         transition={{ duration: 2 }}
                         className="max-w-6xl px-4 mx-auto"
@@ -116,7 +116,7 @@ const ProductInfo = () => {
                             <motion.div
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: false, amount: 0.2 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 variants={fadeInLeft}
                                 transition={{ duration: 2 }}
                                 className="w-full px-4 mb-4 md:w-1/2 md:mb-0"
@@ -143,7 +143,7 @@ const ProductInfo = () => {
                             <motion.div
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: false, amount: 0.2 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 variants={fadeInRight}
                                 transition={{ duration: 2 }}
                                 className="w-full px-4 md:w-1/2"
@@ -200,7 +200,7 @@ const ProductInfo = () => {
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: false, amount: 0.2 }}
+                        viewport={{ once: true, amount: 0.2 }}
                         className="max-w-6xl px-4 mx-auto my-2 gap-6"
                     >
                         {imagesToDisplay.map((image, index) => (
@@ -208,7 +208,7 @@ const ProductInfo = () => {
                                 key={index}
                                 initial="hidden"
                                 whileInView="visible"
-                                viewport={{ once: false, amount: 0.2 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 variants={fadeInUp}
                                 transition={{ duration: 1}}
                                 className="overflow-hidden rounded-lg shadow-lg h-full cursor-pointer my-6"
@@ -228,7 +228,7 @@ const ProductInfo = () => {
                 <motion.h2
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     variants={fadeInDown}
                     transition={{ duration: 2 }}
                     className="mx-5 font-bold text-3xl"

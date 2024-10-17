@@ -24,7 +24,7 @@ const Director = () => {
         className="text-center mb-10"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: false, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
         variants={fadeInDown}
         transition={{ duration: 1.5, ease: 'easeOut' }}
       >
@@ -36,7 +36,7 @@ const Director = () => {
           className="flex flex-col justify-center space-y-6 px-5 text-justify"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={fadeInLeft}
           transition={{ duration: 1.5, ease: 'easeOut' }}
         >
@@ -63,7 +63,7 @@ const Director = () => {
           className="flex flex-col"
           initial="hidden"          
           whileInView="visible"
-          viewport={{ once: false, amount: 0.1 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={fadeInRight}
           transition={{ duration: 1.5, ease: 'easeOut' }}
         >

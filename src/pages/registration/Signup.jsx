@@ -7,153 +7,207 @@ import { auth, fireDB } from "../../firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
 import Loader from "../../components/loader/Loader";
+import Layout from '../../components/layout/Layout';
 
 const Signup = () => {
     const context = useContext(myContext);
-    const {loading, setLoading } = context;
-
-    // navigate 
+    const { loading, setLoading } = context;
     const navigate = useNavigate();
 
-    // User Signup State 
     const [userSignup, setUserSignup] = useState({
         name: "",
+        mobile: "",
         email: "",
         password: "",
+        address: "",
+        landmark: "",
+        pincode: "",
+        city: "",
+        state: "",
+        country: "",
         role: "user"
     });
 
-    /**========================================================================
-     *                          User Signup Function 
-    *========================================================================**/
-
     const userSignupFunction = async () => {
-        // validation 
-        if (userSignup.name === "" || userSignup.email === "" || userSignup.password === "") {
-            toast.error("All Fields are required")
+        const { name, mobile, email, password, address, pincode, city, state, country } = userSignup;
+        if (name === "" || mobile === "" || email === "" || password === "" || address === "" || pincode === "" || city === "" || state === "" || country === "") {
+            toast.error("All Fields are required except Landmark");
+            return;
         }
 
         setLoading(true);
         try {
-            const users = await createUserWithEmailAndPassword(auth, userSignup.email, userSignup.password);
+            const users = await createUserWithEmailAndPassword(auth, email, password);
 
-            // create user object
             const user = {
-                name: userSignup.name,
+                name,
+                mobile,
                 email: users.user.email,
                 uid: users.user.uid,
+                address,
+                landmark: userSignup.landmark,
+                pincode,
+                city,
+                state,
+                country,
                 role: userSignup.role,
                 time: Timestamp.now(),
-                date: new Date().toLocaleString(
-                    "en-US",
-                    {
-                        month: "short",
-                        day: "2-digit",
-                        year: "numeric",
-                    }
-                )
-            }
+                date: new Date().toLocaleString("en-US", {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                })
+            };
 
-            // create user Refrence
-            const userRefrence = collection(fireDB, "user")
-
-            // Add User Detail
-            addDoc(userRefrence, user);
+            const userReference = collection(fireDB, "user");
+            await addDoc(userReference, user);
 
             setUserSignup({
                 name: "",
+                mobile: "",
                 email: "",
-                password: ""
-            })
+                password: "",
+                address: "",
+                landmark: "",
+                pincode: "",
+                city: "",
+                state: "",
+                country: ""
+            });
 
             toast.success("Signup Successfully");
-
             setLoading(false);
-            navigate('/login')
+            navigate('/login');
         } catch (error) {
             console.log(error);
             setLoading(false);
         }
-
     }
+
     return (
-        <div className='flex justify-center items-center h-screen'>
-            {loading && <Loader/>}
-            {/* Login Form  */}
-            <div className="login_Form bg-pink-50 px-8 py-6 border border-pink-100 rounded-xl shadow-md">
+        <Layout>
+            <div className='flex justify-center items-center min-h-screen relative'>
+                {/* Background Images */}
+                <div className="absolute inset-0 bg-[url('../img/bg-image-1.jpg')] bg-cover bg-center "></div>
+                {loading && <Loader />}
+                
+                {/* Signup Form */}
+                <div className="relative z-10 bg-eda72f px-6 py-8 border border-gray-100 rounded-xl shadow-md w-full max-w-lg mx-4 my-16">
+                    {/* Top Heading */}
+                    <div className="mb-5">
+                        <h2 className='text-center text-4xl font-bold'>Signup</h2>
+                    </div>
 
-                {/* Top Heading  */}
-                <div className="mb-5">
-                    <h2 className='text-center text-2xl font-bold text-pink-500 '>
-                        Signup
-                    </h2>
+                    {/* Form Fields */}
+                    <div className="grid grid-cols-1 gap-4">
+                        {/* Full Name */}
+                        <input
+                            type="text"
+                            placeholder='Full Name'
+                            value={userSignup.name}
+                            onChange={(e) => setUserSignup({ ...userSignup, name: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Mobile Number */}
+                        <input
+                            type="text"
+                            placeholder='Mobile Number'
+                            value={userSignup.mobile}
+                            onChange={(e) => setUserSignup({ ...userSignup, mobile: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Email Address */}
+                        <input
+                            type="email"
+                            placeholder='Email Address'
+                            value={userSignup.email}
+                            onChange={(e) => setUserSignup({ ...userSignup, email: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Password */}
+                        <input
+                            type="password"
+                            placeholder='Password'
+                            value={userSignup.password}
+                            onChange={(e) => setUserSignup({ ...userSignup, password: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Complete Address */}
+                        <input
+                            type="text"
+                            placeholder='Complete Address'
+                            value={userSignup.address}
+                            onChange={(e) => setUserSignup({ ...userSignup, address: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Landmark (optional) */}
+                        <input
+                            type="text"
+                            placeholder='Landmark (optional)'
+                            value={userSignup.landmark}
+                            onChange={(e) => setUserSignup({ ...userSignup, landmark: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Pincode */}
+                        <input
+                            type="text"
+                            placeholder='Pincode'
+                            value={userSignup.pincode}
+                            onChange={(e) => setUserSignup({ ...userSignup, pincode: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* City */}
+                        <input
+                            type="text"
+                            placeholder='City'
+                            value={userSignup.city}
+                            onChange={(e) => setUserSignup({ ...userSignup, city: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* State */}
+                        <input
+                            type="text"
+                            placeholder='State'
+                            value={userSignup.state}
+                            onChange={(e) => setUserSignup({ ...userSignup, state: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+
+                        {/* Country */}
+                        <input
+                            type="text"
+                            placeholder='Country'
+                            value={userSignup.country}
+                            onChange={(e) => setUserSignup({ ...userSignup, country: e.target.value })}
+                            className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500'
+                        />
+                    </div>
+
+                    {/* Signup Button */}
+                    <div className="mt-2 mb-5">
+                        <button
+                            type='button'
+                            onClick={userSignupFunction}
+                            className='bg-black hover:bg-blue-600 w-full text-white text-center py-2 font-bold rounded-md transition duration-300'
+                        >
+                            Signup
+                        </button>
+                    </div>
+
+                    <div className='text-center'>
+                        <h2 className='text-black'>Have an account? <Link className='text-blue-500 font-bold' to={'/login'}>Login</Link></h2>
+                    </div>
                 </div>
-
-                {/* Input One  */}
-                <div className="mb-3">
-                    <input
-                        type="text"
-                        placeholder='Full Name'
-                        value={userSignup.name}
-                        onChange={(e) => {
-                            setUserSignup({
-                                ...userSignup,
-                                name: e.target.value
-                            })
-                        }}
-                        className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
-                    />
-                </div>
-
-                {/* Input Two  */}
-                <div className="mb-3">
-                    <input
-                        type="email"
-                        placeholder='Email Address'
-                        value={userSignup.email}
-                        onChange={(e) => {
-                            setUserSignup({
-                                ...userSignup,
-                                email: e.target.value
-                            })
-                        }}
-                        className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
-                    />
-                </div>
-
-                {/* Input Three  */}
-                <div className="mb-5">
-                    <input
-                        type="password"
-                        placeholder='Password'
-                        value={userSignup.password}
-                        onChange={(e) => {
-                            setUserSignup({
-                                ...userSignup,
-                                password: e.target.value
-                            })
-                        }}
-                        className='bg-pink-50 border border-pink-200 px-2 py-2 w-96 rounded-md outline-none placeholder-pink-200'
-                    />
-                </div>
-
-                {/* Signup Button  */}
-                <div className="mb-5">
-                    <button
-                        type='button'
-                        onClick={userSignupFunction}
-                        className='bg-pink-500 hover:bg-pink-600 w-full text-white text-center py-2 font-bold rounded-md '
-                    >
-                        Signup
-                    </button>
-                </div>
-
-                <div>
-                    <h2 className='text-black'>Have an account <Link className=' text-pink-500 font-bold' to={'/login'}>Login</Link></h2>
-                </div>
-
             </div>
-        </div>
+        </Layout>
     );
 }
 

@@ -48,7 +48,7 @@ const HomePageProductCard = () => {
             <motion.div
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.1 }}
+                viewport={{ once: true, amount: 0.1 }}
                 variants={headingVariants}
             >
                 <h1 className="text-center text-4xl mb-8 font-semibold">Bestselling Products</h1>

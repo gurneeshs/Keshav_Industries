@@ -15,35 +15,39 @@ const Categories = () => {
     };
 
     return (
-        <div className="bg-gray-100 p-16 pb-5 mx-auto ">
+        <div className="bg-white p-8 md:p-16 mx-auto">
             {/* Categories Section */}
             <motion.div
                 className="text-center mb-8"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
+                viewport={{ once: true, amount: 0.1 }} // Reset when the user scrolls out and back in
                 variants={headingVariants}
             >
-                <h1 className="text-5xl mb-8 font-bold">Categories</h1>
-                <p className="mt-2 text-lg text-gray-700">
+                <h1 className="text-3xl md:text-5xl mb-4 font-bold">Categories</h1>
+                <p className="mt-2 text-base md:text-lg text-gray-700">
                     We are leading manufacturer & Exporter of Soya Refined Oil, Mustard Oil, Non-GMO Lecithin <br />
                     (Soya, Sunflower & Rice) and a variety of Quality Spices with Natural Flavour.
                 </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {['Mustard_Seed', 'Soyabeans', 'Spices'].map((item, index) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-5">
+                {['Mustard_Seed', 'Soyabeans', 'Spices'].map((item) => (
                     <motion.div
                         key={item}
-                        className="mx-auto shadow-lg rounded-lg overflow-hidden bg-gray-300"
+                        className="mx-auto shadow-lg rounded-lg overflow-hidden bg-gray-300 flex flex-col"
                         initial="hidden"
                         whileInView="visible"
-                        viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
+                        viewport={{ once: true, amount: 0.1 }} // Reset when the user scrolls out and back in
                         variants={cardVariants}
                     >
-                        <img src={`../img/${item}.png`} alt={item} className="w-full h-68 object-cover" />
-                        <div className="text-center p-4">
-                            <h4 className="text-xl font-semibold">
+                        <img
+                            src={`../img/${item}.png`}
+                            alt={item}
+                            className="w-full h-70 object-cover"
+                        />
+                        <div className="flex-grow text-center p-4">
+                            <h4 className="text-lg md:text-xl font-semibold">
                                 {item}{' '}
                                 <Link
                                     to="/allproduct"
