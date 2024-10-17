@@ -126,15 +126,22 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
 
         axios.request(config)
             .then((response) => {
+                const orderItems = cartItems.map(item => ({
+                    Category: item.category,
+                    ProductName: item.title,
+                    Quantity: item.quantity,
+                    Description: item.description,
+                    Price: item.price,
+                }));                
                 console.log(JSON.stringify(response.data))
-                handleRazorpayScreen(response.data.amount, response.data.order_id)
+                handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems)
             })
             .catch((error) => {
                 console.log("error at", error)
             })
     }
 
-    const handleRazorpayScreen = async (amount, orderid) => {
+    const handleRazorpayScreen = async (amount, orderid, orderItems) => {
         // console.log(orderid);
         const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js")
 
@@ -142,7 +149,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             alert("Some error at razorpay screen loading")
             return;
         }
-
+        
         const options = {
             key: 'rzp_live_w1F1WlXsmUUQMN',
             amount: amount,
@@ -153,9 +160,9 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             order_id: orderid,
             handler: async function (response) {
                 const paymentRef = collection(fireDB, 'payments');
-                await addDoc(paymentRef, { UserID: user.uid, UserName: user.name, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: cartItems});
+                await addDoc(paymentRef, { UserID: user.uid, UserName: user.name, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems});
+                
                 navigate('/user-dashboard');
-
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
