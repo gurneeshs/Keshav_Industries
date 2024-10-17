@@ -2,39 +2,29 @@ import { useContext, useState, useEffect } from "react";
 import myContext from "../../context/myContext";
 import { motion } from "framer-motion";
 import { Search, Eye } from "lucide-react";
-import { fireDB, auth } from "../../firebase/FirebaseConfig";
-import { getFirestore, doc, updateDoc, increment, collection, getDocs } from 'firebase/firestore';
-
-const orderData = [
-	{ id: "ORD001", customer: "John Doe", total: 235.4, status: "Delivered", date: "2023-07-01" },
-	{ id: "ORD002", customer: "Jane Smith", total: 412.0, status: "Processing", date: "2023-07-02" },
-	{ id: "ORD003", customer: "Bob Johnson", total: 162.5, status: "Shipped", date: "2023-07-03" },
-	{ id: "ORD004", customer: "Alice Brown", total: 750.2, status: "Pending", date: "2023-07-04" },
-	{ id: "ORD005", customer: "Charlie Wilson", total: 95.8, status: "Delivered", date: "2023-07-05" },
-	{ id: "ORD006", customer: "Eva Martinez", total: 310.75, status: "Processing", date: "2023-07-06" },
-	{ id: "ORD007", customer: "David Lee", total: 528.9, status: "Shipped", date: "2023-07-07" },
-	{ id: "ORD008", customer: "Grace Taylor", total: 189.6, status: "Delivered", date: "2023-07-08" },
-];
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 
 const OrdersTable = () => {
 	const context = useContext(myContext);
 	const { getAllProduct, getAllOrder, getAllUser } = context;
 	const [orderData, setOrderData] = useState([]);
-
+	const [searchTerm, setSearchTerm] = useState("");
+	const [filteredOrders, setFilteredOrders] = useState([]);
 
 	useEffect(() => {
 		async function fetchOrders() {
 			try {
-				const paymentsCollection = collection(fireDB, 'payments');
+				const paymentsCollection = collection(fireDB, "payments");
 				const querySnapshot = await getDocs(paymentsCollection);
 
-				const fetchedOrders = querySnapshot.docs.map(doc => ({
+				const fetchedOrders = querySnapshot.docs.map((doc) => ({
 					id: doc.id,
-					...doc.data()
+					...doc.data(),
 				}));
-				// console.log(fetchedOrders);
-				setOrderData(fetchedOrders);
 
+				setOrderData(fetchedOrders);
+				setFilteredOrders(fetchedOrders);
 			} catch (error) {
 				console.error("Error fetching orders: ", error);
 			}
@@ -43,16 +33,14 @@ const OrdersTable = () => {
 		fetchOrders();
 	}, []);
 
-	// console.log(getAllOrder)
-
-	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredOrders, setFilteredOrders] = useState([]);
-
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
 		setSearchTerm(term);
 		const filtered = orderData.filter(
-			(order) => order.id.toLowerCase().includes(term) || order.customer.toLowerCase().includes(term)
+			(order) =>
+				order.OrderId.toLowerCase().includes(term) ||
+				order.UserName.toLowerCase().includes(term) ||
+				order.UserID.toLowerCase().includes(term)
 		);
 		setFilteredOrders(filtered);
 	};
@@ -78,81 +66,69 @@ const OrdersTable = () => {
 				</div>
 			</div>
 
-			<div className='overflow-x-auto'>
-				<table className='min-w-full divide-y divide-gray-700'>
-					<thead>
-						<tr>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Document ID
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Order ID
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								PaymentID
-							</th>
-							{/* <th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Total
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Status
-							</th>
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Date
-							</th> */}
-							<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
-								Actions
-							</th>
-						</tr>
-					</thead>
+			<div className='space-y-4'>
+				{filteredOrders.map((order) => (
+					<motion.div
+						key={order.id}
+						className='bg-gray-800 rounded-lg p-4 shadow-md'
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.3 }}
+					>
+						<div className='flex justify-between items-center mb-4'>
+							<div>
+								<p className='text-gray-100 font-semibold'>Order ID: {order.OrderId}</p>
+								<p className='text-gray-100'>Payment ID: {order.PaymentID}</p>
+								<p className='text-gray-100'>User Name: {order.UserName}</p>
+								<p className='text-gray-100'>User ID: {order.UserID}</p>
+							</div>
+							{/* <Eye className='text-indigo-400 hover:text-indigo-300 cursor-pointer' size={24} /> */}
+						</div>
 
-					<tbody className='divide divide-gray-700'>
-						{orderData.map((order) => (
-							<motion.tr
-								key={order.Order}
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								transition={{ duration: 0.3 }}
-							>
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
-									{order.id}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
-									{order.Order}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
-									{order.payID}
-								</td>
-								{/* <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100'>
-									${order.total.toFixed(2)}
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<span
-										className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-											order.status === "Delivered"
-												? "bg-green-100 text-green-800"
-												: order.status === "Processing"
-												? "bg-yellow-100 text-yellow-800"
-												: order.status === "Shipped"
-												? "bg-blue-100 text-blue-800"
-												: "bg-red-100 text-red-800"
-										}`}
-									>
-										{order.status}
-									</span>
-								</td>
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>{order.date}</td> */}
-								<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-300'>
-									<button className='text-indigo-400 hover:text-indigo-300 mr-2'>
-										<Eye size={18} />
-									</button>
-								</td>
-							</motion.tr>
-						))}
-					</tbody>
-				</table>
+						{/* Nested table for order details */}
+						<div className='overflow-x-auto'>
+							<table className='min-w-full divide-y divide-gray-700'>
+								<thead>
+									<tr>
+										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+											Product Name
+										</th>
+										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+											Quantity
+										</th>
+										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+											Price
+										</th>
+										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+											Description
+										</th>
+									</tr>
+								</thead>
+								<tbody className='divide-y divide-gray-700'>
+									{order.Order.map((item, index) => (
+										<tr key={index}>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+												{item.ProductName}
+											</td>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+												{item.Quantity}
+											</td>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+												${item.Price}
+											</td>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+												{item.Description}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</motion.div>
+				))}
 			</div>
 		</motion.div>
 	);
 };
+
 export default OrdersTable;
