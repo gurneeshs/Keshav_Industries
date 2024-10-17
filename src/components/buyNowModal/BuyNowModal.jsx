@@ -160,8 +160,8 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             order_id: orderid,
             handler: async function (response) {
                 const paymentRef = collection(fireDB, 'payments');
-                await addDoc(paymentRef, { UserID: user.uid, UserName: user.name, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems});
-                
+                await addDoc(paymentRef, { User:user, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems});
+
                 navigate('/user-dashboard');
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
