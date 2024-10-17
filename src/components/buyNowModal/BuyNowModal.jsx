@@ -7,17 +7,19 @@ import {
 import axios from 'axios'
 import React, { useState, useContext } from "react";
 import { BASE_URL } from "../../helper";
-import { fireDB , auth} from "../../firebase/FirebaseConfig";
+import { fireDB, auth } from "../../firebase/FirebaseConfig";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import myContext from "../../context/myContext";
+import { redirect, useNavigate } from "react-router-dom";
 
 
 const BuyNowModal = ({ amounttoPay, cartItems }) => {
     const user = JSON.parse(localStorage.getItem('users'));
 
     const context = useContext(myContext);
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
@@ -29,6 +31,36 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
     const [responseState, setResponseState] = React.useState([]);
     const [data, setData] = React.useState([]);
 
+    const saveTokenToFirestore = async (tokenData) => {
+        const tokenreferrence  = collection(fireDB, 'Token');
+
+        try {
+          await addDoc(tokenreferrence, tokenData);
+          console.log(`Token for saved in Firestore`);
+        } catch (error) {
+          console.error('Error saving token to Firestore:', error);
+        }
+      };
+    const generateToken = async () => {
+        try {
+            const response = await axios.post(
+                'https://apiv2.shiprocket.in/v1/external/auth/login',
+                { email: "devendra@keshav.co.in", password: "Keshav@123" },
+                { headers: { 'Content-Type': 'application/json' } }
+            );
+
+            const tokenData = response.data;
+            console.log(`Token generated for User:`, tokenData);
+
+            // Save the token in Firestore
+            await saveTokenToFirestore(tokenData);
+            // Schedule the next token regeneration in 9 days
+            // scheduleTokenRegeneration(userEmail, userPassword);
+        } catch (error) {
+            console.error(`Error generating token :`, error);
+        }
+    };
+
     async function updateFirebaseAfterPayment(cartItems, totalAmount) {
         try {
             // Update product sales and price for each item in the cart
@@ -37,20 +69,20 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
                 const productRef = doc(fireDB, 'products', item.id);
                 const salesField = `monthlySales.${currentMonth}`;
                 const revenueField = `monthlyRevenue.${currentMonth}`;
-    
+
                 await updateDoc(productRef, {
                     // Update monthly sales and total sales
                     [salesField]: increment(item.quantity),
                     totalSales: increment(item.quantity),
-    
+
                     // Update monthly revenue and total revenue
                     [revenueField]: increment(item.quantity * item.price),
                     totalRevenue: increment(item.quantity * item.price)
                 });
-            }    
+            }
             // Update the admin dashboard data
-            
-    
+
+
             console.log('Firebase updated successfully!');
         } catch (error) {
             console.error('Error updating Firebase:', error);
@@ -120,10 +152,10 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             image: "https://papayacoders.com/demo.png",
             order_id: orderid,
             handler: async function (response) {
-                setpaymentId(response.razorpay_payment_id);
-                setorderId(response.razorpay_order_id)
-                setSignature(response.razorpay_signature);
-                
+                const paymentRef = collection(fireDB, 'payments');
+                await addDoc(paymentRef, { UserID: user.uid, UserName: user.name, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: cartItems});
+                navigate('/user-dashboard');
+
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
@@ -149,15 +181,6 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             .catch((error) => {
                 console.log("error occures", error)
             })
-    }
-
-    if (payment_Id) {
-        // console.log(data);
-        console.log(orderId, payment_Id, payment_Signature);
-        const paymentRef = collection(fireDB, 'payments');
-        addDoc(paymentRef, {UserID:user.uid, UserName: user.name ,payID:payment_Id,Order:orderId, Signature:payment_Signature});
-
-        // paymentFetch(responseId)
     }
 
     // useEffect(() => {
