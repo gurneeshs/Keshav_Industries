@@ -20,6 +20,12 @@ const slides = [
     "../img/oil_pic.jpg",
     "../img/sarso_oil_pic.jpg",
 ]
+const imgSlide = [
+    "../img/image-1.jpg",
+    "../img/image-2.jpg",
+    "../img/image-3.jpg",
+    "../img/image-4.jpeg",
+]
 const HomePage = () => {
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
@@ -35,13 +41,13 @@ const HomePage = () => {
             <div className="bg-customNewBack">
                 <ImageSlider>
                     {slides.map((s) => (
-                        <img className="w-screen h-2/4" src={s} />
+                        <img className="w-screen h-2/4 hidden md:block" src={s} />
                     ))}
                 </ImageSlider>
 
-                <MobileImageSlider>
-                    {slides.map((s) => (
-                        <img className="w-screen h-2/4" src={s} />
+                <MobileImageSlider >
+                    {imgSlide.map((s) => (
+                        <img className="w-screen block md:hidden" src={s} />
                     ))}
                 </MobileImageSlider>
 
@@ -62,7 +68,7 @@ const HomePage = () => {
                 <HomePageProductCard />
 
                 {/* <Carousel /> */}
-                
+
                 <Testimonial />
             </div>
         </Layout>
