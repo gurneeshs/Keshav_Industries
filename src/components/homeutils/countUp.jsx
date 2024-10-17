@@ -21,19 +21,19 @@ const CountUpComponent = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={fadeInUp}
-                transition={{ duration: 0.9 }}
+                transition={{ duration: 0.5 }}
 
                 className="flex flex-wrap justify-center"
             >
-                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-r last:border-r-0 p-4">
+                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-black border-r last:border-r-0 p-4">
                     <h1 className="text-3xl font-bold"><CountUp duration={9.75} end={2200} /></h1>
                     <p>Wallets Connected</p>
                 </div>
-                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-r last:border-r-0 p-4">
+                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-black border-r last:border-r-0 p-4">
                     <h1 className="text-3xl font-bold"><CountUp duration={9.75} end={2500} /></h1>
                     <p>Wallets Connected</p>
                 </div>
-                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-r last:border-r-0 p-4">
+                <div className="text-center w-1/2 md:w-1/4 lg:w-1/4 xl:w-1/4 2xl:w-1/4 border-black border-r last:border-r-0 p-4">
                     <h1 className="text-3xl font-bold"><CountUp duration={9.75} end={1900} /></h1>
                     <p>Creative artists</p>
                 </div>

@@ -42,21 +42,24 @@ const About = () => {
                         className="w-5/12 ps-5 py-3 h-full bg-white-700 rounded-md bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-40 border border-black-100"
                         initial={{ rotateY: -90 }}
                         animate={controls}
+                        viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 2, type: 'spring', stiffness: 50 }}
                     >
-                        <motion.div className="flex flex-col items-start space-y-4">
+                        <motion.div className="flex flex-col items-start space-y-4" viewport={{ once: true, amount: 0.2 }}>
                             <motion.img
                                 className="h-20"
                                 src="../img/Logo_removebg.png"
                                 alt="Logo"
                                 initial={{ scale: 0.5 }}
                                 animate={{ scale: 1 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 2, ease: 'easeInOut' }}
                             />
                             <motion.h1
                                 className="mt-5 text-4xl font-bold"
                                 initial={{ rotateX: 45 }}
                                 animate={{ rotateX: 0 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 2, ease: 'easeInOut' }}
                             >
                                 Welcome to Keshav <br /> Industry
@@ -65,6 +68,7 @@ const About = () => {
                                 className="text-lg"
                                 initial={{ rotateX: 45 }}
                                 animate={{ rotateX: 0 }}
+                                viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 2, ease: 'easeInOut' }}
                             >
                                 We, Keshav Industries Private Limited started <br />
