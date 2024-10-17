@@ -39,8 +39,8 @@ const OrdersTable = () => {
 		const filtered = orderData.filter(
 			(order) =>
 				order.OrderId.toLowerCase().includes(term) ||
-				order.UserName.toLowerCase().includes(term) ||
-				order.UserID.toLowerCase().includes(term)
+				order.User.name.toLowerCase().includes(term) ||
+				order.uid.toLowerCase().includes(term)
 		);
 		setFilteredOrders(filtered);
 	};
@@ -57,7 +57,7 @@ const OrdersTable = () => {
 				<div className='relative'>
 					<input
 						type='text'
-						placeholder='Search orders...'
+						placeholder='Enter Order Id'
 						className='bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
 						value={searchTerm}
 						onChange={handleSearch}
@@ -70,7 +70,7 @@ const OrdersTable = () => {
 				{filteredOrders.map((order) => (
 					<motion.div
 						key={order.id}
-						className='bg-gray-800 rounded-lg p-4 shadow-md'
+						className='bg-customGray rounded-lg p-4 shadow-md border'
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}
@@ -79,15 +79,38 @@ const OrdersTable = () => {
 							<div>
 								<p className='text-gray-100 font-semibold'>Order ID: {order.OrderId}</p>
 								<p className='text-gray-100'>Payment ID: {order.PaymentID}</p>
-								<p className='text-gray-100'>User Name: {order.UserName}</p>
-								<p className='text-gray-100'>User ID: {order.UserID}</p>
+								<p className='text-gray-100'>User Name: {order.User.name}</p>
+								<p className='text-gray-100'>User ID: {order.User.uid}</p>
+								<p className='text-gray-100'>Created At: {order.Time.toDate().toLocaleString()}</p>
+
 							</div>
+							<div className='flex flex-col items-center space-x-2'>
+								<button
+									className='bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded my-2 w-60'
+									onClick={() => handleShipment(order.id)} // Add your shipment handler here
+								>
+									Ready for Shipment
+								</button>
+								<button
+									className='bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded my-2 w-60'
+									onClick={() => handleUpdate(order.id)} // Add your update handler here
+								>
+									Update Order
+								</button>
+								<button
+									className='bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded my-2 w-60'
+									onClick={() => handleCancel(order.id)} // Add your cancel handler here
+								>
+									Cancel Order
+								</button>
+							</div>							
+
 							{/* <Eye className='text-indigo-400 hover:text-indigo-300 cursor-pointer' size={24} /> */}
 						</div>
 
 						{/* Nested table for order details */}
 						<div className='overflow-x-auto'>
-							<table className='min-w-full divide-y divide-gray-700'>
+							<table className='min-w-full divide-y divide-gray-700 bg-gray-800'>
 								<thead>
 									<tr>
 										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
