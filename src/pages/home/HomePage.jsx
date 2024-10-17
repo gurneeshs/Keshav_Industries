@@ -14,8 +14,9 @@ import ScrollAnimation from 'react-animate-on-scroll';
 import { motion } from "framer-motion";
 
 const slides = [
-    "../img/oil_pic.jpg",
+    "../img/keshav_all_product.jpg",
     "../img/masal_pic.jpg",
+    "../img/oil_pic.jpg",
     "../img/sarso_oil_pic.jpg",
 ]
 const HomePage = () => {
