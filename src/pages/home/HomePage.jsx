@@ -38,21 +38,31 @@ const HomePage = () => {
                         <img className="w-screen h-2/4" src={s} />
                     ))}
                 </ImageSlider>
+
                 <MobileImageSlider>
                     {slides.map((s) => (
                         <img className="w-screen h-2/4" src={s} />
                     ))}
                 </MobileImageSlider>
+
                 <ScrollAnimation animateIn="easeIn">
                     <CountUpComponent />
                 </ScrollAnimation>
+
                 {/* <CountUpComponent /> */}
+
                 <About />
+
                 <Categories />
+
                 <CertificationSlider />
+
                 {/* <ExpoterSlider /> */}
+
                 <HomePageProductCard />
+
                 {/* <Carousel /> */}
+                
                 <Testimonial />
             </div>
         </Layout>
