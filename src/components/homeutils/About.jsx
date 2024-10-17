@@ -33,7 +33,7 @@ const About = () => {
                 initial={{ rotateY: 90, rotateX: 10, opacity: 0 }}
                 animate={controls}
                 viewport={{ once: true, amount: 0.2 }}
-                className="w-full pt-20 pb-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center"
+                className="w-full pt-20 pb-24 home_abt bg-[url('../img/Home_abt_img.jpg')] bg-cover bg-center hidden md:block"
                 style={{ perspective: 1000 }}
             >
                 <div className="flex ps-72 ">
