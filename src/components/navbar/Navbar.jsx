@@ -200,7 +200,7 @@ const Navbar = () => {
             <motion.nav
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
                 variants={fadeInUp}
                 transition={{ duration: 0.9 }}
                 className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center"

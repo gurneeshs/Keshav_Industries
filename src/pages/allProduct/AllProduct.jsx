@@ -51,7 +51,7 @@ const AllProduct = () => {
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     variants={fadeInUp}
                     transition={{ duration: 2 }}
                     className=""
@@ -112,7 +112,7 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate, index 
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: index * 0.2 }}
         >
             <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer bg-white">

@@ -21,7 +21,7 @@ const Categories = () => {
                 className="text-center mb-8"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.1 }} // Reset when the user scrolls out and back in
+                viewport={{ once: true, amount: 0.1 }} // Reset when the user scrolls out and back in
                 variants={headingVariants}
             >
                 <h1 className="text-5xl mb-8 font-bold">Categories</h1>

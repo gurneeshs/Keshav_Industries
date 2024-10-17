@@ -34,7 +34,7 @@ const MissionVisionValue = () => {
           className='justify-center text-center text-3xl font-bold my-8'
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount:0.1 }}
+          viewport={{ once: true, amount:0.1 }}
           variants={cardVariants}
         >
           Mission, Vision and Values
@@ -45,7 +45,7 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount:0.1 }}
+            viewport={{ once: true, amount:0.1 }}
             variants={cardVariants}
           >
             <div className="p-8 flex flex-col justify-center">
@@ -67,7 +67,7 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount:0.1 }}
+            viewport={{ once: true, amount:0.1 }}
             variants={cardVariants}
           >
             <img

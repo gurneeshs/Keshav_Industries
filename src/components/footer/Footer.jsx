@@ -28,7 +28,7 @@ const Footer = () => {
                 <motion.div
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
                     variants={fadeInDown}
                     transition={{ duration: 0.9 }}
                     className="container px-0 py-5 mx-auto flex items-center sm:flex-row flex-col"
@@ -42,7 +42,7 @@ const Footer = () => {
                                 <motion.div
                                     initial="hidden"
                                     whileInView="visible"
-                                    viewport={{ once: false, amount: 0.2 }}
+                                    viewport={{ once: true, amount: 0.2 }}
                                     variants={fadeInLeft}
                                     transition={{ duration: 1.3 }}
                                     className="w-full sm:w-1/2 lg:w-1/5"
@@ -62,7 +62,7 @@ const Footer = () => {
                                 <motion.div
                                     initial="hidden"
                                     whileInView="visible"
-                                    viewport={{ once: false, amount: 0.2 }}
+                                    viewport={{ once: true, amount: 0.2 }}
                                     variants={fadeInUp}
                                     transition={{ duration: 1.2 }}
 
@@ -83,7 +83,7 @@ const Footer = () => {
                                 <motion.div
                                     initial="hidden"
                                     whileInView="visible"
-                                    viewport={{ once: false, amount: 0.2 }}
+                                    viewport={{ once: true, amount: 0.2 }}
                                     variants={fadeInRight}
                                     transition={{ duration: 1.2 }}
 
@@ -106,7 +106,7 @@ const Footer = () => {
                                 <motion.div
                                     initial="hidden"
                                     whileInView="visible"
-                                    viewport={{ once: false, amount: 0.2 }}
+                                    viewport={{ once: true, amount: 0.2 }}
                                     variants={fadeInDown}
                                     transition={{ duration: 1.2}}
 

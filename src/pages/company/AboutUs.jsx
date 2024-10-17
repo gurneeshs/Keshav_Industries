@@ -49,7 +49,7 @@ const AboutUs = () => {
           className="text-4xl font-bold mb-6 text-center"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.5 }}
           variants={fadeInUp}
           transition={{ duration: 0.9 }}
         >
@@ -60,7 +60,7 @@ const AboutUs = () => {
             className="flex flex-col justify-center space-y-4"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.5 }}
             variants={fadeInLeft}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
@@ -84,7 +84,7 @@ const AboutUs = () => {
             className="mx-10 flex items-center justify-center w-3/4"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.5 }}
             variants={fadeInRight}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
@@ -101,7 +101,7 @@ const AboutUs = () => {
           className='text-3xl font-bold justify-center text-center my-3 mt-9'
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.5 }}
           variants={fadeInUp}
           transition={{ duration: 1, delay: 0.7 }}
         >
@@ -111,7 +111,7 @@ const AboutUs = () => {
           className='text-md justify-center text-center my-3'
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.5 }}
           variants={fadeIn}
           transition={{ duration: 1, delay: 0.9 }}
         >
@@ -124,7 +124,7 @@ const AboutUs = () => {
               className="relative overflow-hidden rounded-lg shadow-lg"
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: false, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.5 }}
               variants={scrollUpVariants}
               transition={{ duration: 0.8, delay: index * 0.1 }}
             >
