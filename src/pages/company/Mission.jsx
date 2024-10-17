@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Layout from '../../components/layout/Layout';
 
 const cardVariants = {
   hidden: { opacity: 0, y: 100 },
@@ -15,26 +14,13 @@ const cardVariants = {
 };
 
 const MissionVisionValue = () => {
-  const fadeInDown = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0 },
-  };
-  const fadeInLeft = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const fadeInRight = {
-    hidden: { opacity: 0, x:20 },
-    visible: { opacity: 1, x:0 },
-  };
   return (
       <div className="container mx-auto px-4 py-8">
         <motion.h2
           className='justify-center text-center text-3xl font-bold my-8'
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount:0.1 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={cardVariants}
         >
           Mission, Vision and Values
@@ -45,7 +31,7 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount:0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
             variants={cardVariants}
           >
             <div className="p-8 flex flex-col justify-center">
@@ -57,9 +43,8 @@ const MissionVisionValue = () => {
             <img
               src="../img/Mission/mission.gif"
               alt="Mission"
-              className="lg:w-1/2 h-64 lg:h-auto object-cover"
+              className="hidden lg:block lg:w-1/2 h-64 lg:h-auto object-cover" // Hide on mobile, show on lg and up
             />
-
           </motion.div>
 
           {/* Vision Card */}
@@ -67,13 +52,13 @@ const MissionVisionValue = () => {
             className="flex flex-col lg:flex-row bg-blue-50 shadow-lg rounded-lg overflow-hidden"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount:0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
             variants={cardVariants}
           >
             <img
               src="../img/Mission/vision.gif"
               alt="Vision"
-              className="lg:w-1/2 h-64 lg:h-auto object-cover"
+              className="hidden lg:block lg:w-1/2 h-64 lg:h-auto object-cover" // Hide on mobile, show on lg and up
             />
             <div className="p-8 flex flex-col justify-center">
               <h2 className="text-3xl font-bold mb-4">Our Vision</h2>
@@ -84,6 +69,7 @@ const MissionVisionValue = () => {
           </motion.div>
 
           {/* Values Card */}
+          {/* You can add a Values Card here if needed */}
         </div>
       </div>
   );

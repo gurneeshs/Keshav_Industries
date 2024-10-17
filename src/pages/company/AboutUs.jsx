@@ -44,7 +44,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 bg-white">
         <motion.h2
           className="text-4xl font-bold mb-6 text-center"
           initial="hidden"
@@ -124,7 +124,7 @@ const AboutUs = () => {
               className="relative overflow-hidden rounded-lg shadow-lg"
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
+              viewport={{ once: false, amount: 0.5 }}
               variants={scrollUpVariants}
               transition={{ duration: 0.8, delay: index * 0.1 }}
             >

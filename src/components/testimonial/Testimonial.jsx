@@ -2,7 +2,7 @@
 
 const Testimonial = () => {
     return (
-        <div>
+        <div className="bg-white">
             <section className="text-gray-600 body-font mb-10">
                 {/* main  */}
                 <div className="container px-5 py-10 mx-auto">
