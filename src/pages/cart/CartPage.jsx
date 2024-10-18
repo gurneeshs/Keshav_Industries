@@ -35,6 +35,7 @@ const CartPage = () => {
     const cartItemTotal = cartItems.map(item => item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
     const cartTotal = cartItems.map(item => item.price * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
+    const cartMRPTotal = cartItems.map(item => item.mrp * item.quantity).reduce((prevValue, currValue) => prevValue + currValue, 0);
 
 
     useEffect(() => {
@@ -42,63 +43,9 @@ const CartPage = () => {
     }, [cartItems])
 
     // user
-    const user = JSON.parse(localStorage.getItem('users'))
+    // const user = JSON.parse(localStorage.getItem('users'))
 
-    // Buy Now Function
-    const [addressInfo, setAddressInfo] = useState({
-        name: "",
-        address: "",
-        pincode: "",
-        mobileNumber: "",
-        time: Timestamp.now(),
-        date: new Date().toLocaleString(
-            "en-US",
-            {
-                month: "short",
-                day: "2-digit",
-                year: "numeric",
-            }
-        )
-    });
-
-    const buyNowFunction = () => {
-        // validation 
-        if (addressInfo.name === "" || addressInfo.address === "" || addressInfo.pincode === "" || addressInfo.mobileNumber === "") {
-            return toast.error("All Fields are required")
-        }
-
-        // Order Info 
-        const orderInfo = {
-            cartItems,
-            addressInfo,
-            email: user.email,
-            userid: user.uid,
-            status: "confirmed",
-            time: Timestamp.now(),
-            date: new Date().toLocaleString(
-                "en-US",
-                {
-                    month: "short",
-                    day: "2-digit",
-                    year: "numeric",
-                }
-            )
-        }
-        try {
-            const orderRef = collection(fireDB, 'order');
-            addDoc(orderRef, orderInfo);
-            setAddressInfo({
-                name: "",
-                address: "",
-                pincode: "",
-                mobileNumber: "",
-            })
-            toast.success("Order Placed Successfull")
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
+    
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0 },
@@ -225,10 +172,19 @@ const CartPage = () => {
                                     </div>
 
                                     <div className="flex items-center justify-between">
-                                        <dt className="text-sm text-gray-800">Price</dt>
+                                        <dt className="text-sm text-gray-800">Total Cost</dt>
+                                        <dd className="text-sm font-medium text-gray-900">₹ <CountUp duration={0.4} end={cartMRPTotal} /></dd>
+                                    </div>
+
+                                    <div className="flex items-center justify-between">
+                                        <dt className="text-sm text-gray-800">Total Price</dt>
                                         <dd className="text-sm font-medium text-gray-900">₹ <CountUp duration={0.4} end={cartTotal} /></dd>
                                     </div>
-                                    <div className="flex items-center justify-between py-4 border-b border-black">
+                                    <div className="flex items-center justify-between">
+                                        <dt className="text-sm text-gray-800">Discount</dt>
+                                        <dd className="text-sm font-medium text-gray-900">₹ <CountUp duration={0.4} end={cartMRPTotal - cartTotal} /></dd>
+                                    </div>
+                                    <div className="flex items-center justify-between border-b border-black">
                                         <dt className="flex text-sm text-gray-800">
                                             <span>Delivery Charges</span>
                                         </dt>

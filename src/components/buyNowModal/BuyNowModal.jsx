@@ -31,6 +31,62 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
     const [responseState, setResponseState] = React.useState([]);
     const [data, setData] = React.useState([]);
 
+    // Buy Now Function
+    const [addressInfo, setAddressInfo] = useState({
+        name: "",
+        address: "",
+        pincode: "",
+        mobileNumber: "",
+        time: Timestamp.now(),
+        date: new Date().toLocaleString(
+            "en-US",
+            {
+                month: "short",
+                day: "2-digit",
+                year: "numeric",
+            }
+        )
+    });
+
+    const buyNowFunction = () => {
+        // validation 
+        if (addressInfo.name === "" || addressInfo.address === "" || addressInfo.pincode === "" || addressInfo.mobileNumber === "") {
+            return toast.error("All Fields are required")
+        }
+
+        // Order Info 
+        const orderInfo = {
+            cartItems,
+            addressInfo,
+            email: user.email,
+            userid: user.uid,
+            status: "confirmed",
+            time: Timestamp.now(),
+            date: new Date().toLocaleString(
+                "en-US",
+                {
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
+                }
+            )
+        }
+        try {
+            const orderRef = collection(fireDB, 'order');
+            addDoc(orderRef, orderInfo);
+            setAddressInfo({
+                name: "",
+                address: "",
+                pincode: "",
+                mobileNumber: "",
+            })
+            toast.success("Order Placed Successfull")
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
     const saveTokenToFirestore = async (tokenData) => {
         const tokenreferrence  = collection(fireDB, 'Token');
 
@@ -161,7 +217,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
             handler: async function (response) {
                 const paymentRef = collection(fireDB, 'payments');
                 const currentTime = Timestamp.now();
-                await addDoc(paymentRef, { User:user, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems, Time:currentTime});
+                await addDoc(paymentRef, {PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems, Time:currentTime});
 
                 navigate('/thankyoupage');
             },
