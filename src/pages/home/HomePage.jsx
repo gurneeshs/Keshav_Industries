@@ -5,7 +5,6 @@ import Testimonial from "../../components/testimonial/Testimonial";
 import Track from "../../components/track/Track";
 import ImageSlider from "../../components/imageslider/ImageSlider";
 import MobileImageSlider from "../../components/imageslider/MobileImageSlider";
-import ThankYouPage from "../../components/thankyou/ThankYouPage";
 import CountUpComponent from "../../components/homeutils/countUp";
 import About from "../../components/homeutils/About";
 import Categories from "../../components/homeutils/Categories";
