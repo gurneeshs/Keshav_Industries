@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
 import { useParams } from "react-router";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, increment, collection, setDoc, arrayUnion, arrayRemove, query, where } from "firebase/firestore";
 import Loader from "../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
@@ -12,6 +12,8 @@ import RelatedProduct from "./RelatedProduct";
 import { motion } from "framer-motion";
 
 const ProductInfo = () => {
+    const user = JSON.parse(localStorage.getItem('users'));
+
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0 },
@@ -52,11 +54,80 @@ const ProductInfo = () => {
             setLoading(false);
         }
     };
+    async function addToCart(userId, item) {
+        try {
+            if (!userId || !item) {
+                console.log('User ID or Item is missing');
+                return;
+            }
 
-    const addCart = (item) => {
-        dispatch(addToCart(item));
-        toast.success("Added to cart");
-    };
+            // Reference to the user's document in Firestore
+            const usersCollectionRef = collection(fireDB, 'user');
+
+            // Create a query to find the user by uid
+            const userQuery = query(usersCollectionRef, where('uid', '==', userId));
+            const querySnapshot = await getDocs(userQuery);
+
+            if (querySnapshot.empty) {
+                console.log(`No user found with UID: ${uid}`);
+                return null; // or handle this case as needed
+            }
+    
+            // Assuming there is only one user with the given uid
+            let userData;
+            querySnapshot.forEach((doc) => {
+                userData = { id: doc.id, ...doc.data() }; // include document ID
+            });
+
+            // Execute the query
+
+            // const userRef = doc(fireDB, 'user', userId);
+
+            // Get the current user data
+            // const userSnapshot = await getDoc(userQuery);
+
+            if (userData) {
+                // const userData = userSnapshot.data();
+                // console.log(userSnapshot.data());
+                const cart = userData.cart || [];
+
+                // Check if the item already exists in the cart
+                const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+
+                if (existingItemIndex !== -1) {
+                    // If the item exists, increase its quantity
+                    cart[existingItemIndex].quantity += 1;
+
+                    // Update the cart in Firestore
+                    await updateDoc(userRef, { cart });
+                } else {
+                    // If the item does not exist, add it to the cart
+                    const newItem = {
+                        ...item,
+                        quantity: 1
+                    };
+
+                    // Update the cart in Firestore
+                    await updateDoc(userRef, {
+                        cart: arrayUnion(newItem)
+                    });
+                }
+
+                // console.log('Item added to cart successfully');
+                toast.success('Item added to cart Successfully');
+            } else {
+                toast.error('User Does not exist')
+                // console.log('User document does not exist');
+            }
+        } catch (error) {
+            toast.error('Error in adding item to cart');
+            console.error('Error adding item to cart:', error);
+        }
+    }
+    // const addCart = (item) => {
+    //     dispatch(addToCart(item));
+    //     toast.success("Added to cart");
+    // };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
@@ -180,7 +251,7 @@ const ProductInfo = () => {
                                             </button>
                                         ) : (
                                             <button
-                                                onClick={() => addCart(product)}
+                                                onClick={() => addToCart(user.uid, product)}
                                                 className="w-full px-4 py-3 text-center text-customBlue bg-orange-500 hover:bg-orange-400 rounded-xl"
                                             >
                                                 Add to cart
@@ -210,7 +281,7 @@ const ProductInfo = () => {
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.2 }}
                                 variants={fadeInUp}
-                                transition={{ duration: 1}}
+                                transition={{ duration: 1 }}
                                 className="overflow-hidden rounded-lg shadow-lg h-full cursor-pointer my-6"
                             >
                                 <img
