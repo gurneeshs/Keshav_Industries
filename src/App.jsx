@@ -13,6 +13,7 @@ import AllProduct from "./pages/allProduct/AllProduct";
 import Signup from "./pages/registration/Signup";
 import Login from "./pages/registration/Login";
 import Contacts from "./components/Contact/Contact-Us";
+import ThankYouPage from "./components/thankyou/ThankYouPage";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProductPage from "./pages/admin/AddProductPage";
@@ -66,6 +67,7 @@ const App = () => {
 
           } />
           <Route path="/allproduct" element={<AllProduct />} />
+          <Route path="/thankyoupage" element={<ThankYouPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path={"/userlogin"} element={<UserLogin/>}/>
