@@ -163,7 +163,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
                 const currentTime = Timestamp.now();
                 await addDoc(paymentRef, { User:user, PaymentID: response.razorpay_payment_id, OrderId: response.razorpay_order_id, Signature: response.razorpay_signature, Order: orderItems, Time:currentTime});
 
-                navigate('/user-dashboard');
+                navigate('/thankyoupage');
             },
             // callback_url: `$http://localhost:4000/api/paymentverification`,
             prefill: {
