@@ -1,21 +1,32 @@
 import { useDispatch, useSelector } from "react-redux";
+import {
+    Button,
+    Dialog,
+    DialogBody,
+} from "@material-tailwind/react";
 import Layout from "../../components/layout/Layout";
 import { Trash } from 'lucide-react'
 import { decrementQuantity, deleteFromCart, incrementQuantity } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { fireDB } from "../../firebase/FirebaseConfig";
-import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
-import { Navigate } from "react-router";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import BuyNowPopup from "../../components/buyNowModal/BuyNowPopup";
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
+    console.log(cartItems)
     const dispatch = useDispatch();
+    const [isPopupOpen, setPopupOpen] = useState(false);
+
+    const handleBuyNowClick = () => {
+        setPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setPopupOpen(false);
+    };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
@@ -45,7 +56,7 @@ const CartPage = () => {
     // user
     // const user = JSON.parse(localStorage.getItem('users'))
 
-    
+
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0 },
@@ -76,7 +87,7 @@ const CartPage = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeInUp}
-                        transition={{ duration:1.5}}
+                        transition={{ duration: 1.5 }}
 
                         className="mt-12 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
                     >
@@ -89,7 +100,7 @@ const CartPage = () => {
 
                                     <>
                                         {cartItems.map((item, index) => {
-                                            const { id, title, price, productImageUrls , quantity, category } = item
+                                            const { id, title, price, productImageUrls, quantity, category } = item
                                             return (
                                                 <div key={index} className="my-2 p-4 ">
                                                     <li className="flex py-6 sm:py-6 ">
@@ -197,7 +208,15 @@ const CartPage = () => {
                                 </dl>
                                 <div className="px-2 pb-4 font-medium text-green-700">
                                     <div className="flex gap-4 mb-6">
-                                            <BuyNowModal amounttoPay={cartTotal} cartItems={cartItems} />
+                                        {/* <BuyNowModal amounttoPay={cartTotal} cartItems={cartItems} /> */}
+                                        <Button
+                                            type="button"
+                                            onClick={() => handleBuyNowClick()}
+                                            className="w-full px-4 py-3 text-center text-gray-100 bg-customBlue border border-transparent dark:border-gray-700 hover:border-orange-600 hover:text-white hover:bg-orange-600 rounded-xl"
+                                        >
+                                            Buy now
+                                        </Button>
+                                        <BuyNowPopup isOpen={isPopupOpen} onClose={closePopup} amount={cartTotal} cartItems={cartItems} />
                                     </div>
                                     <div className="justify-center items-center flex">
                                         <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>

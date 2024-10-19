@@ -14,6 +14,9 @@ export const cartSlice = createSlice({
         deleteFromCart(state, action) {
             return state.filter(item => item.id != action.payload.id);
         },
+        clearCart: (state) => {
+            return []; // Reset the cart to an empty array
+        },
         incrementQuantity: (state, action) => {
             state = state.map(item => {
                 if (item.id === action.payload) {
@@ -37,6 +40,6 @@ export const cartSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addToCart, deleteFromCart, incrementQuantity, decrementQuantity } = cartSlice.actions
+export const { addToCart, deleteFromCart, incrementQuantity, decrementQuantity, clearCart} = cartSlice.actions
 
 export default cartSlice.reducer
