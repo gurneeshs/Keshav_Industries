@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
 import { useParams } from "react-router";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, increment, collection, setDoc, arrayUnion, arrayRemove, query, where } from "firebase/firestore";
 import Loader from "../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
@@ -12,6 +12,7 @@ import RelatedProduct from "./RelatedProduct";
 import { motion } from "framer-motion";
 
 const ProductInfo = () => {
+
     const fadeInUp = {
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0 },
@@ -52,7 +53,6 @@ const ProductInfo = () => {
             setLoading(false);
         }
     };
-
     const addCart = (item) => {
         dispatch(addToCart(item));
         toast.success("Added to cart");
@@ -210,7 +210,7 @@ const ProductInfo = () => {
                                 whileInView="visible"
                                 viewport={{ once: true, amount: 0.2 }}
                                 variants={fadeInUp}
-                                transition={{ duration: 1}}
+                                transition={{ duration: 1 }}
                                 className="overflow-hidden rounded-lg shadow-lg h-full cursor-pointer my-6"
                             >
                                 <img

@@ -61,16 +61,13 @@ const App = () => {
           <Route path="/spicesproductinfo/:id" element={<SpicesProductInfo />} />
           <Route path="/lecithinproductinfo/:id" element={<LecithinProductInfo />} />
           <Route path="/cart" element={
-            <ProtectedRouteForUser>
-              <CartPage />
-            </ProtectedRouteForUser>
-
+            <CartPage />
           } />
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/thankyoupage" element={<ThankYouPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path={"/userlogin"} element={<UserLogin/>}/>
+          <Route path={"/userlogin"} element={<UserLogin />} />
           <Route path="/contact" element={<Contacts />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/spicesProduct" element={<SpicesProduct />} />
