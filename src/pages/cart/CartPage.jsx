@@ -12,7 +12,9 @@ import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import emptycartimg from "/img/empty-cart-gif.mp4";
 import BuyNowPopup from "../../components/buyNowModal/BuyNowPopup";
+
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
@@ -69,7 +71,7 @@ const CartPage = () => {
 
     return (
         <Layout>
-            <div className="container mx-auto px-4 max-w-7xl lg:px-0 bg-customNewBack">
+            <div className="container mx-auto px-4 max-w-7xl lg:px-0 bg-white">
                 <div className="mx-auto max-w-2xl py-8 lg:max-w-7xl">
                     <motion.h1
                         initial="hidden"
@@ -161,7 +163,10 @@ const CartPage = () => {
                                     </>
                                     :
 
-                                    <h1 className="text-center font-bold text-xl">Please Select the Products</h1>}
+                                    <h1 className="text-center font-bold text-2xl">Your Cart Feel So Light.
+                                    <video src={emptycartimg} autoPlay loop muted className=" w-96 mx-auto object-cover"></video>
+                                    </h1>
+                                    }
                             </ul>
                         </section>
                         {/* Order summary */}
