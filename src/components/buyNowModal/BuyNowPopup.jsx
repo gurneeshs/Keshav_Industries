@@ -165,6 +165,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     if (isFormValid()) {
       createRazorpayOrder(amount);
     }
+    // dispatch(clearCart());
   };
 
   if (!isOpen) return null;

@@ -79,8 +79,8 @@ const OrdersTable = () => {
 							<div>
 								<p className='text-gray-100 font-semibold'>Order ID: {order.OrderId}</p>
 								<p className='text-gray-100'>Payment ID: {order.PaymentID}</p>
-								<p className='text-gray-100'>User Name: {order.User.name}</p>
-								<p className='text-gray-100'>User ID: {order.User.uid}</p>
+								<p className='text-gray-100'>User Name: {order.userInfo.name}</p>
+								<p className='text-gray-100'>User Phone: {order.userInfo.phone}</p>
 								<p className='text-gray-100'>Created At: {order.Time.toDate().toLocaleString()}</p>
 
 							</div>
