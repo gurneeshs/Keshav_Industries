@@ -23,6 +23,10 @@ const CartPage = () => {
     const [isPopupOpen, setPopupOpen] = useState(false);
 
     const handleBuyNowClick = () => {
+        if(cartItems.length == 0){
+            toast.error("Please Add Some Item");
+            return;
+        }
         setPopupOpen(true);
     };
 
