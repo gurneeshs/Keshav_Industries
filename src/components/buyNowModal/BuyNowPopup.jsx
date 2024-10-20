@@ -1,5 +1,5 @@
 // src/components/BuyNowPopup.jsx
-import React, { useState , useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
@@ -34,6 +34,33 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     return Object.values(formData).every((value) => value.trim() !== '');
   };
 
+  async function updateFirebaseAfterPayment(cartItems, totalAmount) {
+    try {
+      // Update product sales and price for each item in the cart
+      const currentMonth = new Date().getMonth() + 1;
+      for (let item of cartItems) {
+        const productRef = doc(fireDB, 'products', item.id);
+        const salesField = `monthlySales.${currentMonth}`;
+        const revenueField = `monthlyRevenue.${currentMonth}`;
+
+        await updateDoc(productRef, {
+          // Update monthly sales and total sales
+          [salesField]: increment(item.quantity),
+          totalSales: increment(item.quantity),
+
+          // Update monthly revenue and total revenue
+          [revenueField]: increment(item.quantity * item.price),
+          totalRevenue: increment(item.quantity * item.price)
+        });
+      }
+      // Update the admin dashboard data
+
+
+      console.log('Firebase updated successfully!');
+    } catch (error) {
+      console.error('Error updating Firebase:', error);
+    }
+  }
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -100,7 +127,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
         const paymentRef = collection(fireDB, 'payments');
         const currentTime = Timestamp.now();
         await addDoc(paymentRef, {
-          userInfo:formData,
+          userInfo: formData,
           PaymentID: response.razorpay_payment_id,
           OrderId: response.razorpay_order_id,
           Signature: response.razorpay_signature,
