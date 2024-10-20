@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-import thankyouimg from "/img/thank-you-gif-2.mp4";
+import thankyouimg from "../../../public/img/thank-you-gif-2.mp4";
 import thankyouimggif from "/img/thank-you-gif-3.gif";
+import Layout from "../../components/layout/Layout";
+
 
 const ThankYouPage = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ const ThankYouPage = () => {
   };
 
   return (
+    <Layout>
     <div className="bg-white p-4 md:p-8">
       <div className="text-center">
         <h1 className="text-4xl md:text-6xl font-bold mb-5">Thanks For Choosing Us!</h1>
@@ -39,6 +42,7 @@ const ThankYouPage = () => {
         <div className="flex-1"></div>
       </div>
     </div>
+    </Layout>
   );
 };
 
