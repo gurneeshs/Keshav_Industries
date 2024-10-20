@@ -15,12 +15,15 @@ import { clearCart } from '../../redux/cartSlice';
 import { useDispatch } from 'react-redux';
 import { fireDB, auth } from "../../firebase/FirebaseConfig";
 import myContext from "../../context/myContext";
+// import { CircularProgress } from "@material-ui/core";
+import NewLoader from "../loader/NewLoader";
 
 
 const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
   const context = useContext(myContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -122,6 +125,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
       alert('Razorpay SDK failed to load. Are you online?');
       return;
     }
+    setLoading(false);
 
     const options = {
       key: 'rzp_live_w1F1WlXsmUUQMN', // Replace with your Razorpay key
@@ -161,6 +165,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
   };
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault(); // Prevent any default action
     if (isFormValid()) {
       createRazorpayOrder(amount);
@@ -255,7 +260,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
             className={`py-2 px-4 rounded ${isFormValid() ? 'bg-blue-900 text-white' : 'bg-gray-600 text-gray-100 cursor-not-allowed'}`}
             disabled={!isFormValid()}
           >
-            Next
+            {loading ? <NewLoader/>  : 'Next'}
           </button>
         </div>
       </div>
