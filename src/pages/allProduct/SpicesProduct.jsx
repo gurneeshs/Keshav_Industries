@@ -17,9 +17,6 @@ const SpicesProduct = () => {
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
-
-    // console.log(cartItems)
-
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
     }, [cartItems])
@@ -39,14 +36,14 @@ const SpicesProduct = () => {
                         </div>
                         <div className="flex flex-wrap -m-4">
                             {getAllProduct.map((item, index) => {
-                                const { id, title, price, productImageUrl } = item
+                                const { id, title, price, productImageUrls } = item
                                 return (
                                     <div key={index} className="p-4 w-full md:w-1/4">
                                         <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
                                             <img
                                                 onClick={() => navigate(`/spicesproductinfo/${id}`)}
                                                 className="lg:h-80  h-96 w-full"
-                                                src={productImageUrl}
+                                                src={productImageUrls[0]}
                                                 alt="blog"
                                             />
                                             <div className="p-6">
