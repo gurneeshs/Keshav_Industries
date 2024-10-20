@@ -31,7 +31,7 @@ const OrdersTable = () => {
             const orderRef = doc(fireDB, 'payments', orderId);
             await updateDoc(orderRef, dimensions);
             toast.success("Order Updated Successfully");
-            setIsPopupOpen(false);
+            closePopup();
         } catch (error) {
             toast.error("Error in updating order: " + error.message);
             console.error('Error updating order:', error);
@@ -50,6 +50,16 @@ const OrdersTable = () => {
             });
         }
         setIsPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setDimensions({
+            length: '',
+            breadth: '',
+            height: '',
+            weight: '',
+        });
+        setIsPopupOpen(false);
     };
 
     useEffect(() => {
@@ -76,20 +86,56 @@ const OrdersTable = () => {
         setSearchTerm(term);
         const filtered = orderData.filter(
             (order) =>
-                order.OrderId.toLowerCase().includes(term) ||
-                order.userInfo.name.toLowerCase().includes(term) ||
-                order.uid.toLowerCase().includes(term)
+                (order.OrderId && order.OrderId.toLowerCase().includes(term)) ||
+                (order.userInfo?.name && order.userInfo.name.toLowerCase().includes(term)) ||
+                (order.uid && order.uid.toLowerCase().includes(term))
         );
         setFilteredOrders(filtered);
     };
 
     const placeShiprocketOrder = async (order) => {
         try {
-            // Your logic to place an order with Shiprocket
+            const response = await fetch('https://api.shiprocket.in/v1/external/orders/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer YOUR_ACCESS_TOKEN`, // Replace with your Shiprocket access token
+                },
+                body: JSON.stringify({
+                    order_id: order.id,
+                    order_items: order.Order, // Adjust this according to the Shiprocket API requirements
+                    shipping_address: {
+                        name: order.userInfo.name,
+                        phone: order.userInfo.phone,
+                        // Include other necessary address fields here
+                    },
+                    // Add any other required parameters here
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
             toast.success("Order placed for shipment successfully!");
+            console.log("Order placed successfully:", data);
         } catch (error) {
             toast.error("Error placing order for shipment: " + error.message);
             console.error("Error in placing Shiprocket order:", error);
+        }
+    };
+
+    const handleCancel = async (orderId) => {
+        try {
+            const orderRef = doc(fireDB, 'payments', orderId);
+            await updateDoc(orderRef, { status: 'canceled' });
+            toast.success("Order canceled successfully!");
+            // Optionally, refresh the orders list
+            await fetchOrders();
+        } catch (error) {
+            toast.error("Error canceling order: " + error.message);
+            console.error("Error in canceling order:", error);
         }
     };
 
@@ -138,7 +184,7 @@ const OrdersTable = () => {
                                     />
                                 ))}
                                 <div>
-                                    <Button onClick={() => setIsPopupOpen(false)} color="red">Cancel</Button>
+                                    <Button onClick={closePopup} color="red">Cancel</Button>
                                     <Button onClick={() => updateOrder(order.id)} color="green">Update</Button>
                                 </div>
                             </div>
@@ -147,14 +193,14 @@ const OrdersTable = () => {
                             <div>
                                 <p className='text-gray-100 font-semibold'>Order ID: {order.OrderId}</p>
                                 <p className='text-gray-100'>Payment ID: {order.PaymentID}</p>
-                                <p className='text-gray-100'>User Name: {order.userInfo.name}</p>
-                                <p className='text-gray-100'>User Phone: {order.userInfo.phone}</p>
+                                <p className='text-gray-100'>User Name: {order.userInfo?.name}</p>
+                                <p className='text-gray-100'>User Phone: {order.userInfo?.phone}</p>
                                 <p className='text-gray-100'>Created At: {order.Time.toDate().toLocaleString()}</p>
                             </div>
                             <div className='flex flex-col items-center space-x-2'>
                                 <button
                                     className='bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded my-2 w-60'
-                                    onClick={() => placeShiprocketOrder(order)} // This now calls the defined function
+                                    onClick={() => placeShiprocketOrder(order)}
                                 >
                                     Ready for Shipment
                                 </button>
@@ -166,7 +212,7 @@ const OrdersTable = () => {
                                 </button>
                                 <button
                                     className='bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded my-2 w-60'
-                                    onClick={() => handleCancel(order.id)} // Implement this function
+                                    onClick={() => handleCancel(order.id)}
                                 >
                                     Cancel Order
                                 </button>
@@ -183,7 +229,7 @@ const OrdersTable = () => {
                                     </tr>
                                 </thead>
                                 <tbody className='divide-y divide-gray-700'>
-                                    {order.Order.map((item, index) => (
+                                    {order.Order && order.Order.map((item, index) => (
                                         <tr key={index}>
                                             <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>{item.ProductName}</td>
                                             <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>{item.Quantity}</td>
