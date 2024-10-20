@@ -88,7 +88,7 @@ const OrdersTable = () => {
 	const placeShiprocketOrder = async (orderDetails) => {
 		try {
 
-			if(!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight){
+			if (!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight) {
 				toast.error("Please Update the order First");
 				return;
 			}
@@ -98,11 +98,9 @@ const OrdersTable = () => {
 				password: SHIPROCKET_PASSWORD,
 			});
 
-			const totalCost = orderDetails.reduce((total, item) => {
-				// Assuming each item has a 'price' and 'quantity' field
-				const itemTotal = item.price * item.quantity;
-				return total + itemTotal;
-			}, 0);
+			var totalCost = 0;
+			orderDetails.Order.map(item => { totalCost = totalCost + (item.Price * item.Quantity)}) // Map each item to its total cost (price * quantity)
+			// console.log(totalCost)
 
 			const token = authResponse.data.token;
 			console.log('Authentication successful:', token);
@@ -110,10 +108,10 @@ const OrdersTable = () => {
 			// Step 2: Create the order using the token
 			const orderData = {
 				order_id: orderDetails.OrderId,
-				order_date: orderDetails.Time.toDate().toLocaleString(),
+				order_date: orderDetails.Time.toDate().toLocaleDateString(),
 				pickup_location: "Plot No. 101, Industrial Area No: 3, A.B. Road, Dewas, Madhya Pradesh - 455001, India",
 				billing_customer_name: orderDetails.userInfo.name,
-				billing_last_name: orderDetails.customerLastName,
+				// billing_last_name: orderDetails.customerLastName,
 				billing_address: orderDetails.userInfo.addressLane,
 				billing_city: orderDetails.userInfo.city,
 				billing_pincode: orderDetails.userInfo.pincode,
@@ -130,7 +128,7 @@ const OrdersTable = () => {
 				height: orderDetails.height,
 				weight: orderDetails.weight,
 			};
-
+			console.log(orderData);
 			const createOrderResponse = await axios.post(
 				'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
 				orderData,
@@ -157,11 +155,11 @@ const OrdersTable = () => {
 				// Update the order document in Firestore
 				await updateDoc(orderRef, orderUpdateData);
 				const paymentDoc = await getDoc(orderRef);
-				if(paymentDoc.exists()){
+				if (paymentDoc.exists()) {
 					const paymentDocData = paymentDoc.data();
 					await addDoc(collection(fireDB, 'ship_orders'), {
 						...paymentDocData,
-					  });
+					});
 					await deleteDoc(orderRef);
 
 				}
