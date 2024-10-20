@@ -1,4 +1,9 @@
 // src/components/BuyNowPopup.jsx
+import {
+  Button,
+  Dialog,
+  DialogBody,
+} from "@material-tailwind/react";
 import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import { Timestamp, addDoc, collection } from "firebase/firestore";
@@ -6,9 +11,11 @@ import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { redirect, useNavigate } from "react-router-dom";
 import { BASE_URL } from '../../helper';
-import myContext from '../../context/myContext';
 import { clearCart } from '../../redux/cartSlice';
 import { useDispatch } from 'react-redux';
+import { fireDB, auth } from "../../firebase/FirebaseConfig";
+import myContext from "../../context/myContext";
+
 
 const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
   const context = useContext(myContext);
