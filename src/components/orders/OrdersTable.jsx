@@ -99,8 +99,11 @@ const OrdersTable = () => {
 			});
 
 			var totalCost = 0;
-			orderDetails.Order.map(item => { totalCost = totalCost + (item.Price * item.Quantity)}) // Map each item to its total cost (price * quantity)
+			orderDetails.Order.map(item => { totalCost = totalCost + (item.selling_price * item.units) }) // Map each item to its total cost (price * quantity)
 			// console.log(totalCost)
+			let fullName = orderDetails.userInfo.name.split(" ");
+			let firstName = fullName[0];
+			let lastName = fullName.slice(1).join(" ");
 
 			const token = authResponse.data.token;
 			console.log('Authentication successful:', token);
@@ -110,8 +113,8 @@ const OrdersTable = () => {
 				order_id: orderDetails.OrderId,
 				order_date: orderDetails.Time.toDate().toLocaleDateString(),
 				pickup_location: "Keahav industries Pvt Ltd. Plot 101, Industrial Area No. 3, A. B. Road Dewas M. P. 455001, India",
-				billing_customer_name: orderDetails.userInfo.name,
-				// billing_last_name: orderDetails.customerLastName,
+				billing_customer_name: firstName,
+				billing_last_name: lastName,
 				billing_address: orderDetails.userInfo.addressLane,
 				billing_city: orderDetails.userInfo.city,
 				billing_pincode: orderDetails.userInfo.pincode,
@@ -321,13 +324,13 @@ const OrdersTable = () => {
 									{order.Order.map((item, index) => (
 										<tr key={index}>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{item.ProductName}
+												{item.name}
 											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{item.Quantity}
+												{item.units}
 											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												${item.Price}
+												${item.selling_price}
 											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
 												{item.Description}
