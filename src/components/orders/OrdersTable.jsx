@@ -9,186 +9,200 @@ import UpdateOrder from "./UpdateOrder";
 import { Button, Dialog, DialogBody, DialogFooter } from "@material-tailwind/react";
 import axios from "axios";
 
+const pickupLocation = {
+    name: "Primary",
+    address: "101, Industrial Area No. 3",
+    city: "Dewas",
+    state: "Madhya Pradesh",
+    pin_code: "455001",
+    country: "India",
+    phone: "9425923509"
+};
 
 const OrdersTable = () => {
-	const context = useContext(myContext);
-	const { getAllProduct, getAllOrder, getAllUser } = context;
-	const [isPopupOpen, setIsPopupOpen] = useState(false);
-	const [selectedOrderId, setSelectedOrderId] = useState(null);
-	const [orderData, setOrderData] = useState([]);
-	const [searchTerm, setSearchTerm] = useState("");
-	const [filteredOrders, setFilteredOrders] = useState([]);
-	const SHIPROCKET_EMAIL = 'devendra@keshav.co.in'; // Replace with your Shiprocket email
-	const SHIPROCKET_PASSWORD = 'Keshav@123';
-	const [dimensions, setDimensions] = useState({
-		length: '',
-		breadth: '',
-		height: '',
-		weight: '',
-	});
+    const context = useContext(myContext);
+    const { getAllProduct, getAllOrder, getAllUser } = context;
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedOrderId, setSelectedOrderId] = useState(null);
+    const [orderData, setOrderData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredOrders, setFilteredOrders] = useState([]);
+    const SHIPROCKET_EMAIL = 'devendra@keshav.co.in'; // Replace with your Shiprocket email
+    const SHIPROCKET_PASSWORD = 'Keshav@123'; // Replace with your Shiprocket password
+    const [dimensions, setDimensions] = useState({
+        length: '',
+        breadth: '',
+        height: '',
+        weight: '',
+    });
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setDimensions({ ...dimensions, [name]: value });
-	};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setDimensions({ ...dimensions, [name]: value });
+    };
 
-	const updateOrder = async (orderId) => {
-		try {
-			// Reference to the order document in Firestore
-			const orderRef = doc(fireDB, 'payments', orderId);
+    const updateOrder = async (orderId) => {
+        try {
+            const orderRef = doc(fireDB, 'payments', orderId);
+            await updateDoc(orderRef, {
+                length: dimensions.length,
+                breadth: dimensions.breadth,
+                height: dimensions.height,
+                weight: dimensions.weight,
+            });
+            toast.success("Order Updated Successfully");
+            setIsPopupOpen(false);
+            console.log('Order updated successfully!');
+        } catch (error) {
+            toast.error("Error in updating order");
+            setIsPopupOpen(false);
+            console.error('Error updating order:', error);
+        }
+    };
 
-			// Update the order document with the new dimensions and weight
-			await updateDoc(orderRef, {
-				length: dimensions.length,
-				breadth: dimensions.breadth,
-				height: dimensions.height,
-				weight: dimensions.weight,
-			});
+    const openPopup = (orderId) => {
+        setSelectedOrderId(orderId);
+        setIsPopupOpen(true);
+    };
 
-			toast.success("Order Updated Successfully");
-			setIsPopupOpen(false);
-			console.log('Order updated successfully!');
-			// onClose()
-			// You might want to add a success message or redirect after this
-		} catch (error) {
-			toast.error("Error in updating order");
-			setIsPopupOpen(false);
-			console.error('Error updating order:', error);
-			// onClose()
-		}
-	};
+    useEffect(() => {
+        async function fetchOrders() {
+            try {
+                const paymentsCollection = collection(fireDB, "payments");
+                const querySnapshot = await getDocs(paymentsCollection);
+                const fetchedOrders = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setOrderData(fetchedOrders);
+                setFilteredOrders(fetchedOrders);
+            } catch (error) {
+                console.error("Error fetching orders: ", error);
+            }
+        }
+        fetchOrders();
+    }, []);
 
+    const validateOrderItems = (items) => {
+        return items.every(item => 
+            item.name && 
+            item.sku && 
+            typeof item.units === 'number' && 
+            !isNaN(Number(item.selling_price)) // Check for valid selling price
+        );
+    };
 
-	const openPopup = (orderId) => {
-		setSelectedOrderId(orderId); // Set the selected order ID
-		setIsPopupOpen(true); // Open the popup
-	};
+    const placeShiprocketOrder = async (orderDetails) => {
+    try {
+        // Validate dimensions and log order details
+        if (!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight) {
+            toast.error("Please Update the order dimensions First");
+            return;
+        }
 
-	useEffect(() => {
-		async function fetchOrders() {
-			try {
-				const paymentsCollection = collection(fireDB, "payments");
-				const querySnapshot = await getDocs(paymentsCollection);
+        console.log("Order Details:", orderDetails.Order);
 
-				const fetchedOrders = querySnapshot.docs.map((doc) => ({
-					id: doc.id,
-					...doc.data(),
-				}));
+        const validateOrderItems = (items) => {
+            return items.every(item => 
+                item.name && 
+                item.sku && 
+                typeof item.units === 'number' && 
+                !isNaN(Number(item.selling_price))
+            );
+        };
 
-				setOrderData(fetchedOrders);
-				setFilteredOrders(fetchedOrders);
-			} catch (error) {
-				console.error("Error fetching orders: ", error);
-			}
-		}
+        if (!validateOrderItems(orderDetails.Order)) {
+            toast.error("Order items structure is invalid.");
+            return;
+        }
 
-		fetchOrders();
-	}, []);
+        const authResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
+            email: SHIPROCKET_EMAIL,
+            password: SHIPROCKET_PASSWORD,
+        });
 
-	const placeShiprocketOrder = async (orderDetails) => {
-		try {
+        const totalCost = orderDetails.Order.reduce((sum, item) => sum + (Number(item.selling_price) * item.units), 0);
+        const fullName = orderDetails.userInfo.name.split(" ");
+        const firstName = fullName[0];
+        const lastName = fullName.slice(1).join(" ");
+        const token = authResponse.data.token;
 
-			if (!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight) {
-				toast.error("Please Update the order First");
-				return;
-			}
-			// Step 1: Authenticate to get the API token
-			const authResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
-				email: SHIPROCKET_EMAIL,
-				password: SHIPROCKET_PASSWORD,
-			});
+        const orderData = {
+            order_id: orderDetails.OrderId,
+            order_date: new Date().toISOString().split('T')[0],
+            pickup_location: `${pickupLocation.name}, ${pickupLocation.address}, ${pickupLocation.city}, ${pickupLocation.state}, ${pickupLocation.country}, ${pickupLocation.pin_code}`,
+            billing_customer_name: firstName,
+            billing_last_name: lastName,
+            billing_address: orderDetails.userInfo.addressLane,
+            billing_city: orderDetails.userInfo.city,
+            billing_pincode: orderDetails.userInfo.pincode,
+            billing_state: orderDetails.userInfo.state,
+            billing_country: orderDetails.userInfo.country,
+            billing_email: orderDetails.userInfo.email,
+            billing_phone: orderDetails.userInfo.phone,
+            shipping_is_billing: true,
+            order_items: orderDetails.Order.map(item => ({
+                name: item.name,
+                sku: item.sku,
+                units: item.units,
+                selling_price: Number(item.selling_price)
+            })),
+            payment_method: 'prepaid',
+            sub_total: totalCost,
+            length: orderDetails.length,
+            breadth: orderDetails.breadth,
+            height: orderDetails.height,
+            weight: orderDetails.weight,
+        };
 
-			var totalCost = 0;
-			orderDetails.Order.map(item => { totalCost = totalCost + (item.selling_price * item.units) }) // Map each item to its total cost (price * quantity)
-			// console.log(totalCost)
-			let fullName = orderDetails.userInfo.name.split(" ");
-			let firstName = fullName[0];
-			let lastName = fullName.slice(1).join(" ");
+        console.log('Order Data to Shiprocket:', orderData);
 
-			const token = authResponse.data.token;
-			console.log('Authentication successful:', token);
+        const createOrderResponse = await axios.post(
+            'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
+            orderData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
 
-			// Step 2: Create the order using the token
-			const orderData = {
-				order_id: orderDetails.OrderId,
-				order_date: orderDetails.Time.toDate().toLocaleDateString(),
-				pickup_location: "Keahav industries Pvt Ltd. Plot 101, Industrial Area No. 3, A. B. Road Dewas M. P. 455001, India",
-				billing_customer_name: firstName,
-				billing_last_name: lastName,
-				billing_address: orderDetails.userInfo.addressLane,
-				billing_city: orderDetails.userInfo.city,
-				billing_pincode: orderDetails.userInfo.pincode,
-				billing_state: orderDetails.userInfo.state,
-				billing_country: orderDetails.userInfo.country,
-				billing_email: orderDetails.userInfo.email,
-				billing_phone: orderDetails.userInfo.phone,
-				shipping_is_billing: true,
-				order_items: orderDetails.Order,
-				payment_method: 'prepaid',
-				sub_total: totalCost,
-				length: orderDetails.length,
-				breadth: orderDetails.breadth,
-				height: orderDetails.height,
-				weight: orderDetails.weight,
-			};
-			console.log(orderData);
-			const createOrderResponse = await axios.post(
-				'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
-				orderData,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+        console.log('Create Order Response:', createOrderResponse.data);
 
-			if (createOrderResponse.data.status === 200) {
-				console.log('Order placed successfully:', createOrderResponse.data);
-				const orderId = createOrderResponse.data.data.order_id; // Get the order ID from the response
-				const orderRef = doc(fireDB, 'payments', orderDetails.id); // Reference to the order document in Firestore
+        if (createOrderResponse.data.status === 200) {
+            console.log('Order placed successfully:', createOrderResponse.data);
+            // Handle successful order placement
+        } else {
+            console.error('API Error Status:', createOrderResponse.data);
+            toast.error("Failed to Place Order");
+        }
+    } catch (error) {
+        toast.error("Error in placing order");
+        console.error('Error placing order:', error);
+        if (error.response) {
+            console.error('Response data:', error.response.data);
+            toast.error(`Error: ${error.response.data.message || 'Unknown error'}`);
+        } else {
+            console.error('Error message:', error.message);
+            toast.error(`Error: ${error.message}`);
+        }
+    }
+};
 
-				// Prepare the data to be updated
-				const orderUpdateData = {
-					shiprocketOrderId: orderId,
-					trackingId: createOrderResponse.data.data.tracking_id || null, // Assuming tracking_id is in the response
-					status: createOrderResponse.data.data.status, // Get order status
-					// Add any other relevant fields from the Shiprocket response as needed
-				};
+    
+    
 
-				// Update the order document in Firestore
-				await updateDoc(orderRef, orderUpdateData);
-				const paymentDoc = await getDoc(orderRef);
-				if (paymentDoc.exists()) {
-					const paymentDocData = paymentDoc.data();
-					await addDoc(collection(fireDB, 'ship_orders'), {
-						...paymentDocData,
-					});
-					await deleteDoc(orderRef);
-
-				}
-				toast.success("Order Placed at shiprocket successfully");
-				return createOrderResponse.data;
-			} else {
-				toast.error("Failed to Place Order");
-				throw new Error('Failed to place order');
-			}
-		} catch (error) {
-			toast.error("Error in placing order");
-			console.error('Error placing order:', error);
-			throw error;
-		}
-	};
-	const handleSearch = (e) => {
-		const term = e.target.value.toLowerCase();
-		setSearchTerm(term);
-		const filtered = orderData.filter(
-			(order) =>
-				order.OrderId.toLowerCase().includes(term) ||
-				order.User.name.toLowerCase().includes(term) ||
-				order.uid.toLowerCase().includes(term)
-		);
-		setFilteredOrders(filtered);
-	};
+    const handleSearch = (e) => {
+        const term = e.target.value.toLowerCase();
+        setSearchTerm(term);
+        const filtered = orderData.filter(
+            (order) =>
+                order.OrderId.toLowerCase().includes(term) ||
+                order.User.name.toLowerCase().includes(term) ||
+                order.uid.toLowerCase().includes(term)
+        );
+        setFilteredOrders(filtered);
+    };
 
 	return (
 		<motion.div
