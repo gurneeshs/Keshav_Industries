@@ -109,7 +109,7 @@ const OrdersTable = () => {
 			const orderData = {
 				order_id: orderDetails.OrderId,
 				order_date: orderDetails.Time.toDate().toLocaleDateString(),
-				pickup_location: "Plot No. 101, Industrial Area No: 3, A.B. Road, Dewas, Madhya Pradesh - 455001, India",
+				pickup_location: "Keahav industries Pvt Ltd. Plot 101, Industrial Area No. 3, A. B. Road Dewas M. P. 455001, India",
 				billing_customer_name: orderDetails.userInfo.name,
 				// billing_last_name: orderDetails.customerLastName,
 				billing_address: orderDetails.userInfo.addressLane,
@@ -123,10 +123,10 @@ const OrdersTable = () => {
 				order_items: orderDetails.Order,
 				payment_method: 'prepaid',
 				sub_total: totalCost,
-				length: parseInt(orderDetails.length, 10),
-				breadth: parseInt(orderDetails.breadth, 10),
-				height: parseInt(orderDetails.height, 10),
-				weight: parseInt(orderDetails.weight, 10),
+				length: orderDetails.length,
+				breadth: orderDetails.breadth,
+				height: orderDetails.height,
+				weight: orderDetails.weight,
 			};
 			console.log(orderData);
 			const createOrderResponse = await axios.post(
