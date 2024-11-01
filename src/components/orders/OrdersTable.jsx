@@ -9,228 +9,194 @@ import UpdateOrder from "./UpdateOrder";
 import { Button, Dialog, DialogBody, DialogFooter } from "@material-tailwind/react";
 import axios from "axios";
 
-const pickupLocation = {
-    name: "Primary",
-    address: "101, Industrial Area No. 3",
-    city: "Dewas",
-    state: "Madhya Pradesh",
-    pin_code: "455001",
-    country: "India",
-    phone: "9425923509"
-};
 
 const OrdersTable = () => {
-    const context = useContext(myContext);
-    const { getAllProduct, getAllOrder, getAllUser } = context;
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedOrderId, setSelectedOrderId] = useState(null);
-    const [orderData, setOrderData] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredOrders, setFilteredOrders] = useState([]);
-    const SHIPROCKET_EMAIL = 'devendra@keshav.co.in'; // Replace with your Shiprocket email
-    const SHIPROCKET_PASSWORD = 'Keshav@123'; // Replace with your Shiprocket password
-    const [dimensions, setDimensions] = useState({
-        length: '',
-        breadth: '',
-        height: '',
-        weight: '',
-    });
+	const context = useContext(myContext);
+	const { getAllProduct, getAllOrder, getAllUser } = context;
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const [selectedOrderId, setSelectedOrderId] = useState(null);
+	const [orderData, setOrderData] = useState([]);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [filteredOrders, setFilteredOrders] = useState([]);
+	const SHIPROCKET_EMAIL = 'devendra@keshav.co.in'; // Replace with your Shiprocket email
+	const SHIPROCKET_PASSWORD = 'Keshav@123';
+	const [dimensions, setDimensions] = useState({
+		length: '',
+		breadth: '',
+		height: '',
+		weight: '',
+	});
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setDimensions({ ...dimensions, [name]: value });
-    };
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setDimensions({ ...dimensions, [name]: value });
+	};
 
-    const updateOrder = async (orderId) => {
-        try {
-            const orderRef = doc(fireDB, 'payments', orderId);
-            await updateDoc(orderRef, {
-                length: dimensions.length,
-                breadth: dimensions.breadth,
-                height: dimensions.height,
-                weight: dimensions.weight,
-            });
-            toast.success("Order Updated Successfully");
-            setIsPopupOpen(false);
-            console.log('Order updated successfully!');
-        } catch (error) {
-            toast.error("Error in updating order");
-            setIsPopupOpen(false);
-            console.error('Error updating order:', error);
-        }
-    };
+	const updateOrder = async (orderId) => {
+		try {
+			// Reference to the order document in Firestore
+			const orderRef = doc(fireDB, 'payments', orderId);
 
-    const openPopup = (orderId) => {
-        setSelectedOrderId(orderId);
-        setIsPopupOpen(true);
-    };
+			// Update the order document with the new dimensions and weight
+			await updateDoc(orderRef, {
+				length: dimensions.length,
+				breadth: dimensions.breadth,
+				height: dimensions.height,
+				weight: dimensions.weight,
+			});
 
-    useEffect(() => {
-        async function fetchOrders() {
-            try {
-                const paymentsCollection = collection(fireDB, "payments");
-                const querySnapshot = await getDocs(paymentsCollection);
-                const fetchedOrders = querySnapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
-                setOrderData(fetchedOrders);
-                setFilteredOrders(fetchedOrders);
-            } catch (error) {
-                console.error("Error fetching orders: ", error);
-            }
-        }
-        fetchOrders();
-    }, []);
+			toast.success("Order Updated Successfully");
+			setIsPopupOpen(false);
+			console.log('Order updated successfully!');
+			// onClose()
+			// You might want to add a success message or redirect after this
+		} catch (error) {
+			toast.error("Error in updating order");
+			setIsPopupOpen(false);
+			console.error('Error updating order:', error);
+			// onClose()
+		}
+	};
 
-    const validateOrderItems = (items) => {
-        return items.every(item => 
-            item.name && 
-            item.sku && 
-            typeof item.units === 'number' && 
-            !isNaN(Number(item.selling_price)) // Check for valid selling price
-        );
-    };
 
-    const placeShiprocketOrder = async (orderDetails) => {
-    try {
-        // Validate dimensions and log order details
-        if (!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight) {
-            toast.error("Please Update the order dimensions First");
-            return;
-        }
+	const openPopup = (orderId) => {
+		setSelectedOrderId(orderId); // Set the selected order ID
+		setIsPopupOpen(true); // Open the popup
+	};
 
-        console.log("Order Details:", orderDetails.Order);
+	useEffect(() => {
+		async function fetchOrders() {
+			try {
+				const paymentsCollection = collection(fireDB, "payments");
+				const querySnapshot = await getDocs(paymentsCollection);
 
-        const validateOrderItems = (items) => {
-            return items.every(item => 
-                item.name && 
-                item.sku && 
-                typeof item.units === 'number' && 
-                !isNaN(Number(item.selling_price))
-            );
-        };
+				const fetchedOrders = querySnapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
 
-        if (!validateOrderItems(orderDetails.Order)) {
-            toast.error("Order items structure is invalid.");
-            return;
-        }
+				setOrderData(fetchedOrders);
+				setFilteredOrders(fetchedOrders);
+			} catch (error) {
+				console.error("Error fetching orders: ", error);
+			}
+		}
 
-        const authResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
-            email: SHIPROCKET_EMAIL,
-            password: SHIPROCKET_PASSWORD,
-        });
+		fetchOrders();
+	}, []);
+	
 
-        const totalCost = orderDetails.Order.reduce((sum, item) => sum + (Number(item.selling_price) * item.units), 0);
-        const fullName = orderDetails.userInfo.name.split(" ");
-        const firstName = fullName[0];
-        const lastName = fullName.slice(1).join(" ");
-        const token = authResponse.data.token;
+	const formatDateTime = (timestamp) => {
+		const date = timestamp.toDate(); // Convert Firestore timestamp to Date object
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+		const day = String(date.getDate()).padStart(2, '0');
+		const hours = String(date.getHours()).padStart(2, '0');
+		const minutes = String(date.getMinutes()).padStart(2, '0');
+		const seconds = String(date.getSeconds()).padStart(2, '0');
+	
+		return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+	};
+	
+	const placeShiprocketOrder = async (orderDetails) => {
+		try {
+			if (!orderDetails.length || !orderDetails.breadth || !orderDetails.height || !orderDetails.weight) {
+				toast.error("Please Update the order First");
+				return;
+			}
+	
+			const authResponse = await axios.post('https://apiv2.shiprocket.in/v1/external/auth/login', {
+				email: SHIPROCKET_EMAIL,
+				password: SHIPROCKET_PASSWORD,
+			});
+	
+			let totalCost = 0;
+			orderDetails.Order.forEach(item => { totalCost += (item.selling_price * item.units); });
+	
+			let fullName = orderDetails.userInfo.name.split(" ");
+			let firstName = fullName[0];
+			let lastName = fullName.slice(1).join(" ");
+	
+			const token = authResponse.data.token;
+	
+			const orderData = {
+				order_id: orderDetails.OrderId,
+				order_date: formatDateTime(orderDetails.Time), // Format date from Firestore
+				pickup_location: 'warehouse',
+				billing_customer_name: firstName,
+				billing_last_name: lastName,
+				billing_address: orderDetails.userInfo.addressLane,
+				billing_city: orderDetails.userInfo.city,
+				billing_pincode: orderDetails.userInfo.pincode,
+				billing_state: orderDetails.userInfo.state,
+				billing_country: orderDetails.userInfo.country,
+				billing_email: orderDetails.userInfo.email,
+				billing_phone: orderDetails.userInfo.phone,
+				shipping_is_billing: true,
+				order_items: orderDetails.Order,
+				payment_method: 'prepaid',
+				sub_total: totalCost,
+				length: orderDetails.length,
+				breadth: orderDetails.breadth,
+				height: orderDetails.height,
+				weight: orderDetails.weight,
+			};
+	
+			console.log('Order Data:', orderData); // Log order data to check its structure
+	
+			const createOrderResponse = await axios.post(
+				'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
+				orderData,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+	
+			if (createOrderResponse.data.status === 200) {
+				const orderId = createOrderResponse.data.data.order_id;
+				const orderRef = doc(fireDB, 'payments', orderDetails.id);
+	
+				const orderUpdateData = {
+					shiprocketOrderId: orderId,
+					trackingId: createOrderResponse.data.data.tracking_id || null,
+					status: createOrderResponse.data.data.status,
+				};
+	
+				await updateDoc(orderRef, orderUpdateData);
+				const paymentDoc = await getDoc(orderRef);
+				if (paymentDoc.exists()) {
+					const paymentDocData = paymentDoc.data();
+					await addDoc(collection(fireDB, 'ship_orders'), { ...paymentDocData });
+					await deleteDoc(orderRef);
+				}
+				toast.success("Order Placed at Shiprocket successfully");
+				return createOrderResponse.data;
+			} else {
+				toast.error("Failed to Place Order");
+				throw new Error('Failed to place order');
+			}
+		} catch (error) {
+			toast.error("Error in placing order");
+			console.error('Error placing order:', error.response?.data || error);
+			throw error;
+		}
+	};
+	
+	
 
-        const orderData = {
-            order_id: orderDetails.OrderId,
-            order_date: new Date().toISOString().split('T')[0],
-            pickup_location: "101, Industrial Area No. 3, A.B. Road,, Dewas, Madhya Pradesh, India, 455001",
-            billing_customer_name: firstName,
-            billing_last_name: lastName,
-            billing_address: orderDetails.userInfo.addressLane,
-            billing_city: orderDetails.userInfo.city,
-            billing_pincode: orderDetails.userInfo.pincode,
-            billing_state: orderDetails.userInfo.state,
-            billing_country: orderDetails.userInfo.country,
-            billing_email: orderDetails.userInfo.email,
-            billing_phone: orderDetails.userInfo.phone,
-            shipping_is_billing: true,
-            order_items: orderDetails.Order.map(item => ({
-                name: item.name,
-                sku: item.sku,
-                units: item.units,
-                selling_price: Number(item.selling_price)
-            })),
-            payment_method: 'prepaid',
-            sub_total: totalCost,
-            length: orderDetails.length,
-            breadth: orderDetails.breadth,
-            height: orderDetails.height,
-            weight: orderDetails.weight,
-        };
-
-		// const orderData = {
-        //     order_id: 'order_PBhPx2zIHIg9Ka',
-        //     order_date: '2024-10-28',
-        //     pickup_location: '265 Mukharji Nagar Dewas',
-        //     billing_customer_name: 'Divyansh',
-        //     billing_last_name: 'Rana',
-        //     billing_address: ,
-        //     billing_city: ,
-        //     billing_pincode: ,
-        //     billing_state: ,
-        //     billing_country: ,
-        //     billing_email: ,
-        //     billing_phone: ,
-        //     shipping_is_billing: true,
-        //     order_items: orderDetails.Order.map(item => ({
-        //         name: ,
-        //         sku: ,
-        //         units: ,
-        //         selling_price:
-        //     })),
-        //     payment_method: 'prepaid',
-        //     sub_total: ,
-        //     length: ,
-        //     breadth: ,
-        //     height: ,
-        //     weight: ,
-        // };
-
-        console.log('Order Data to Shiprocket:', orderData);
-
-        const createOrderResponse = await axios.post(
-            'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
-            orderData,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-
-        // console.log('Create Order Response:', createOrderResponse.data, token);
-
-        if (createOrderResponse.data.status === 200) {
-            console.log('Order placed successfully:', createOrderResponse.data);
-            // Handle successful order placement
-        } else {
-            console.error('API Error Status:', createOrderResponse.data, token);
-            toast.error("Failed to Place Order");
-        }
-    } catch (error) {
-        toast.error("Error in placing order");
-        console.error('Error placing order:', error);
-        if (error.response) {
-            console.error('Response data:', error.response.data);
-            toast.error(`Error: ${error.response.data.message || 'Unknown error'}`);
-        } else {
-            console.error('Error message:', error.message);
-            toast.error(`Error: ${error.message}`);
-        }
-    }
-};
-
-    
-    
-
-    const handleSearch = (e) => {
-        const term = e.target.value.toLowerCase();
-        setSearchTerm(term);
-        const filtered = orderData.filter(
-            (order) =>
-                order.OrderId.toLowerCase().includes(term) ||
-                order.User.name.toLowerCase().includes(term) ||
-                order.uid.toLowerCase().includes(term)
-        );
-        setFilteredOrders(filtered);
-    };
+	const handleSearch = (e) => {
+		const term = e.target.value.toLowerCase();
+		setSearchTerm(term);
+		const filtered = orderData.filter(
+			(order) =>
+				order.OrderId.toLowerCase().includes(term) ||
+				order.User.name.toLowerCase().includes(term) ||
+				order.uid.toLowerCase().includes(term)
+		);
+		setFilteredOrders(filtered);
+	};
 
 	return (
 		<motion.div
