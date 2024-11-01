@@ -130,7 +130,7 @@ const OrdersTable = () => {
         const orderData = {
             order_id: orderDetails.OrderId,
             order_date: new Date().toISOString().split('T')[0],
-            pickup_location: `${pickupLocation.name}, ${pickupLocation.address}, ${pickupLocation.city}, ${pickupLocation.state}, ${pickupLocation.country}, ${pickupLocation.pin_code}`,
+            pickup_location: "101, Industrial Area No. 3, A.B. Road,, Dewas, Madhya Pradesh, India, 455001",
             billing_customer_name: firstName,
             billing_last_name: lastName,
             billing_address: orderDetails.userInfo.addressLane,
@@ -155,6 +155,34 @@ const OrdersTable = () => {
             weight: orderDetails.weight,
         };
 
+		// const orderData = {
+        //     order_id: 'order_PBhPx2zIHIg9Ka',
+        //     order_date: '2024-10-28',
+        //     pickup_location: '265 Mukharji Nagar Dewas',
+        //     billing_customer_name: 'Divyansh',
+        //     billing_last_name: 'Rana',
+        //     billing_address: ,
+        //     billing_city: ,
+        //     billing_pincode: ,
+        //     billing_state: ,
+        //     billing_country: ,
+        //     billing_email: ,
+        //     billing_phone: ,
+        //     shipping_is_billing: true,
+        //     order_items: orderDetails.Order.map(item => ({
+        //         name: ,
+        //         sku: ,
+        //         units: ,
+        //         selling_price:
+        //     })),
+        //     payment_method: 'prepaid',
+        //     sub_total: ,
+        //     length: ,
+        //     breadth: ,
+        //     height: ,
+        //     weight: ,
+        // };
+
         console.log('Order Data to Shiprocket:', orderData);
 
         const createOrderResponse = await axios.post(
@@ -167,13 +195,13 @@ const OrdersTable = () => {
             }
         );
 
-        console.log('Create Order Response:', createOrderResponse.data);
+        // console.log('Create Order Response:', createOrderResponse.data, token);
 
         if (createOrderResponse.data.status === 200) {
             console.log('Order placed successfully:', createOrderResponse.data);
             // Handle successful order placement
         } else {
-            console.error('API Error Status:', createOrderResponse.data);
+            console.error('API Error Status:', createOrderResponse.data, token);
             toast.error("Failed to Place Order");
         }
     } catch (error) {
