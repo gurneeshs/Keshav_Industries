@@ -123,114 +123,112 @@ const AddProductPage = () => {
 
     return (
         <AdminLayout>
-            <div className="w-full bg-customBackG py-5 justify-center items-center py-5 h-screen">
-                <div className='flex justify-center items-center h-full'>
-                    {loading && <Loader />}
-                    <div className="login_Form bg-opacity-50 backdrop-blur-md px-8 py-6 rounded-xl shadow-md w-full max-h-full overflow-y-auto">
-                        <div className="mb-5">
-                            <h2 className='text-center text-2xl font-bold text-gray-100 '>
-                                Add Product
-                            </h2>
-                        </div>
+            <div className="w-full bg-customBackG py-5 h-screen flex justify-center items-center">
+                {loading && <Loader />}
+                <div className="login_Form bg-opacity-50 backdrop-blur-md px-8 py-6 rounded-xl shadow-md w-full max-w-lg overflow-y-auto">
+                    <div className="mb-5">
+                        <h2 className='text-center text-2xl font-bold text-gray-100'>
+                            Add Product
+                        </h2>
+                    </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
-                            <input
-                                type="text"
-                                name="title"
-                                value={product.title}
-                                onChange={(e) => setProduct({ ...product, title: e.target.value })}
-                                placeholder='Product Title'
-                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
-                            />
-                            <input
-                                type="number"
-                                name="price"
-                                value={product.price}
-                                onChange={(e) => setProduct({ ...product, price: e.target.value })}
-                                placeholder='Product Price'
-                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
-                            />
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                        <input
+                            type="text"
+                            name="title"
+                            value={product.title}
+                            onChange={(e) => setProduct({ ...product, title: e.target.value })}
+                            placeholder='Product Title'
+                            className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                        />
+                        <input
+                            type="number"
+                            name="price"
+                            value={product.price}
+                            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                            placeholder='Product Price'
+                            className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                        />
+                    </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-3">
-                            <input
-                                type="number"
-                                name="mrp"
-                                value={product.mrp}
-                                onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
-                                placeholder='Product MRP'
-                                className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
-                            />
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                        <input
+                            type="number"
+                            name="mrp"
+                            value={product.mrp}
+                            onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
+                            placeholder='Product MRP'
+                            className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                        />
+                    </div>
 
-                        <div className="mb-3">
-                            {product.productImages.map((image, index) => (
-                                <div key={index} className="mb-3 flex items-center">
-                                    <input
-                                        type="file"
-                                        name={`productImageFile-${index}`}
-                                        onChange={(e) => handleFileChange(e, index)}
-                                        className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
-                                    />
-                                    {image && (
-                                        <button
-                                            type="button"
-                                            onClick={() => deleteImage(index)}
-                                            className="ml-3 bg-red-500 text-white px-2 py-1 rounded-md"
-                                        >
-                                            Delete
-                                        </button>
-                                    )}
-                                </div>
+                    <div className="mb-3">
+                        {product.productImages.map((image, index) => (
+                            <div key={index} className="mb-3 flex items-center">
+                                <input
+                                    type="file"
+                                    name={`productImageFile-${index}`}
+                                    onChange={(e) => handleFileChange(e, index)}
+                                    className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                                />
+                                {image && (
+                                    <button
+                                        type="button"
+                                        onClick={() => deleteImage(index)}
+                                        className="ml-3 bg-red-500 text-white px-2 py-1 rounded-md"
+                                    >
+                                        Delete
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={addMoreImages}
+                            className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-3"
+                        >
+                            Add Image
+                        </button>
+                    </div>
+
+                    <div className="mb-3">
+                        <select
+                            value={product.category}
+                            onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                            className="w-full px-1 py-2 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none">
+                            <option disabled>Select Product Category</option>
+                            {categoryList.map((value, index) => (
+                                <option className="first-letter:uppercase" key={index} value={value.name}>
+                                    {value.name}
+                                </option>
                             ))}
-                            <button
-                                type="button"
-                                onClick={addMoreImages}
-                                className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md mt-3"
-                            >
-                                Add Image
-                            </button>
-                        </div>
+                        </select>
+                    </div>
 
-                        <div className="mb-3">
-                            <select
-                                value={product.category}
-                                onChange={(e) => setProduct({ ...product, category: e.target.value })}
-                                className="w-full px-1 py-2 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none">
-                                <option disabled>Select Product Category</option>
-                                {categoryList.map((value, index) => (
-                                    <option className="first-letter:uppercase" key={index} value={value.name}>
-                                        {value.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                    <div className="mb-3">
+                        <textarea
+                            value={product.description}
+                            onChange={(e) => setProduct({ ...product, description: e.target.value })}
+                            name="description"
+                            placeholder="Product Description"
+                            rows="5"
+                            className="w-full px-2 py-1 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none placeholder-gray-300"
+                        ></textarea>
+                    </div>
 
-                        <div className="mb-3">
-                            <textarea
-                                value={product.description}
-                                onChange={(e) => setProduct({ ...product, description: e.target.value })}
-                                name="description"
-                                placeholder="Product Description"
-                                rows="5"
-                                className="w-full px-2 py-1 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none placeholder-gray-300 "
-                            ></textarea>
-                        </div>
-
-                        <div className="mb-3">
-                            <button
-                                onClick={addProductFunction}
-                                type='button'
-                                className='bg-customGray hover:bg-gray-600 w-full text-white text-center py-2 font-bold rounded-md'
-                            >
-                                Add Product
-                            </button>
-                        </div>
+                    <div className="mb-3">
+                        <button
+                            onClick={addProductFunction}
+                            type='button'
+                            className='bg-customGray hover:bg-gray-600 w-full text-white text-center py-2 font-bold rounded-md'
+                        >
+                            Add Product
+                        </button>
                     </div>
                 </div>
             </div>
         </AdminLayout>
     );
-}
+};
 
 export default AddProductPage;
