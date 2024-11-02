@@ -153,15 +153,15 @@ const OrdersTable = () => {
 					},
 				}
 			);
-	
-			if (createOrderResponse.data.status === 200) {
-				const orderId = createOrderResponse.data.data.order_id;
+            console.log(createOrderResponse);
+			if (createOrderResponse.status === 200) {
+				const orderId = createOrderResponse.data.order_id;
 				const orderRef = doc(fireDB, 'payments', orderDetails.id);
 	
 				const orderUpdateData = {
 					shiprocketOrderId: orderId,
-					trackingId: createOrderResponse.data.data.tracking_id || null,
-					status: createOrderResponse.data.data.status,
+					trackingId: createOrderResponse.data.tracking_id || null,
+					status: createOrderResponse.data.status,
 				};
 	
 				await updateDoc(orderRef, orderUpdateData);
@@ -172,7 +172,7 @@ const OrdersTable = () => {
 					await deleteDoc(orderRef);
 				}
 				toast.success("Order Placed at Shiprocket successfully");
-				return createOrderResponse.data;
+				// return createOrderResponse.data;
 			} else {
 				toast.error("Failed to Place Order");
 				throw new Error('Failed to place order');
@@ -180,7 +180,7 @@ const OrdersTable = () => {
 		} catch (error) {
 			toast.error("Error in placing order");
 			console.error('Error placing order:', error.response?.data || error);
-			throw error;
+			// throw error;
 		}
 	};
 	
@@ -200,13 +200,13 @@ const OrdersTable = () => {
 
 	return (
 		<motion.div
-			className='bg-customGray bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700'
+			className='bg-customGray bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 my-3'
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ delay: 0.4 }}
 		>
 			<div className='flex justify-between items-center mb-6'>
-				<h2 className='text-xl font-semibold text-gray-100'>Order List</h2>
+				<h2 className='text-xl font-semibold text-gray-100'>Created Order</h2>
 				<div className='relative'>
 					<input
 						type='text'
