@@ -7,6 +7,7 @@ import DailyOrders from "../../components/orders/DailyOrders";
 import OrderDistribution from "../../components/orders/OrderDistribution";
 import OrdersTable from "../../components/orders/OrdersTable";
 import AdminLayout from "../../components/layout/AdminLayout";
+import ShipOrder from "../../components/orders/ShipOrder";
 const orderStats = {
 	totalOrders: "1,234",
 	pendingOrders: "56",
@@ -44,6 +45,7 @@ const OrdersPage = () => {
 					</div> */}
 
 					<OrdersTable />
+					<ShipOrder />
 				</main>
 			</div>
 
