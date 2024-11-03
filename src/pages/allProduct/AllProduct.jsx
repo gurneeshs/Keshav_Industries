@@ -14,15 +14,17 @@ const AllProduct = () => {
     const { loading, getAllProduct } = context;
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
+    
+    const [searchTerm, setSearchTerm] = useState("");
 
     const addCart = (item) => {
         dispatch(addToCart(item));
-        toast.success("Add to cart");
+        toast.success("Added to cart");
     };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Delete cart");
+        toast.success("Deleted from cart");
     };
 
     useEffect(() => {
@@ -45,6 +47,10 @@ const AllProduct = () => {
         },
     };
 
+    const filteredProducts = Array.isArray(getAllProduct) ? getAllProduct.filter(product =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    ) : [];
+
     return (
         <Layout>
             <div className="py-8 bg-customNewBack">
@@ -54,9 +60,15 @@ const AllProduct = () => {
                     viewport={{ once: true, amount: 0.2 }}
                     variants={fadeInUp}
                     transition={{ duration: 2 }}
-                    className=""
                 >
-                    <h1 className="text-center my-5 text-4xl font-bold">All Products</h1>
+                    <h1 className="text-center ps-8 my-5 text-4xl font-bold inline-block">All Products</h1>
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        className="p-2 border border-gray-300 rounded-lg w-full md:w-1/2 mx-auto "
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </motion.div>
 
                 <section className="text-gray-600 body-font">
@@ -64,15 +76,18 @@ const AllProduct = () => {
                         <div className="flex justify-center">
                             {loading && <Loader />}
                         </div>
+                        {filteredProducts.length === 0 && !loading && (
+                            <div className="text-center">No products found.</div>
+                        )}
                         <motion.div
                             className="flex flex-wrap -m-4"
                             variants={cardContainer}
                             initial="hidden"
                             animate="visible"
                         >
-                            {getAllProduct.map((item, index) => (
+                            {filteredProducts.map((item, index) => (
                                 <ProductCard
-                                    key={index}
+                                    key={item.id} // Use a unique key for better performance
                                     product={item}
                                     addCart={addCart}
                                     deleteCart={deleteCart}
@@ -94,11 +109,7 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate, index 
     const [mainImage, setMainImage] = useState(productImageUrls[0]);
 
     const handleImageClick = (index) => {
-        const newImages = [...productImageUrls];
-        const temp = newImages[0];
-        newImages[0] = newImages[index];
-        newImages[index] = temp;
-        setMainImage(newImages[0]);
+        setMainImage(productImageUrls[index]); // Directly set the main image
     };
 
     const fadeInUp = {
@@ -123,13 +134,13 @@ const ProductCard = ({ product, addCart, deleteCart, cartItems, navigate, index 
                     alt="product"
                 />
                 <div className="flex space-x-2 mt-2 justify-center">
-                    {productImageUrls.slice(1).map((url, index) => (
+                    {productImageUrls.map((url, idx) => (
                         <img
-                            key={index + 1}
-                            onClick={() => handleImageClick(index + 1)}
+                            key={idx}
+                            onClick={() => handleImageClick(idx)} // Use the index to change images
                             className="w-16 h-16 object-cover border border-gray-300 rounded-md cursor-pointer"
                             src={url}
-                            alt={`thumbnail-${index + 1}`}
+                            alt={`thumbnail-${idx}`}
                         />
                     ))}
                 </div>
