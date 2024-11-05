@@ -7,9 +7,9 @@ const SIDEBAR_ITEMS = [
 	{ name: "Home", icon: Home, color: "#34D399", href: "/" },
 	{ name: "Overview", icon: BarChart2, color: "#6366f1", href: "/admin-dashboard" },
 	{ name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/adminProductPage" },
-	{ name: "Sales", icon: DollarSign, color: "#10B981", href: "/adminSalesPage" },
+	// { name: "Sales", icon: DollarSign, color: "#10B981", href: "/adminSalesPage" },
 	{ name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/adminOrders" },
-	{ name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
+	// { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
 ];
 
 const Sidebar = () => {

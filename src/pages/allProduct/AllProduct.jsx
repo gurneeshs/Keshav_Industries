@@ -14,7 +14,7 @@ const AllProduct = () => {
     const { loading, getAllProduct } = context;
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
-    
+
     const [searchTerm, setSearchTerm] = useState("");
 
     const addCart = (item) => {
@@ -60,12 +60,13 @@ const AllProduct = () => {
                     viewport={{ once: true, amount: 0.2 }}
                     variants={fadeInUp}
                     transition={{ duration: 2 }}
+                    className="flex items-center justify-between my-5 px-5"
                 >
-                    <h1 className="text-center ps-8 my-5 text-4xl font-bold inline-block">All Products</h1>
+                    <h1 className="text-4xl font-bold mx-5">All Products</h1>
                     <input
                         type="text"
                         placeholder="Search products..."
-                        className="p-2 border border-gray-300 rounded-lg w-full md:w-1/2 mx-auto "
+                        className="p-2 border border-gray-300 rounded-lg w-full md:w-1/2 lg:w-1/3 mx-5"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
