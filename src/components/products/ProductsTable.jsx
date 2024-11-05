@@ -39,14 +39,14 @@ const ProductsTable = () => {
 		}
 	}
 	const [searchTerm, setSearchTerm] = useState("");
-	console.log(getAllProduct)
-	const [filteredProducts, setFilteredProducts] = useState(PRODUCT_DATA);
+	// console.log(getAllProduct)
+	const [filteredProducts, setFilteredProducts] = useState(getAllProduct);
 
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
 		setSearchTerm(term);
 		const filtered = PRODUCT_DATA.filter(
-			(product) => product.name.toLowerCase().includes(term) || product.category.toLowerCase().includes(term)
+			(product) => product.title.toLowerCase().includes(term) || product.category.toLowerCase().includes(term)
 		);
 
 		setFilteredProducts(filtered);
@@ -94,7 +94,7 @@ const ProductsTable = () => {
 							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Category</th>
 							<th scope="col" className="h-12 px-6 text-md font-bold fontPara text-slate-700 bg-slate-100">Action</th>
 						</tr>
-						{getAllProduct.map((item, index) => {
+						{filteredProducts.map((item, index) => {
 							const { id, title, price, category, date, productImageUrls } = item
 							return (
 								<tr key={index} className="">

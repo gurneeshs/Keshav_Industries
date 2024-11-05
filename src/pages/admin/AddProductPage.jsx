@@ -105,14 +105,18 @@ const AddProductPage = () => {
                 description: product.description,
                 quantity: product.quantity,
                 time: product.time,
-                date: product.date
+                date: product.date,
+                monthlySales: {},
+                monthlyRevenue: {},
+                totalSales: 0,
+                totalRevenue: 0
             };
 
             const productRef = collection(fireDB, 'products');
             await addDoc(productRef, newProduct);
 
             toast.success("Product added successfully");
-            navigate('/admin-dashboard');
+            navigate('/adminProductPage');
             setLoading(false);
         } catch (error) {
             console.log(error);

@@ -8,14 +8,10 @@ import Loader from "../../components/loader/Loader";
 import AdminLayout from "../../components/layout/AdminLayout";
 
 const categoryList = [
-    { name: 'fashion' },
-    { name: 'shirt' },
-    { name: 'jacket' },
-    { name: 'mobile' },
-    { name: 'laptop' },
-    { name: 'shoes' },
-    { name: 'home' },
-    { name: 'books' }
+    { name: 'Kash Products' },
+    { name: 'Pride Products' },
+    { name: 'Mustard Products' },
+    { name: 'Kash Spices' },
 ];
 
 const UpdateProductPage = () => {
@@ -46,9 +42,10 @@ const UpdateProductPage = () => {
             setProduct({
                 title: productData?.title || "",
                 price: productData?.price || "",
-                productImageUrl: productData?.productImageUrl || "",
+                productImageUrl: productData?.productImageUrls || "",
                 category: productData?.category || "",
                 description: productData?.description || "",
+                ...productData,
             });
         } catch (error) {
             console.log(error);
@@ -62,7 +59,7 @@ const UpdateProductPage = () => {
             await setDoc(doc(fireDB, 'products', id), product);
             toast.success("Product Updated successfully");
             getAllProductFunction();
-            navigate('/admin-dashboard');
+            navigate('/adminProductPage');
         } catch (error) {
             console.log(error);
         } finally {
