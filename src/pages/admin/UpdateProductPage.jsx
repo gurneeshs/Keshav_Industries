@@ -131,6 +131,16 @@ const UpdateProductPage = () => {
 
                     <div className="mb-3">
                         <textarea
+                            value={product.sku}
+                            onChange={(e) => setProduct({ ...product, sku: e.target.value })}
+                            name="sku"
+                            placeholder="Product SKU"
+                            className="w-full px-2 py-1 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none placeholder-gray-300"
+                        ></textarea>
+                    </div>
+
+                    <div className="mb-3">
+                        <textarea
                             value={product.description}
                             onChange={(e) => setProduct({ ...product, description: e.target.value })}
                             name="description"
@@ -139,6 +149,7 @@ const UpdateProductPage = () => {
                             className="w-full px-2 py-1 text-gray-300 bg-customGray border border-gray-200 rounded-md outline-none placeholder-gray-300"
                         ></textarea>
                     </div>
+
 
                     <div className="mb-3">
                         <button
