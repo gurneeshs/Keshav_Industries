@@ -108,7 +108,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
           name: item.title,
           units: item.quantity,
           selling_price: item.price,
-          sku:"",
+          sku:item.sku,
         }));
         handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems);
       })

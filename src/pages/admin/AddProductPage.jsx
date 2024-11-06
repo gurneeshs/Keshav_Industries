@@ -25,6 +25,7 @@ const AddProductPage = () => {
         title: "",
         price: "",
         mrp: "",
+        sku: "",
         productImages: [], // Array to hold multiple images
         category: "Kash Products",
         description: "",
@@ -67,7 +68,7 @@ const AddProductPage = () => {
     };
 
     const addProductFunction = async () => {
-        if (!product.title || !product.price || !product.productImages.length || !product.category || !product.description) {
+        if (!product.title || !product.price || !product.sku || !product.productImages.length || !product.category || !product.description) {
             return toast.error("All fields are required");
         }
 
@@ -100,6 +101,7 @@ const AddProductPage = () => {
                 title: product.title,
                 price: product.price,
                 mrp: product.mrp,
+                sku: product.sku,
                 productImageUrls, // Store the array of optimized image URLs
                 category: product.category,
                 description: product.description,
@@ -164,6 +166,15 @@ const AddProductPage = () => {
                             placeholder='Product MRP'
                             className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
                         />
+                        <input
+                            type="text"
+                            name="sku"
+                            value={product.sku}
+                            onChange={(e) => setProduct({ ...product, sku: e.target.value })}
+                            placeholder='Product SKU'
+                            className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                        />
+
                     </div>
 
                     <div className="mb-3">
