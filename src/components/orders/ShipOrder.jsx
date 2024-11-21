@@ -69,7 +69,6 @@ const ShipOrder = () => {
 		);
 		setFilteredOrders(filtered);
 	};
-
 	return (
 		<motion.div
 			className='bg-customGray bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 my-3'
