@@ -45,7 +45,7 @@ const OrdersPage = () => {
 					</div> */}
 
 					<OrdersTable />
-					<ShipOrder />
+					{/* <ShipOrder /> */}
 				</main>
 			</div>
 
