@@ -135,6 +135,9 @@ const OrdersTable = () => {
 											Order Id
 										</th>
 										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+											Payment Id
+										</th>
+										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
 											Order Date
 										</th>
 										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
@@ -159,9 +162,9 @@ const OrdersTable = () => {
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
 												{order.order_id || "N/A"}
 											</td>
-											{/* <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
 												{order.payment_id || "N/A"}
-											</td> */}
+											</td>
 											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
 												{order.order_date || 0}
 											</td>
