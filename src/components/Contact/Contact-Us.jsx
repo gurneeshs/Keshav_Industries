@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../layout/Layout';
 import { fireDB } from '../../firebase/FirebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import NewLoader from '../loader/NewLoader';
 import toast from 'react-hot-toast';
@@ -43,6 +43,7 @@ const Contacts = () => {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
+          time : Timestamp.now(),
         }
         )
         toast.success("message sent successfully!")
@@ -107,7 +108,6 @@ const Contacts = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />

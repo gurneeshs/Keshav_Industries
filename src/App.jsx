@@ -44,6 +44,7 @@ import LecithinProductInfo from "./pages/productInfo/LecithinProductInfo";
 import AddExportProduct from "./pages/admin/AddExport";
 import Company from "./pages/company/Company";
 import UserLogin from "./pages/registration/UserLogin";
+import UserMessage from "./pages/admin/UserMessage";
 
 const App = () => {
   return (
@@ -101,6 +102,7 @@ const App = () => {
             </ProtectedRouteForAdmin>
           } />
           <Route path="/adminSalesPage" element={<SalesPage />} />
+          <Route path="/userMessages" element = {<UserMessage/> }/>
           <Route path="/adminAnalytics" element={<AnalyticsPage />} />
           <Route path="/adminProductPage" element={<ProductsPage />} />
           <Route path="/adminUserPage" element={<UsersPage />} />

@@ -4,8 +4,15 @@ import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { Button } from "@material-tailwind/react";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const OrdersTable = () => {
+	const contentStyle = { background: 'white' };
+	const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
+	const arrowStyle = { color: '#000' };
+
 	const context = useContext(myContext);
 	const { getAllProduct, getAllOrder, getAllUser } = context;
 
@@ -37,7 +44,7 @@ const OrdersTable = () => {
 					return {
 						id: doc.id,
 						order_id: orderDetails.OrderId || "N/A",
-						payment_id:orderDetails.PaymentID || "N/A",
+						payment_id: orderDetails.PaymentID || "N/A",
 						order_date: formatDateTime(orderDetails.Time),
 						pickup_location: "warehouse",
 						billing_customer_name: orderDetails.userInfo?.name || "N/A",
@@ -128,80 +135,80 @@ const OrdersTable = () => {
 							<p className='text-gray-100'>Sub Total: ${order.sub_total.toFixed(2)}</p>
 						</div> */}
 						<div className='overflow-x-auto'>
-							<table className='min-w-full divide-y divide-gray-700 bg-gray-800'>
+							<table className='min-w-full divide-y divide-gray-700 bg-customGray'>
 								<thead>
 									<tr>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Order Id
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Payment Id
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Order Date
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Customer Name
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Phone
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Address
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Email
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Sub Total
 										</th>
 									</tr>
 								</thead>
 								<tbody className='divide-y divide-gray-700'>
-										<tr>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.order_id || "N/A"}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.payment_id || "N/A"}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.order_date || 0}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.billing_customer_name || "N/A"}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.billing_phone || "N/A"}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-											{order.billing_address}, {order.billing_city}, {order.billing_state}, {order.billing_country}, {order.billing_pincode} 
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.billing_email}
-											</td>
-											<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
-												{order.sub_total || "N/A"}
-											</td>
+									<tr>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.order_id || "N/A"}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.payment_id || "N/A"}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.order_date || 0}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.billing_customer_name || "N/A"}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.billing_phone || "N/A"}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.billing_address}, {order.billing_city}, {order.billing_state}, {order.billing_country}, {order.billing_pincode}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.billing_email}
+										</td>
+										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-100'>
+											{order.sub_total || "N/A"}
+										</td>
 
-										</tr>
-									
+									</tr>
+
 								</tbody>
 							</table>
-						</div><br></br>
-						<p>Order Data</p><br></br>
+						</div>
 						{/* Nested table for order items */}
 						<div className='overflow-x-auto'>
-							<table className='min-w-full divide-y divide-gray-700 bg-gray-800'>
+							{/* <p>Order Data</p> */}
+							<table className='min-w-full divide-y divide-gray-700 bg-customGray'>
 								<thead>
 									<tr>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Product Name
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Quantity
 										</th>
-										<th className='px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider'>
+										<th className='px-6 py-3 text-left text-sm font-bold text-gray-300 uppercase tracking-wider'>
 											Price
 										</th>
 									</tr>
@@ -223,6 +230,20 @@ const OrdersTable = () => {
 								</tbody>
 							</table>
 						</div>
+						<Popup className="w-100 bg-red-200" trigger={<Button className="m-2 bg-green-500">Order Placed</Button>}
+							position="top center">
+							<div>
+								<div className="my-3">
+									<input type="text"  className="" placeholder="Enter Shiprocket ID" required />
+									<Button className="bg-blue-600" >Update Order</Button>
+								</div>
+
+							</div>
+						</Popup>
+
+
+						<Button className="m-2 bg-red-500">Cancel Order</Button>
+
 					</motion.div>
 				))}
 			</div>
