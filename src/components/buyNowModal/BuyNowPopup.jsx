@@ -17,6 +17,7 @@ import { fireDB, auth } from "../../firebase/FirebaseConfig";
 import myContext from "../../context/myContext";
 // import { CircularProgress } from "@material-ui/core";
 import NewLoader from "../loader/NewLoader";
+import toast from "react-hot-toast";
 
 
 const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
@@ -169,6 +170,10 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     e.preventDefault(); // Prevent any default action
     if (isFormValid()) {
       createRazorpayOrder(amount);
+    }
+    else{
+      toast.error("Error in creating order");
+      setLoading(false);
     }
     // dispatch(clearCart());
   };
