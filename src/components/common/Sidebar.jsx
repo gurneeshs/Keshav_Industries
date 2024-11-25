@@ -1,4 +1,4 @@
-import { BarChart2, DollarSign, Home, LogOut, Menu, Settings, ShoppingBag, ShoppingCart, MessageCircle } from "lucide-react";
+import { BarChart2, DollarSign, Home, LogOut, Menu, Settings,Repeat, PauseCircle, ShoppingBag, ShoppingCart, MessageCircle, BriefcaseBusiness, ClipboardCheck } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,8 +7,11 @@ const SIDEBAR_ITEMS = [
 	{ name: "Home", icon: Home, color: "#34D399", href: "/" },
 	{ name: "Overview", icon: BarChart2, color: "#6366f1", href: "/admin-dashboard" },
 	{ name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/adminProductPage" },
-	{ name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/adminOrders" },
-	{ name: "User Messages", icon: MessageCircle, color: "#10B981", href: "/userMessages" },
+	{ name: "Pending Orders", icon: PauseCircle, color: "#F59E0B", href: "/adminOrders" },
+	{ name: "InProgress Orders", icon: Repeat, color: "#EF4444", href: "/admininProgressOrders" },
+	{ name: "Completed Orders", icon: ClipboardCheck, color: "#34D399", href: "/adminCompletedOrders" },
+	{ name: "User Messages", icon: MessageCircle, color: "#6366f1", href: "/userMessages" },
+	{ name: "Carrer", icon: BriefcaseBusiness, color: "#F59E0B", href: "/userCarrer" },
 	// { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
 ];
 
@@ -30,7 +33,7 @@ const Sidebar = () => {
 			}`}
 			animate={{ width: isSidebarOpen ? 256 : 80 }}
 		>
-			<div className='h-full bg-customGray bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700'>
+			<div className='h-full bg-customGray bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-gray-700 overflow-y-scroll'>
 				<motion.button
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}
