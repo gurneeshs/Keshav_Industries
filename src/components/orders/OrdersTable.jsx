@@ -3,80 +3,170 @@ import myContext from "../../context/myContext";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, getDoc, deleteDoc, addDoc, Timestamp } from "firebase/firestore";
 import { Button } from "@material-tailwind/react";
-import Popup from 'reactjs-popup';
+// import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import toast from "react-hot-toast";
+import NewLoader from "../loader/NewLoader";
+
+const Popup = ({ show, onClose, onUpdate, orderId, loading }) => {
+	const [shipmentID, setshipmentId] = useState("");
+	// console.log(orderId);
+
+	if (!show) return null;
+
+	return (
+		<div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+			<div className="bg-customGray bg-opacity-30 rounded-lg shadow-lg p-6 w-80">
+				<h2 className="text-xl font-bold mb-4 text-center">Order Update</h2>
+				<label htmlFor="orderId" className="block text-sm font-medium text-white">
+					Shipment ID:
+				</label>
+				<input
+					type="text"
+					id="orderId"
+					className="mt-1 p-2 text-black block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+					value={shipmentID}
+					onChange={(e) => setshipmentId(e.target.value)}
+					placeholder="Enter Order ID"
+				/>
+				<div className="mt-6 flex justify-end space-x-4">
+					<button
+						className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+						onClick={() => {
+							onUpdate(orderId, shipmentID);
+							// onClose();
+						}}
+						disabled={loading}
+					>
+						{loading ? "Updating..." : "Update"}
+					</button>
+					<button
+						className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
+						onClick={onClose}
+					>
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 const OrdersTable = () => {
-	const contentStyle = { background: 'white' };
-	const overlayStyle = { background: 'rgba(0,0,0,0.5)' };
-	const arrowStyle = { color: '#000' };
 
 	const context = useContext(myContext);
 	const { getAllProduct, getAllOrder, getAllUser } = context;
 
+
 	const [orderData, setOrderData] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredOrders, setFilteredOrders] = useState([]);
+	const [isPopupVisible, setIsPopupVisible] = useState(false);
+	const [selectedOrderId, setSelectedOrderId] = useState(null);
+	const [selectedStatus, setSelectedStatus] = useState("Pending");
+	const [loading, setLoading] = useState(false);
+
+
+
+	async function fetchOrders() {
+		try {
+			const paymentsCollection = collection(fireDB, "payments");
+			const querySnapshot = await getDocs(paymentsCollection);
+
+			const fetchedOrders = querySnapshot.docs.map((doc) => {
+				const orderDetails = doc.data();
+
+				const totalCost = orderDetails.Order
+					? orderDetails.Order.reduce(
+						(sum, item) => sum + (item.units * item.selling_price || 0),
+						0
+					)
+					: 0;
+
+				return {
+					id: doc.id,
+					order_id: orderDetails.OrderId || "N/A",
+					payment_id: orderDetails.PaymentID || "N/A",
+					order_date: formatDateTime(orderDetails.Time),
+					pickup_location: "warehouse",
+					billing_customer_name: orderDetails.userInfo?.name || "N/A",
+					billing_last_name: orderDetails.userInfo?.lastName || "N/A",
+					billing_address: orderDetails.userInfo?.addressLane || "N/A",
+					billing_city: orderDetails.userInfo?.city || "N/A",
+					billing_pincode: orderDetails.userInfo?.pincode || "N/A",
+					billing_state: orderDetails.userInfo?.state || "N/A",
+					billing_country: orderDetails.userInfo?.country || "N/A",
+					billing_email: orderDetails.userInfo?.email || "N/A",
+					billing_phone: orderDetails.userInfo?.phone || "N/A",
+					shipping_is_billing: true,
+					order_items: orderDetails.Order || [],
+					payment_method: "prepaid",
+					sub_total: totalCost,
+					length: orderDetails.length || "N/A",
+					breadth: orderDetails.breadth || "N/A",
+					height: orderDetails.height || "N/A",
+					weight: orderDetails.weight || "N/A",
+				};
+			});
+
+			setOrderData(fetchedOrders);
+			setFilteredOrders(fetchedOrders);
+			// console.log(fetchedOrders)
+		} catch (error) {
+			console.error("Error fetching orders: ", error);
+		}
+	}
+
+	useEffect(() => {
+		fetchOrders();
+	}, [])
+
+
+
+	const handleUpdate = async (orderId, shipmentId) => {
+		setLoading(true);
+		try {
+			// Reference to the specific document in the Firestore collection
+			const orderRef = doc(fireDB, "payments", orderId);
+			const progressCollectionRef = collection(fireDB, "progress");
+
+			// Get the document data
+			const orderDoc = await getDoc(orderRef);
+
+			if (orderDoc.exists()) {
+				const orderData = orderDoc.data();
+				const currentTime = Timestamp.now();
+
+				// Add the document to the progress collection with the updated fields
+				await addDoc(progressCollectionRef, {
+					...orderData,
+					Status: "InProgress",
+					shipmentID: shipmentId,
+					updatedAt:currentTime,
+				});
+				await deleteDoc(orderRef);
+				// Update the status field to "inProgress"
+			}
+			setSelectedOrderId(null);
+			toast.success('Order Updated Successfully');
+			await fetchOrders();
+		} catch (error) {
+			toast.error(`Error in updating Order : ${error}`)
+			console.log(error);
+		} finally {
+			setLoading(false); // Set loading to false
+			setIsPopupVisible(false);
+		}
+	};
 
 	const formatDateTime = (timestamp) => {
 		if (!timestamp) return "N/A";
 		return timestamp.toDate().toLocaleString();
 	};
 
-	useEffect(() => {
-		async function fetchOrders() {
-			try {
-				const paymentsCollection = collection(fireDB, "payments");
-				const querySnapshot = await getDocs(paymentsCollection);
 
-				const fetchedOrders = querySnapshot.docs.map((doc) => {
-					const orderDetails = doc.data();
-
-					const totalCost = orderDetails.Order
-						? orderDetails.Order.reduce(
-							(sum, item) => sum + (item.units * item.selling_price || 0),
-							0
-						)
-						: 0;
-
-					return {
-						id: doc.id,
-						order_id: orderDetails.OrderId || "N/A",
-						payment_id: orderDetails.PaymentID || "N/A",
-						order_date: formatDateTime(orderDetails.Time),
-						pickup_location: "warehouse",
-						billing_customer_name: orderDetails.userInfo?.name || "N/A",
-						billing_last_name: orderDetails.userInfo?.lastName || "N/A",
-						billing_address: orderDetails.userInfo?.addressLane || "N/A",
-						billing_city: orderDetails.userInfo?.city || "N/A",
-						billing_pincode: orderDetails.userInfo?.pincode || "N/A",
-						billing_state: orderDetails.userInfo?.state || "N/A",
-						billing_country: orderDetails.userInfo?.country || "N/A",
-						billing_email: orderDetails.userInfo?.email || "N/A",
-						billing_phone: orderDetails.userInfo?.phone || "N/A",
-						shipping_is_billing: true,
-						order_items: orderDetails.Order || [],
-						payment_method: "prepaid",
-						sub_total: totalCost,
-						length: orderDetails.length || "N/A",
-						breadth: orderDetails.breadth || "N/A",
-						height: orderDetails.height || "N/A",
-						weight: orderDetails.weight || "N/A",
-					};
-				});
-
-				setOrderData(fetchedOrders);
-				setFilteredOrders(fetchedOrders);
-				console.log(fetchedOrders)
-			} catch (error) {
-				console.error("Error fetching orders: ", error);
-			}
-		}
-
-		fetchOrders();
-	}, []);
 
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
@@ -89,6 +179,13 @@ const OrdersTable = () => {
 		);
 		setFilteredOrders(filtered);
 	};
+
+	const handleOrderPlaced = (orderId) => {
+		setSelectedOrderId(orderId);
+		setIsPopupVisible(true);
+	};
+
+
 
 	return (
 		<motion.div
@@ -112,6 +209,7 @@ const OrdersTable = () => {
 			</div>
 			<div className='space-y-4'>
 				{filteredOrders.map((order) => (
+
 					<motion.div
 						key={order.id}
 						className='bg-customGray rounded-lg p-4 shadow-md border'
@@ -119,21 +217,6 @@ const OrdersTable = () => {
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3 }}
 					>
-						{/* <div className='mb-4'>
-							<p className='text-gray-100 font-semibold'>Order ID: {order.order_id}</p>
-							<p className='text-gray-100'>Order Date: {order.order_date}</p>
-							<p className='text-gray-100'>
-								Customer Name: {order.billing_customer_name}
-							</p>
-							<p className='text-gray-100'>Phone: {order.billing_phone}</p>
-							<p className='text-gray-100'>
-								Address: {order.billing_address}, {order.billing_city},{" "}
-								{order.billing_state}, {order.billing_country},{" "}
-								{order.billing_pincode}
-							</p>
-							<p className='text-gray-100'>Email: {order.billing_email}</p>
-							<p className='text-gray-100'>Sub Total: ${order.sub_total.toFixed(2)}</p>
-						</div> */}
 						<div className='overflow-x-auto'>
 							<table className='min-w-full divide-y divide-gray-700 bg-customGray'>
 								<thead>
@@ -230,23 +313,20 @@ const OrdersTable = () => {
 								</tbody>
 							</table>
 						</div>
-						<Popup className="w-100 bg-red-200" trigger={<Button className="m-2 bg-green-500">Order Placed</Button>}
-							position="top center">
-							<div>
-								<div className="my-3">
-									<input type="text"  className="" placeholder="Enter Shiprocket ID" required />
-									<Button className="bg-blue-600" >Update Order</Button>
-								</div>
-
-							</div>
-						</Popup>
-
-
+						<Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id)}>Order Placed</Button>
+						<Popup
+							show={isPopupVisible}
+							onClose={() => setIsPopupVisible(false)}
+							onUpdate={handleUpdate}
+							orderId={selectedOrderId}
+							loading={loading}
+						/>
 						<Button className="m-2 bg-red-500">Cancel Order</Button>
 
 					</motion.div>
 				))}
 			</div>
+
 		</motion.div>
 	);
 };

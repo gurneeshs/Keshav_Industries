@@ -18,7 +18,7 @@ const UserCarrer = () => {
     useEffect(() => {
         async function fetchMessage() {
             try {
-                const messagesCollection = collection(fireDB, 'Messages')
+                const messagesCollection = collection(fireDB, 'Carrer')
                 const querySnapshot = await getDocs(messagesCollection);
 
                 const fetchMessages = querySnapshot.docs.map((doc) => {
@@ -39,7 +39,7 @@ const UserCarrer = () => {
     return (
         <AdminLayout>
             <div className='flex-1 overflow-auto relative z-10'>
-                <Header title='User Messages' />
+                <Header title='Carrer' />
                 <motion.div
                     className='bg-customGray bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl p-6 border border-gray-700 mb-8 mx-5 my-5'
                     initial={{ opacity: 0, y: 20 }}
@@ -47,7 +47,7 @@ const UserCarrer = () => {
                     transition={{ delay: 0.2 }}
                 >
                     <div className='flex justify-between items-center mb-6'>
-                        <h2 className='text-xl font-semibold text-gray-100'>User Messages</h2>
+                        <h2 className='text-xl font-semibold text-gray-100'>Applications for Jobs</h2>
 
                         {/* <div className='relative'>
 
