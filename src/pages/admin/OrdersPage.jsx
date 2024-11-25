@@ -3,23 +3,16 @@ import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import Header from "../../components/common/Header";
 import StatCard from "../../components/common/StatCard";
-import DailyOrders from "../../components/orders/DailyOrders";
-import OrderDistribution from "../../components/orders/OrderDistribution";
 import OrdersTable from "../../components/orders/OrdersTable";
 import AdminLayout from "../../components/layout/AdminLayout";
-import ShipOrder from "../../components/orders/ShipOrder";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import { useState } from "react";
-const orderStats = {
-	totalOrders: "1,234",
-	pendingOrders: "56",
-	completedOrders: "1,178",
-	totalRevenue: "$98,765",
-};
 
 const OrdersPage = () => {
 	const orderDB = collection(fireDB, 'payments');
+	const inProgressorderDB = collection(fireDB, 'progress');
+	const completedorderDB = collection(fireDB, 'completed');
 
 	const [totalOrder, settotalOrder] = useState();
 	const [incompleteOrder, setincompleteOrder] = useState(0);
@@ -28,26 +21,22 @@ const OrdersPage = () => {
 
 	async function OrderLength() {
 		
-		const q1 = query(orderDB, where("Status", "==", "Pending"));
-		const q2 = query(orderDB, where("Status", "==", "InProgress"));
-		const q3 = query(orderDB, where("Status", "==", "Completed"));
 
 		const snapshot1 = await getDocs(orderDB);
-		const snapshot2 = await getDocs(q1);
-		const snapshot3 = await getDocs(q2);
-		const snapshot4 = await getDocs(q3);
+		const snapshot2 = await getDocs(inProgressorderDB);
+		const snapshot3 = await getDocs(completedorderDB);
 
-		settotalOrder(snapshot1.size);
-		setincompleteOrder(snapshot2.size);
-		setinprogressOrder(snapshot3.size);
-		setcompleteOrder(snapshot4.size);
+		settotalOrder(snapshot1.size + snapshot2.size + snapshot3.size);
+		setincompleteOrder(snapshot1.size);
+		setinprogressOrder(snapshot2.size);
+		setcompleteOrder(snapshot3.size);
 	}
 
 	OrderLength();
 	return (
 		<AdminLayout>
 			<div className='flex-1 relative z-10 overflow-auto'>
-				<Header title={"Orders"} />
+				<Header title={"Pending Orders"} />
 
 				<main className='max-w-7xl mx-auto py-6 px-4 lg:px-8'>
 					<motion.div
@@ -57,12 +46,12 @@ const OrdersPage = () => {
 						transition={{ duration: 1 }}
 					>
 						<StatCard name='Total Orders' icon={ShoppingBag} value={<CountUp duration={3.75} end={totalOrder} />} color='#6366F1' />
-						<StatCard name='Pending Orders' icon={Clock} value={incompleteOrder} color='#F59E0B' />
-						<StatCard name='In Progress Orders' icon={RotateCw} value={inprogressOrder} color='#EF4444' />
+						<StatCard name='Pending Orders' icon={Clock} value={<CountUp duration={3.75} end={incompleteOrder} />} color='#F59E0B' />
+						<StatCard name='In Progress Orders' icon={RotateCw} value={<CountUp duration={3.75} end={inprogressOrder} />} color='#EF4444' />
 						<StatCard
 							name='Completed Orders'
 							icon={CheckCircle}
-							value={completeOrder}
+							value={<CountUp duration={3.75} end={completeOrder} />}
 							color='#10B981'
 						/>
 					</motion.div>

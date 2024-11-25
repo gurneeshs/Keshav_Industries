@@ -45,6 +45,9 @@ import AddExportProduct from "./pages/admin/AddExport";
 import Company from "./pages/company/Company";
 import UserLogin from "./pages/registration/UserLogin";
 import UserMessage from "./pages/admin/UserMessage";
+import UserCarrer from "./pages/admin/UserCarrer";
+import ProgressOrder from "./pages/admin/ProgressOrder";
+import CompletedOrder from "./pages/admin/CompletedOrder";
 
 const App = () => {
   return (
@@ -103,11 +106,14 @@ const App = () => {
           } />
           <Route path="/adminSalesPage" element={<SalesPage />} />
           <Route path="/userMessages" element = {<UserMessage/> }/>
+          <Route path="/userCarrer" element = {<UserCarrer/> }/>
           <Route path="/adminAnalytics" element={<AnalyticsPage />} />
           <Route path="/adminProductPage" element={<ProductsPage />} />
           <Route path="/adminUserPage" element={<UsersPage />} />
           <Route path="/adminSettings" element={<SettingsPage />} />
           <Route path="/adminOrders" element={<OrdersPage />} />
+          <Route path="/admininProgressOrders" element={<ProgressOrder />} />
+          <Route path="/adminCompletedOrders" element={<CompletedOrder />} />
           <Route path="/terms" element={<TermsOfUse />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/cancellation" element={<Shipping />} />
