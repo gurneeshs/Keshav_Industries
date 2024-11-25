@@ -1,4 +1,4 @@
-import { BarChart2, DollarSign, Home, LogOut, Menu, Settings, ShoppingBag, ShoppingCart } from "lucide-react";
+import { BarChart2, DollarSign, Home, LogOut, Menu, Settings, ShoppingBag, ShoppingCart, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,8 +7,8 @@ const SIDEBAR_ITEMS = [
 	{ name: "Home", icon: Home, color: "#34D399", href: "/" },
 	{ name: "Overview", icon: BarChart2, color: "#6366f1", href: "/admin-dashboard" },
 	{ name: "Products", icon: ShoppingBag, color: "#8B5CF6", href: "/adminProductPage" },
-	// { name: "Sales", icon: DollarSign, color: "#10B981", href: "/adminSalesPage" },
 	{ name: "Orders", icon: ShoppingCart, color: "#F59E0B", href: "/adminOrders" },
+	{ name: "User Messages", icon: MessageCircle, color: "#10B981", href: "/userMessages" },
 	// { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
 ];
 

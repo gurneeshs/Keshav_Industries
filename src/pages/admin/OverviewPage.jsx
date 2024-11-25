@@ -8,12 +8,23 @@ import CategoryDistributionChart from "../../components/overview/CategoryDistrib
 import SalesChannelChart from "../../components/overview/SalesChannelChart";
 import AdminLayout from "../../components/layout/AdminLayout";
 import CountUp from "react-countup";
-
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { getDocs, collection } from "firebase/firestore";
 const OverviewPage = () => {
+	const orderDB = collection(fireDB, 'payments');
 	const context = useContext(myContext);
 	const { getAllProduct, getAllOrder, getAllUser } = context;
 	const [totalSalesInINR, setTotalSalesInINR] = useState(0);
 	const [totalSales, setTotalSales] = useState(0);
+	const [orderlength, setOrderLength] = useState();
+
+	async function OrderLength(){
+		const snapshot = await getDocs(orderDB);
+		setOrderLength(snapshot.size);
+	}
+
+	OrderLength();
+
 
 	// console.log(getAllProduct)
 	useEffect(() => {
@@ -64,7 +75,7 @@ const OverviewPage = () => {
 						<StatCard name='Total Product Sales' icon={Zap} value={<CountUp duration={5.75} end={totalSales} />} color='#6366F1' />
 						<StatCard name='Total Sales in INR' icon={Users} value={<CountUp duration={5.75} end={totalSalesInINR} />} color='#8B5CF6' />
 						<StatCard name='Total Products' icon={ShoppingBag} value={<CountUp duration={5.75} end={getAllProduct.length} />} color='#EC4899' />
-						<StatCard name='Conversion Rate%' icon={BarChart2} value={<CountUp duration={5.75} end={2500} />} color='#10B981' />
+						<StatCard name='Total Orders' icon={BarChart2} value={<CountUp duration={5.75} end={orderlength} />} color='#10B981' />
 					</motion.div>
 
 					{/* CHARTS */}

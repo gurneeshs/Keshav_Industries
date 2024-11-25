@@ -56,7 +56,7 @@ function MyState({ children }) {
             );
             const data = onSnapshot(q, (QuerySnapshot) => {
                 let orderArray = [];
-                console.log(QuerySnapshot)
+                // console.log(QuerySnapshot)
                 QuerySnapshot.forEach((doc) => {
                     orderArray.push({ ...doc.data(), id: doc.id });
                 });

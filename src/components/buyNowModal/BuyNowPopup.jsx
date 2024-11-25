@@ -143,6 +143,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
           Signature: response.razorpay_signature,
           Order: orderItems,
           Time: currentTime,
+          Status: 'Pending'
         });
         await updateFirebaseAfterPayment(cartItems, amount);
         dispatch(clearCart());

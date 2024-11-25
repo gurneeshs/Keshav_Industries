@@ -1,6 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Layout from '../../components/layout/Layout';
+import { fireDB } from '../../firebase/FirebaseConfig';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { useState } from 'react';
+import NewLoader from '../../components/loader/NewLoader';
+import toast from 'react-hot-toast';
+const departments = [
+  'HR',
+  'Marketing',
+  'Sales',
+  'IT',
+  'Finance',
+  'Operations',
+  'Management',
+  'Research and Development',
+  'Customer Support'
+];
 
 const Carrer = () => {
   const animationVariants = {
@@ -17,6 +33,61 @@ const Carrer = () => {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0 },
   };
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
+    department: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const isFormValid = () => {
+    return Object.values(formData).every((value) => value.trim() !== '');
+  };
+
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault(); // Prevent any default action
+    if (isFormValid()) {
+      const messageRef = collection(fireDB, 'Carrer');
+      try {
+        await addDoc(messageRef, {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          department:formData.department,
+          time: Timestamp.now(),
+        }
+        )
+        toast.success("message sent successfully!")
+        setLoading(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          message: ''
+        })
+
+      } catch (error) {
+        toast.error(error);
+        setLoading(false);
+      }
+      // createRazorpayOrder(amount);
+    }
+    // dispatch(clearCart());
+  };
+
+
 
   return (
     <Layout>
@@ -49,35 +120,68 @@ const Carrer = () => {
               <input
                 type="text"
                 placeholder="First name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />
               <input
                 type="text"
                 placeholder="Last name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />
               <input
                 type="email"
                 placeholder="Your Email Address"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />
               <input
                 type="text"
                 placeholder="Phone Number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               />
+              <select
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              >
+                <option value="">Select Department</option>
+                {departments.map((department) => (
+                  <option key={department} value={department}>
+                    {department}
+                  </option>
+                ))}
+              </select>
               <textarea
                 placeholder="Message (Optional)"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               ></textarea>
               <button
                 type="submit"
-                className="w-full py-3 bg-eda72f text-white font-bold rounded-lg hover:bg-ffab19"
+                // className="w-full py-3 bg-eda72f text-white font-bold rounded-lg hover:bg-ffab19"
+                className={` w-full py-3 px-4 rounded-lg ${isFormValid() ? 'bg-orange-500 text-white' : 'bg-orange-100 text-white cursor-not-allowed'}`}
+
+                onClick={handleSubmit}
+                disabled={!isFormValid()}
+
               >
-                Submit
+                {loading ? <NewLoader /> : 'Submit'}
               </button>
             </form>
           </motion.div>
