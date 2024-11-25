@@ -166,7 +166,7 @@ const Carrer = () => {
                 ))}
               </select>
               <textarea
-                placeholder="Message (Optional)"
+                placeholder="Message"
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
