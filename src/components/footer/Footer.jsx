@@ -95,8 +95,8 @@ const Footer = () => {
                                         <ul className="mt-2 space-y-2">
                                             <li><i className="bi bi-linkedin text-blue-600"></i><a href="#" className="text-blue-400 hover:underline ml-2">LinkedIn</a></li>
                                             <li><i className="bi bi-whatsapp text-green-600"></i><a href="https://wa.me/" className="text-blue-400 hover:underline ml-2">WhatsApp</a></li>
-                                            <li><i className="bi bi-instagram text-pink-600"></i><a href="#" className="text-blue-400 hover:underline ml-2">Instagram</a></li>
-                                            <li><i className="bi bi-facebook text-blue-600"></i><a href="#" className="text-blue-400 hover:underline ml-2">Facebook</a></li>
+                                            <li><i className="bi bi-instagram text-pink-600"></i><a href="https://www.instagram.com/industries.keshav/" className="text-blue-400 hover:underline ml-2">Instagram</a></li>
+                                            <li><i className="bi bi-facebook text-blue-600"></i><a href="https://www.facebook.com/share/19dyzFGvSe/?mibextid=LQQJ4d" className="text-blue-400 hover:underline ml-2">Facebook</a></li>
                                             <li><i className="bi bi-twitter text-blue-400"></i><a href="#" className="text-blue-400 hover:underline ml-2">Twitter</a></li>
                                         </ul>
                                     </div>
