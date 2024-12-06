@@ -106,6 +106,17 @@ const UpdateProductPage = () => {
 
                     <div className="mb-3">
                         <input
+                            type="number"
+                            name="mrp"
+                            value={product.mrp}
+                            onChange={(e) => setProduct({ ...product, mrp: e.target.value })}
+                            placeholder='Product MRP'
+                            className='bg-customGray border text-gray-300 border-gray-200 px-2 py-2 rounded-md outline-none placeholder-gray-300 w-full'
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <input
                             type="text"
                             name="productImageUrl"
                             value={product.productImageUrl}
