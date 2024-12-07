@@ -80,12 +80,12 @@ const UserCarrer = () => {
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Email</th>
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Phone</th>
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Message</th>
+                                    <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Resume</th>
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Time</th>
-                                    <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Action</th>
 
                                 </tr>
                                 {message.map((item, index) => {
-                                    const { firstName, lastName, email, phone, message, time } = item
+                                    const { firstName, lastName, email, phone, message, time, resumeUrl } = item
                                     return (
                                         <tr key={index} className="">
                                             <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
@@ -107,10 +107,16 @@ const UserCarrer = () => {
                                                 {message}
                                             </td>
                                             <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500  ">
-                                                {formatDateTime(time)}
+                                                <a
+                                                    href = {`${resumeUrl}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    Open PDF
+                                                </a>
                                             </td>
                                             <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500  ">
-                                                <Button className='bg-green-500'>Seen</Button>
+                                                {formatDateTime(time)}
                                             </td>
 
 

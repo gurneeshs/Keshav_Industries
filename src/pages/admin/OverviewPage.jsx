@@ -12,6 +12,9 @@ import { fireDB } from "../../firebase/FirebaseConfig";
 import { getDocs, collection } from "firebase/firestore";
 const OverviewPage = () => {
 	const orderDB = collection(fireDB, 'payments');
+	const inProgressorderDB = collection(fireDB, 'progress');
+	const completedorderDB = collection(fireDB, 'completed');
+
 	const context = useContext(myContext);
 	const { getAllProduct, getAllOrder, getAllUser } = context;
 	const [totalSalesInINR, setTotalSalesInINR] = useState(0);
@@ -19,8 +22,10 @@ const OverviewPage = () => {
 	const [orderlength, setOrderLength] = useState();
 
 	async function OrderLength(){
-		const snapshot = await getDocs(orderDB);
-		setOrderLength(snapshot.size);
+		const snapshot1 = await getDocs(orderDB);
+		const snapshot2 = await getDocs(inProgressorderDB);
+		const snapshot3 = await getDocs(completedorderDB);
+		setOrderLength(snapshot1.size + snapshot2.size + snapshot3.size);
 	}
 
 	OrderLength();
