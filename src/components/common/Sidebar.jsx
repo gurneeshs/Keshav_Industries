@@ -10,7 +10,7 @@ const SIDEBAR_ITEMS = [
 	{ name: "Pending Orders", icon: PauseCircle, color: "#F59E0B", href: "/adminOrders" },
 	{ name: "InProgress Orders", icon: Repeat, color: "#EF4444", href: "/admininProgressOrders" },
 	{ name: "Completed Orders", icon: ClipboardCheck, color: "#34D399", href: "/adminCompletedOrders" },
-	{ name: "User Messages", icon: MessageCircle, color: "#6366f1", href: "/userMessages" },
+	{ name: "Contact Us", icon: MessageCircle, color: "#6366f1", href: "/userMessages" },
 	{ name: "Carrer", icon: BriefcaseBusiness, color: "#F59E0B", href: "/userCarrer" },
 	// { name: "Settings", icon: Settings, color: "#6EE7B7", href: "/adminSettings" },
 ];
