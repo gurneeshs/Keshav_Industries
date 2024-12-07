@@ -86,7 +86,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     });
   };
 
-  const createRazorpayOrder = (amount) => {
+  const createRazorpayOrder = async (amount) => {
     let data = JSON.stringify({
       amount: amount * 100, // Convert amount to paise
       currency: 'INR',
@@ -109,12 +109,14 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
           name: item.title,
           units: item.quantity,
           selling_price: item.price,
-          sku:item.sku,
+          sku: item.sku,
         }));
         handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems);
       })
       .catch((error) => {
         console.log('Error creating Razorpay order:', error);
+        toast.error("Error in creating order");
+        setLoading(false);
       });
   };
 
@@ -135,21 +137,27 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
       description: 'Payment to Keshav Industries',
       order_id: orderid,
       handler: async function (response) {
-        const paymentRef = collection(fireDB, 'payments');
-        const currentTime = Timestamp.now();
-        await addDoc(paymentRef, {
-          userInfo: formData,
-          PaymentID: response.razorpay_payment_id,
-          OrderId: response.razorpay_order_id,
-          Signature: response.razorpay_signature,
-          Order: orderItems,
-          Time: currentTime,
-          Status: 'Pending'
-        });
-        await updateFirebaseAfterPayment(cartItems, amount);
-        dispatch(clearCart());
+        try {
+          const paymentRef = collection(fireDB, 'payments');
+          const currentTime = Timestamp.now();
+          await addDoc(paymentRef, {
+            userInfo: formData,
+            PaymentID: response.razorpay_payment_id,
+            OrderId: response.razorpay_order_id,
+            Signature: response.razorpay_signature,
+            Order: orderItems,
+            Time: currentTime,
+            Status: 'Pending'
+          });
+          await updateFirebaseAfterPayment(cartItems, amount);
+          dispatch(clearCart());
+          navigate('/thankyoupage');
 
-        navigate('/thankyoupage');
+        } catch (error) {
+          console.error("Error during payment response handling:", error);
+          toast.error("Payment failed. Please contact support.");
+          setLoading(false); // Reset loading on failure
+        }
       },
       prefill: {
         name: formData.name,
@@ -171,7 +179,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     if (isFormValid()) {
       createRazorpayOrder(amount);
     }
-    else{
+    else {
       toast.error("Error in creating order");
       setLoading(false);
     }
@@ -265,7 +273,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
             className={`py-2 px-4 rounded ${isFormValid() ? 'bg-blue-900 text-white' : 'bg-gray-600 text-gray-100 cursor-not-allowed'}`}
             disabled={!isFormValid()}
           >
-            {loading ? <NewLoader/>  : 'Next'}
+            {loading ? <NewLoader /> : 'Next'}
           </button>
         </div>
       </div>

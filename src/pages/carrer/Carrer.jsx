@@ -6,6 +6,7 @@ import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import NewLoader from '../../components/loader/NewLoader';
 import toast from 'react-hot-toast';
+import cloudinary from '../../config/cloudinary';
 const departments = [
   'HR',
   'Marketing',
@@ -34,6 +35,13 @@ const Carrer = () => {
     visible: { opacity: 1, x: 0 },
   };
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null); // File state
+  const [resumeUrl, setResumeUrl] = useState('');
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]); // Set the selected file
+  };
+
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -49,13 +57,47 @@ const Carrer = () => {
     setFormData({ ...formData, [name]: value });
   };
   const isFormValid = () => {
-    return Object.values(formData).every((value) => value.trim() !== '');
+    return Object.values(formData).every((value) => value.trim() !== '') && file !== null;
+  };
+
+  const uploadFileToCloudinary = async () => {
+    if (!file) {
+      toast.error('Please select a file');
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'file_upload');
+
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudinary.config().cloud_name}/raw/upload`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.secure_url) {
+        setResumeUrl(data.secure_url); // Store the uploaded file URL
+        return data.secure_url;
+      } else {
+        throw new Error('File upload failed');
+      }
+    } catch (error) {
+      toast.error('Error uploading file: ' + error.message);
+      return null;
+    }
   };
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault(); // Prevent any default action
     if (isFormValid()) {
+      const fileUrl = await uploadFileToCloudinary(); // Upload file to Cloudinary
+      if (!fileUrl) {
+        setLoading(false);
+        return;
+      }
       const messageRef = collection(fireDB, 'Carrer');
       try {
         await addDoc(messageRef, {
@@ -64,12 +106,14 @@ const Carrer = () => {
           email: formData.email,
           phone: formData.phone,
           message: formData.message,
-          department:formData.department,
+          department: formData.department,
           time: Timestamp.now(),
+          resumeUrl: fileUrl,
         }
         )
         toast.success("message sent successfully!")
         setLoading(false);
+        setFile(null);
         setFormData({
           firstName: '',
           lastName: '',
@@ -172,6 +216,12 @@ const Carrer = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg"
               ></textarea>
+               <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              />
               <button
                 type="submit"
                 // className="w-full py-3 bg-eda72f text-white font-bold rounded-lg hover:bg-ffab19"

@@ -55,7 +55,7 @@ const ProductInfo = () => {
     };
     const addCart = (item) => {
         dispatch(addToCart(item));
-        toast.success("Added to cart");
+        // toast.success("Added to cart");
     };
 
     const deleteCart = (item) => {

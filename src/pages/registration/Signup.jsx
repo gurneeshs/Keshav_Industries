@@ -72,12 +72,13 @@ const Signup = () => {
                 pincode: "",
                 city: "",
                 state: "",
-                country: ""
+                country: "",
+                role:"user"
             });
 
             toast.success("Signup Successfully");
             setLoading(false);
-            navigate('/login');
+            navigate('/userlogin');
         } catch (error) {
             console.log(error);
             setLoading(false);
