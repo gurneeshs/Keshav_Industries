@@ -7,10 +7,14 @@ import { auth, fireDB } from "../../firebase/FirebaseConfig";
 import Loader from "../../components/loader/Loader";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import Layout from '../../components/layout/Layout';
+import NewLoader from "../../components/loader/NewLoader";
 
 const UserLogin = () => {
     const context = useContext(myContext);
     const { loading, setLoading } = context;
+    const [buttonloading, setButtonLoading] = useState(false);
+
+
 
     const navigate = useNavigate();
 
@@ -20,8 +24,10 @@ const UserLogin = () => {
     });
 
     const userLoginFunction = async () => {
+        setButtonLoading(true);
         if (userLogin.email === "" || userLogin.password === "") {
             toast.error("All Fields are required");
+            setButtonLoading(false);
             return;
         }
 
@@ -36,10 +42,11 @@ const UserLogin = () => {
             const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
                 let user;
                 QuerySnapshot.forEach((doc) => user = doc.data());
-                localStorage.setItem("users", JSON.stringify(user));
+                localStorage.setItem("users", JSON.stringify({uid: user.uid, role:user.role, name:user.name, email:user.email, date:user.date}));
                 setUserLogin({ email: "", password: "" });
                 toast.success("Login Successfully");
                 setLoading(false);
+                setButtonLoading(false);
                 if (user.role === "admin") {
                     navigate('/admin-dashboard');
                 } else {
@@ -50,6 +57,7 @@ const UserLogin = () => {
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setButtonLoading(false);
             toast.error("Login Failed");
         }
     };
@@ -57,7 +65,7 @@ const UserLogin = () => {
     return (
         <Layout>
             <div className='flex justify-center items-center min-h-screen relative'>
-                {loading && <Loader />}
+                {loading && <NewLoader />}
                 {/* Background Image */}
                 <div className="absolute inset-0 bg-[url('../img/bg-image-1.jpg')] bg-cover bg-center"></div>
                 {/* Login Form */}
@@ -113,9 +121,12 @@ const UserLogin = () => {
                         <button
                             type='button'
                             onClick={userLoginFunction}
-                            className='bg-customBlue hover:bg-blue-900 w-full text-white text-center py-2 font-bold rounded-md'
+                            className='bg-customBlue hover:bg-blue-900 w-full text-white text-center items-center justify-center py-2 font-bold rounded-md'
                         >
-                            Login
+                            {buttonloading ? (<div className="flex items-center justify-center">
+                                <NewLoader className='' />
+                            </div>
+                            ) : 'Login'}
                         </button>
                     </div>
                     <div>
