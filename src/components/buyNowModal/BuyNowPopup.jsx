@@ -7,7 +7,7 @@ import {
 import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { getFirestore, doc, updateDoc, increment } from 'firebase/firestore';
+import { getFirestore, query, where, getDocs, doc, updateDoc, increment, arrayUnion } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { redirect, useNavigate } from "react-router-dom";
 import { BASE_URL } from '../../helper';
@@ -20,7 +20,8 @@ import NewLoader from "../loader/NewLoader";
 import toast from "react-hot-toast";
 
 
-const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
+const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
+  // console.log(userObject)
   const context = useContext(myContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
     pincode: '',
   });
 
+  // console.log(userObject)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -139,7 +141,19 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
       handler: async function (response) {
         try {
           const paymentRef = collection(fireDB, 'payments');
+          const userRef = doc(fireDB, 'user', userObject.id);
           const currentTime = Timestamp.now();
+
+
+          await updateDoc(userRef, {
+            Orders: arrayUnion({
+              orderId: response.razorpay_order_id,
+              PaymentID: response.razorpay_payment_id,
+              Time: currentTime,
+              Status: 'Pending',
+            }),
+          });
+
           await addDoc(paymentRef, {
             userInfo: formData,
             PaymentID: response.razorpay_payment_id,
@@ -196,74 +210,84 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems }) => {
           <input
             type="text"
             name="name"
-            placeholder="Name"
+            placeholder={userObject.name}
             value={formData.name}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.name}
           />
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder={userObject.email}
             value={formData.email}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.email}
           />
           <input
             type="tel"
             name="phone"
-            placeholder="Phone"
+            placeholder={userObject.mobile}
             value={formData.phone}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.mobile}
           />
           <input
             type="text"
             name="addressLane"
-            placeholder="Address Lane"
+            placeholder={userObject.address}
             value={formData.addressLane}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.address}
           />
           <input
             type="text"
             name="city"
-            placeholder="City"
+            placeholder={userObject.city}
             value={formData.city}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.city}
+
           />
           <input
             type="text"
             name="state"
-            placeholder="State"
+            placeholder={userObject.state}
             value={formData.state}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.state}
           />
           <input
             type="text"
             name="country"
-            placeholder="Country"
+            placeholder={userObject.country}
             value={formData.country}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.country}
+
           />
           <input
             type="text"
             name="pincode"
-            placeholder="Pincode"
+            placeholder={userObject.pincode}
             value={formData.pincode}
             onChange={handleChange}
             className="border p-2 w-full text-black"
             required
+            defaultValue={userObject.pincode}
           />
         </div>
         <div className="flex justify-between mt-4">

@@ -91,12 +91,14 @@ const Navbar = () => {
             {/* <li className="py-2 lg:py-0">
                 <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/admin-dashboard'}>Admin</Link>
             </li> */}
-            <li className="py-2 px-2 lg:py-0">
-                <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/cart'}>
-                    <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
-                    Cart ({cartItems.length})
-                </Link>
-            </li>
+            {user?.role === "user" ? (
+                <li className="py-2 px-2 lg:py-0">
+                    <Link className="hover:text-eda72f relative after:content-[''] after:block after:w-0 after:h-[2px] after:bg-blue-200 after:transition-all after:duration-300 after:ease-in-out hover:after:w-full hover:after:right-0" to={'/cart'}>
+                        <ShoppingCart className="inline mr-1" size={18} strokeWidth={2} />
+                        Cart ({cartItems.length})
+                    </Link>
+                </li>
+            ) : ('')}
         </ul>
     );
 

@@ -14,19 +14,57 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import emptycartimg from "/img/empty-cart-gif.mp4";
 import BuyNowPopup from "../../components/buyNowModal/BuyNowPopup";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { collection } from "firebase/firestore";
+import { query, where, getDocs } from 'firebase/firestore';
 
 
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
-    console.log(cartItems)
+    // console.log(cartItems)
     const dispatch = useDispatch();
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const user = JSON.parse(localStorage.getItem('users'));
+    const [userObject, setUserObject] = useState();
+  
+    const fetchDocumentByUIDField = async (uid) => {
+        try {
+            // Reference to the collection
+            const collectionRef = collection(fireDB, "user"); // Replace 'user' with your collection name
 
-    const handleBuyNowClick = () => {
-        if(cartItems.length == 0){
+            // Query to find the document where the 'uid' field matches the provided value
+            const q = query(collectionRef, where("uid", "==", uid));
+
+            // Execute the query
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                    // console.log("Document ID:", doc.id);
+                    // console.log("Document data:", doc.data());
+                    setUserObject({ id: doc.id, ...doc.data() });
+                });
+                // console.log(userObject)
+            } else {
+                console.log("No document matches the provided UID field.");
+            }
+        } catch (error) {
+            console.error("Error fetching document by UID field:", error);
+        }
+    };
+    fetchDocumentByUIDField(user.uid);
+
+
+    // fetchDocumentByUIDField(user.uid);
+    // setFormData(userObject)
+    
+
+    const handleBuyNowClick = async () => {
+        if (cartItems.length == 0) {
             toast.error("Please Add Some Item");
             return;
         }
+        // console.log(userObject);
         setPopupOpen(true);
     };
 
@@ -168,9 +206,9 @@ const CartPage = () => {
                                     :
 
                                     <h1 className="text-center font-bold text-2xl">Your Cart Feel So Light.
-                                    <video src={emptycartimg} autoPlay loop muted className=" w-96 mx-auto object-cover"></video>
+                                        <video src={emptycartimg} autoPlay loop muted className=" w-96 mx-auto object-cover"></video>
                                     </h1>
-                                    }
+                                }
                             </ul>
                         </section>
                         {/* Order summary */}
@@ -225,7 +263,7 @@ const CartPage = () => {
                                         >
                                             Buy now
                                         </Button>
-                                        <BuyNowPopup isOpen={isPopupOpen} onClose={closePopup} amount={cartTotal} cartItems={cartItems} />
+                                        <BuyNowPopup isOpen={isPopupOpen} onClose={closePopup} amount={cartTotal} cartItems={cartItems} userObject = {userObject}/>
                                     </div>
                                     <div className="justify-center items-center flex">
                                         <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>
