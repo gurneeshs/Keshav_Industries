@@ -106,7 +106,7 @@ const OrdersTable = () => {
 			let lastName = fullName.slice(1).join(" ");
 
 			const token = authResponse.data.token;
-			console.log('Authentication successful:', token);
+			// console.log('Authentication successful:', token);
 
 			// Step 2: Create the order using the token
 			const orderData = {
@@ -131,7 +131,7 @@ const OrdersTable = () => {
 				height: orderDetails.height,
 				weight: orderDetails.weight,
 			};
-			console.log(orderData);
+			// console.log(orderData);
 			const createOrderResponse = await axios.post(
 				'https://apiv2.shiprocket.in/v1/external/orders/create/adhoc',
 				orderData,
@@ -143,7 +143,7 @@ const OrdersTable = () => {
 			);
 
 			if (createOrderResponse.data.status === 200) {
-				console.log('Order placed successfully:', createOrderResponse.data);
+				// console.log('Order placed successfully:', createOrderResponse.data);
 				const orderId = createOrderResponse.data.data.order_id; // Get the order ID from the response
 				const orderRef = doc(fireDB, 'payments', orderDetails.id); // Reference to the order document in Firestore
 

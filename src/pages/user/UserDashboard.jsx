@@ -25,7 +25,7 @@ const UserDashboard = () => {
                 if (!querySnapshot.empty) {
                     querySnapshot.forEach((doc) => {
                         setUserObject({ id: doc.id, ...doc.data() });
-                        console.log(doc.data());
+                        // console.log(doc.data());
 
                     });
                 } else {

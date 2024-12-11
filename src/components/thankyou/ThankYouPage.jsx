@@ -23,7 +23,7 @@ const ThankYouPage = () => {
         <div className="flex-1"></div>
         <div className="flex-2 px-4"> 
           <p className="mb-2 mt-20 text-lg">
-            Thank you for using our services; <br /> we've successfully processed your payment of RS--
+            Thank you for using our services; <br /> we've successfully processed your payment 
           </p>
           <p className="mb-4 text-lg"> 
             You can access your product information from your email app. 

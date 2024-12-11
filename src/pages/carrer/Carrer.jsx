@@ -76,7 +76,7 @@ const Carrer = () => {
       });
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if (data.secure_url) {
         setResumeUrl(data.secure_url); // Store the uploaded file URL
         return data.secure_url;

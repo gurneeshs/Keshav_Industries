@@ -51,9 +51,9 @@ const Footer = () => {
                                         <h3 className="text-xl font-bold">Know Us</h3>
                                         <ul className="mt-2 space-y-2">
                                             <li><a href="/" className="text-blue-400 hover:underline">Home</a></li>
-                                            <li><a href="/Products" className="text-blue-400 hover:underline">Products</a></li>
-                                            <li><a href="" className="text-blue-400 hover:underline">Export</a></li>
-                                            <li><a href="" className="text-blue-400 hover:underline">Contact</a></li>
+                                            <li><a href="/allproduct" className="text-blue-400 hover:underline">Products</a></li>
+                                            <li><a href="/export" className="text-blue-400 hover:underline">Export</a></li>
+                                            <li><a href="/contact" className="text-blue-400 hover:underline">Contact</a></li>
                                         </ul>
                                     </div>
                                 </motion.div>
@@ -93,11 +93,11 @@ const Footer = () => {
                                     <div className="text-gray-300">
                                         <h3 className="text-xl font-bold">Follow Us</h3>
                                         <ul className="mt-2 space-y-2">
-                                            <li><i className="bi bi-linkedin text-blue-600"></i><a href="#" className="text-blue-400 hover:underline ml-2">LinkedIn</a></li>
+                                            {/* <li><i className="bi bi-linkedin text-blue-600"></i><a href="#" className="text-blue-400 hover:underline ml-2">LinkedIn</a></li> */}
                                             <li><i className="bi bi-whatsapp text-green-600"></i><a href="https://wa.me/" className="text-blue-400 hover:underline ml-2">WhatsApp</a></li>
                                             <li><i className="bi bi-instagram text-pink-600"></i><a href="https://www.instagram.com/industries.keshav/" className="text-blue-400 hover:underline ml-2">Instagram</a></li>
                                             <li><i className="bi bi-facebook text-blue-600"></i><a href="https://www.facebook.com/share/19dyzFGvSe/?mibextid=LQQJ4d" className="text-blue-400 hover:underline ml-2">Facebook</a></li>
-                                            <li><i className="bi bi-twitter text-blue-400"></i><a href="#" className="text-blue-400 hover:underline ml-2">Twitter</a></li>
+                                            {/* <li><i className="bi bi-twitter text-blue-400"></i><a href="#" className="text-blue-400 hover:underline ml-2">Twitter</a></li> */}
                                         </ul>
                                     </div>
                                 </motion.div>
