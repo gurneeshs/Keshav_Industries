@@ -125,25 +125,50 @@ const ProgressOrderTable = () => {
             // Reference to the specific document in the Firestore collection
             const orderRef = doc(fireDB, "progress", orderId);
             const completeCollectionRef = collection(fireDB, "completed");
+            const userQuery = query(collection(fireDB, "user"), where("email", "==", userEmail));
+            const userSnapshot = await getDocs(userQuery);
+
 
             // Get the document data
             const orderDoc = await getDoc(orderRef);
 
-            if (orderDoc.exists()) {
+            if (orderDoc.exists() && !userSnapshot.empty) {
                 const orderData = orderDoc.data();
                 const currentTime = Timestamp.now();
 
                 // Add the document to the progress collection with the updated fields
-                await addDoc(completeCollectionRef, {
-                    ...orderData,
-                    Status: "Completed",
-                    shipmentID: shipmentId,
-                    completedAt:currentTime,
+                // await addDoc(completeCollectionRef, {
+                //     ...orderData,
+                //     Status: "Completed",
+                //     shipmentID: shipmentId,
+                //     completedAt:currentTime,
+                // });
+                // await deleteDoc(orderRef);
+
+                const userDoc = userSnapshot.docs[0];
+                const userRef = doc(fireDB, "user", userDoc.id);
+
+                const userData = userDoc.data();
+                const updatedOrders = userData.Orders.map((order) => {
+                    console.log(order.orderId, orderData.OrderId)
+                    if (order.orderId === orderData.OrderId && order.Status === "InProgress") {
+                        return {
+                            ...order,
+                            Status: "Completed",
+                        };
+                    }
+                    return order;
                 });
-                await deleteDoc(orderRef);
-                // Update the status field to "inProgress"
+
+                // Update the user's document with the updated Orders array
+                // await updateDoc(userRef, {
+                //     Orders: updatedOrders,
+                // });
+                toast.success('Order Updated Successfully');
             }
-            toast.success('Order Updated Successfully');
+            else{
+                toast.error('Error in Updating Order');
+            }
             await fetchOrders();
         } catch (error) {
             toast.error(`Error in updating Order : ${error}`)
@@ -175,7 +200,7 @@ const ProgressOrderTable = () => {
         setFilteredOrders(filtered);
     };
 
-    const handleOrderPlaced = (orderId, ) => {
+    const handleOrderPlaced = (orderId,email) => {
         setSelectedEmail(email)
         setSelectedOrderId(orderId);
         setIsPopupVisible(true);

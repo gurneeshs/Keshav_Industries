@@ -158,7 +158,7 @@ const OrdersTable = () => {
 
                 const userData = userDoc.data();
                 const updatedOrders = userData.Orders.map((order) => {
-                    if (order.orderId == orderId) {
+                    if (order.orderId === orderData.OrderId && order.Status === "Pending") {
                         return {
                             ...order,
                             Status: "InProgress",
@@ -166,7 +166,6 @@ const OrdersTable = () => {
                     }
                     return order;
                 });
-
                 // Update the user's document with the updated Orders array
                 await updateDoc(userRef, {
                     Orders: updatedOrders,
