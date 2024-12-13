@@ -220,11 +220,14 @@ const UserDashboard = () => {
                                                         <span
                                                             className={`px-3 py-1 rounded-lg ${Status.toLowerCase() === 'pending'
                                                                     ? 'bg-red-200 text-red-600'
-                                                                    : 'bg-green-200 text-green-600'
+                                                                    : Status.toLowerCase() === 'inprogress'
+                                                                        ? 'bg-yellow-200 text-yellow-900'
+                                                                        : 'bg-green-200 text-green-600'
                                                                 }`}
                                                         >
                                                             {Status.charAt(0).toUpperCase() + Status.slice(1)}
                                                         </span>
+
                                                     </td>
                                                 </tr>
                                             );
