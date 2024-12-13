@@ -3,14 +3,14 @@ import myContext from "../../context/myContext";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { collection, getDocs, updateDoc, doc, getDoc, deleteDoc, addDoc, Timestamp } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, getDoc, deleteDoc, addDoc, Timestamp, query, where } from "firebase/firestore";
 import { Button } from "@material-tailwind/react";
 // import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import toast from "react-hot-toast";
 import NewLoader from "../loader/NewLoader";
 
-const Popup = ({ show, onClose, onUpdate, orderId, loading }) => {
+const Popup = ({ show, onClose, onUpdate, orderId, loading, userEmail }) => {
 	const [shipmentID, setshipmentId] = useState("");
 	// console.log(orderId);
 
@@ -35,7 +35,7 @@ const Popup = ({ show, onClose, onUpdate, orderId, loading }) => {
 					<button
 						className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
 						onClick={() => {
-							onUpdate(orderId, shipmentID);
+							onUpdate(orderId, shipmentID, userEmail);
 							// onClose();
 						}}
 						disabled={loading}
@@ -65,6 +65,7 @@ const OrdersTable = () => {
 	const [filteredOrders, setFilteredOrders] = useState([]);
 	const [isPopupVisible, setIsPopupVisible] = useState(false);
 	const [selectedOrderId, setSelectedOrderId] = useState(null);
+	const [selectedEmail, setSelectedEmail] = useState(null);
 	const [selectedStatus, setSelectedStatus] = useState("Pending");
 	const [loading, setLoading] = useState(false);
 
@@ -125,17 +126,20 @@ const OrdersTable = () => {
 
 
 
-	const handleUpdate = async (orderId, shipmentId) => {
+	const handleUpdate = async (orderId, shipmentId,userEmail) => {
 		setLoading(true);
 		try {
 			// Reference to the specific document in the Firestore collection
 			const orderRef = doc(fireDB, "payments", orderId);
 			const progressCollectionRef = collection(fireDB, "progress");
+			const userQuery = query(collection(fireDB, "user"), where("email", "==", userEmail));
+            const userSnapshot = await getDocs(userQuery);
 
 			// Get the document data
 			const orderDoc = await getDoc(orderRef);
 
-			if (orderDoc.exists()) {
+			
+			if (orderDoc.exists() && !userSnapshot.empty) {
 				const orderData = orderDoc.data();
 				const currentTime = Timestamp.now();
 
@@ -148,14 +152,39 @@ const OrdersTable = () => {
 				});
 				await deleteDoc(orderRef);
 				// Update the status field to "inProgress"
+			
+                const userDoc = userSnapshot.docs[0];
+                const userRef = doc(fireDB, "user", userDoc.id);
+
+                const userData = userDoc.data();
+                const updatedOrders = userData.Orders.map((order) => {
+                    if (order.orderId == orderId) {
+                        return {
+                            ...order,
+                            Status: "InProgress",
+                        };
+                    }
+                    return order;
+                });
+
+                // Update the user's document with the updated Orders array
+                await updateDoc(userRef, {
+                    Orders: updatedOrders,
+                });
+
+				toast.success('Order Updated Successfully');
+            }
+			else{
+				toast.error('Error in Updating Order. Invalid Data');
 			}
-			setSelectedOrderId(null);
-			toast.success('Order Updated Successfully');
+
 			await fetchOrders();
 		} catch (error) {
 			toast.error(`Error in updating Order : ${error}`)
 			console.log(error);
 		} finally {
+			setSelectedOrderId(null);
+			setSelectedEmail(null);
 			setLoading(false); // Set loading to false
 			setIsPopupVisible(false);
 		}
@@ -180,7 +209,8 @@ const OrdersTable = () => {
 		setFilteredOrders(filtered);
 	};
 
-	const handleOrderPlaced = (orderId) => {
+	const handleOrderPlaced = (orderId, email) => {
+		setSelectedEmail(email)
 		setSelectedOrderId(orderId);
 		setIsPopupVisible(true);
 	};
@@ -313,12 +343,13 @@ const OrdersTable = () => {
 								</tbody>
 							</table>
 						</div>
-						<Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id)}>Order Placed</Button>
+						<Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id, order.billing_email)}>Order Placed</Button>
 						<Popup
 							show={isPopupVisible}
 							onClose={() => setIsPopupVisible(false)}
 							onUpdate={handleUpdate}
 							orderId={selectedOrderId}
+							userEmail={selectedEmail}
 							loading={loading}
 						/>
 						<Button className="m-2 bg-red-500">Cancel Order</Button>

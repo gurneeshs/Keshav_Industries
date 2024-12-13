@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import { collection } from "firebase/firestore";
 import { query, where, getDocs } from 'firebase/firestore';
+import { Button } from "@material-tailwind/react";
 
 
 const UserDashboard = () => {
@@ -40,6 +41,7 @@ const UserDashboard = () => {
 
         if (user?.uid) {
             fetchDocumentByUIDField(user.uid);
+            console.log(userObject)
         } else {
             setLoading(false); // If no user, stop the loader
         }
@@ -63,7 +65,7 @@ const UserDashboard = () => {
                 {/* Top  */}
                 <div className="top ">
                     {/* main  */}
-                    <div className=" bg-pink-50 py-5 rounded-xl border border-pink-100">
+                    <div className=" bg-gray-50 py-5 rounded-xl border border-gray-100">
                         {/* image  */}
                         <div className="flex justify-center">
                             <img src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png" alt="" />
@@ -73,30 +75,37 @@ const UserDashboard = () => {
                             {/* Name  */}
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Name : </span>
-                                {user?.name}
+                                {userObject?.name}
                             </h1>
 
                             {/* Email  */}
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Email : </span>
-                                {user?.email}
+                                {userObject?.email}
                             </h1>
 
                             {/* Date  */}
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Date : </span>
-                                {user?.date}
+                                {userObject?.date}
                             </h1>
 
                             {/* Role  */}
                             <h1 className=" text-center text-lg">
                                 <span className=" font-bold">Role : </span>
-                                {user?.role}
+                                {userObject?.role}
                             </h1>
 
-                            <button onClick={userLogout}>
+                            {/* Role  */}
+                            <h1 className=" text-center text-lg">
+                                <span className=" font-bold">Address : </span>
+                                {userObject?.address} {userObject?.landmark} {userObject?.city} {userObject?.state} {userObject?.country}
+                            </h1>
+                            {/* <p>{userObject.role}</p> */}
+
+                            <Button onClick={userLogout}>
                                 Logout
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

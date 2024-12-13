@@ -8,6 +8,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
 import Loader from "../../components/loader/Loader";
 import Layout from '../../components/layout/Layout';
+import NewLoader from "../../components/loader/NewLoader";
 
 const Signup = () => {
     const context = useContext(myContext);
@@ -199,7 +200,10 @@ const Signup = () => {
                             onClick={userSignupFunction}
                             className='bg-black hover:bg-blue-600 w-full text-white text-center py-2 font-bold rounded-md transition duration-300'
                         >
-                            Signup
+                            {loading ? (<div className="flex items-center justify-center">
+                                <NewLoader className='' />
+                            </div>
+                            ) : 'Signup'}
                         </button>
                     </div>
 
