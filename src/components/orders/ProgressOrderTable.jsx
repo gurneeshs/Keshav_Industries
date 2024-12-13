@@ -3,13 +3,13 @@ import myContext from "../../context/myContext";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { collection, getDocs, updateDoc, doc, getDoc, addDoc, deleteDoc , Timestamp} from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, getDoc, deleteDoc, addDoc, Timestamp, query, where } from "firebase/firestore";
 import { Button } from "@material-tailwind/react";
 // import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import toast from "react-hot-toast";
 
-const Popup = ({ show, onClose, onUpdate, orderId, loading }) => {
+const Popup = ({ show, onClose, onUpdate, orderId, loading , userEmail}) => {
     const [shipmentID, setshipmentId] = useState("");
     // console.log(orderId);
 
@@ -34,7 +34,7 @@ const Popup = ({ show, onClose, onUpdate, orderId, loading }) => {
                     <button
                         className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                         onClick={() => {
-                            onUpdate(orderId, shipmentID);
+                            onUpdate(orderId, shipmentID, userEmail);
                             // onClose();
                         }}
                     >
@@ -65,6 +65,8 @@ const ProgressOrderTable = () => {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [selectedStatus, setSelectedStatus] = useState("Pending");
+    const [selectedEmail, setSelectedEmail] = useState(null);
+
     const [loading, setLoading] = useState(false);
 
 
@@ -117,7 +119,7 @@ const ProgressOrderTable = () => {
     }, [])
 
 
-    const handleUpdate = async (orderId, shipmentId) => {
+    const handleUpdate = async (orderId, shipmentId, userEmail) => {
         setLoading(true);
         try {
             // Reference to the specific document in the Firestore collection
@@ -141,13 +143,14 @@ const ProgressOrderTable = () => {
                 await deleteDoc(orderRef);
                 // Update the status field to "inProgress"
             }
-            setSelectedOrderId(null);
             toast.success('Order Updated Successfully');
             await fetchOrders();
         } catch (error) {
             toast.error(`Error in updating Order : ${error}`)
             console.log(error);
         } finally {
+            setSelectedOrderId(null);
+            setSelectedEmail(null);
             setLoading(false); // Set loading to false
             setIsPopupVisible(false);
         }
@@ -172,7 +175,8 @@ const ProgressOrderTable = () => {
         setFilteredOrders(filtered);
     };
 
-    const handleOrderPlaced = (orderId) => {
+    const handleOrderPlaced = (orderId, ) => {
+        setSelectedEmail(email)
         setSelectedOrderId(orderId);
         setIsPopupVisible(true);
     };
@@ -305,12 +309,13 @@ const ProgressOrderTable = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id)}>Order Completed</Button>
+                        <Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id, order.billing_email)}>Order Completed</Button>
                         <Popup
                             show={isPopupVisible}
                             onClose={() => setIsPopupVisible(false)}
                             onUpdate={handleUpdate}
                             orderId={selectedOrderId}
+                            userEmail={selectedEmail}
                             loading={loading}
                         />
                         <Button className="m-2 bg-red-500">Cancel Order</Button>
