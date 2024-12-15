@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import Loader from "../../components/loader/Loader";
 import Layout from '../../components/layout/Layout';
 import NewLoader from "../../components/loader/NewLoader";
+import emailjs from "@emailjs/browser";
 
 const Signup = () => {
     const context = useContext(myContext);
@@ -35,9 +36,27 @@ const Signup = () => {
             toast.error("All Fields are required except Landmark");
             return;
         }
+        const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-        setLoading(true);
+        console.log(verificationCode);
+        // setLoading(true);
         try {
+            await emailjs.send("service_nxpm74r", "template_6paeh9u", {
+                to_name: name,
+                to_email: email,
+                message: verificationCode,
+            }, "AX5QPEWUDd7UZrPe9");
+
+            toast.success("Verification code sent to your email.");
+            // Prompt user to enter the verification code
+            const userInputCode = prompt("Enter the verification code sent to your email:");
+
+            if (userInputCode !== verificationCode) {
+                toast.error("Invalid verification code. Please try again.");
+                return;
+            }
+
+            setLoading(true);
             const users = await createUserWithEmailAndPassword(auth, email, password);
 
             const user = {
@@ -74,7 +93,7 @@ const Signup = () => {
                 city: "",
                 state: "",
                 country: "",
-                role:"user"
+                role: "user"
             });
 
             toast.success("Signup Successfully");
@@ -92,7 +111,7 @@ const Signup = () => {
                 {/* Background Images */}
                 <div className="absolute inset-0 bg-[url('../img/bg-image-1.jpg')] bg-cover bg-center "></div>
                 {loading && <Loader />}
-                
+
                 {/* Signup Form */}
                 <div className="relative z-10 bg-eda72f px-6 py-8 border border-gray-100 rounded-xl shadow-md w-full max-w-lg mx-4 my-16">
                     {/* Top Heading */}
