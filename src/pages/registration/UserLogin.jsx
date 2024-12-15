@@ -42,6 +42,7 @@ const UserLogin = () => {
             const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
                 let user;
                 QuerySnapshot.forEach((doc) => user = doc.data());
+                console.log(user);
                 localStorage.setItem("users", JSON.stringify({uid: user.uid, role:user.role, name:user.name, email:user.email, date:user.date}));
                 setUserLogin({ email: "", password: "" });
                 toast.success("Login Successfully");
