@@ -2,39 +2,49 @@ import React from 'react'
 import AdminLayout from '../../components/layout/AdminLayout'
 import Header from '../../components/common/Header'
 import { fireDB } from '../../firebase/FirebaseConfig'
-import { addDoc, collection, doc, updateDoc, getDocs } from 'firebase/firestore'
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { motion } from "framer-motion";
 import { Button } from '@material-tailwind/react'
 
-
 const UserMessage = () => {
     const [message, setMessage] = useState([]);
+
     const formatDateTime = (timestamp) => {
         if (!timestamp) return "N/A";
         return timestamp.toDate().toLocaleString();
     };
+
     useEffect(() => {
         async function fetchMessage() {
             try {
-                const messagesCollection = collection(fireDB, 'Messages')
+                const messagesCollection = collection(fireDB, 'Messages');
                 const querySnapshot = await getDocs(messagesCollection);
 
                 const fetchMessages = querySnapshot.docs.map((doc) => {
                     const messageDetail = doc.data();
-                    // console.log(messageDetail);
-                    return messageDetail;
-                })
-                setMessage(fetchMessages);
+                    return { id: doc.id, ...messageDetail }; // Include document ID
+                });
 
+                setMessage(fetchMessages);
             } catch (error) {
                 toast.error("Failed to fetch Messages");
             }
-
         }
+
         fetchMessage();
-    }, [])
+    }, []);
+
+    const handleDeleteMessage = async (id) => {
+        try {
+            await deleteDoc(doc(fireDB, 'Messages', id));
+            setMessage((prevMessages) => prevMessages.filter((msg) => msg.id !== id)); // Update state
+            toast.success("Message marked as seen and deleted successfully.");
+        } catch (error) {
+            toast.error("Failed to delete the message.");
+        }
+    };
 
     return (
         <AdminLayout>
@@ -48,26 +58,6 @@ const UserMessage = () => {
                 >
                     <div className='flex justify-between items-center mb-6'>
                         <h2 className='text-xl font-semibold text-gray-100'>User Messages</h2>
-
-                        {/* <div className='relative'>
-
-                            <input
-                                type='text'
-                                placeholder='Search products...'
-                                className='bg-gray-700 text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-                                onChange={handleSearch}
-                                value={searchTerm}
-                            />
-                            <Search className='absolute left-3 top-2.5 text-gray-400' size={18} />
-
-                            <Link to={'/addproduct'}>
-                                <button className="px-5 py-2 ml-3 bg-gray-700 text-gray-400  rounded-lg">Add Product</button>
-                            </Link>
-                            <Link to={'/addexport'}>
-                                <button className="px-5 py-2 ml-3 bg-gray-700 text-gray-400  rounded-lg">Add Export Product</button>
-                            </Link>
-
-                        </div> */}
                     </div>
 
                     <div className='overflow-x-auto'>
@@ -82,57 +72,47 @@ const UserMessage = () => {
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Message</th>
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Time</th>
                                     <th scope="col" className="h-12 px-6 text-left font-bold fontPara text-slate-700 bg-slate-100">Action</th>
-
                                 </tr>
                                 {message.map((item, index) => {
-                                    const { firstName, lastName, email, phone, message, time } = item
+                                    const { id, firstName, lastName, email, phone, message, time } = item;
                                     return (
-                                        <tr key={index} className="">
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
+                                        <tr key={id}>
+                                            <td className="h-12 px-6 text-sm text-slate-500">
                                                 {index + 1}.
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+                                            <td className="h-12 px-6 text-sm text-slate-500 first-letter:uppercase">
                                                 {firstName}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 first-letter:uppercase ">
+                                            <td className="h-12 px-6 text-sm text-slate-500 first-letter:uppercase">
                                                 {lastName}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
+                                            <td className="h-12 px-6 text-sm text-slate-500">
                                                 {email}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 ">
+                                            <td className="h-12 px-6 text-sm text-slate-500">
                                                 {phone}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500  ">
+                                            <td className="h-12 px-6 text-sm text-slate-500">
                                                 {message}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500  ">
+                                            <td className="h-12 px-6 text-sm text-slate-500">
                                                 {formatDateTime(time)}
                                             </td>
-                                            <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500  ">
-                                                <Button className='bg-green-500'>Seen</Button>
+                                            <td className="h-12 px-6 text-sm text-slate-500">
+                                                <Button className='bg-green-500' onClick={() => handleDeleteMessage(id)}>
+                                                    Seen
+                                                </Button>
                                             </td>
-
-
-                                            {/* <td className="h-12 px-6 text-sm transition duration-300 stroke-slate-500 text-slate-500 cursor-pointer ">
-                                                <button onClick={() => navigate(`/updateproduct/${id}`)} className='text-indigo-400 hover:text-indigo-300 mr-2'>
-                                                    <Edit size={18} />
-                                                </button>
-                                                <button onClick={() => deleteProduct(id)} className='text-red-400 hover:text-red-300'>
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </td> */}
                                         </tr>
-                                    )
+                                    );
                                 })}
                             </tbody>
                         </table>
                     </div>
                 </motion.div>
-
             </div>
         </AdminLayout>
-    )
-}
+    );
+};
 
-export default UserMessage
+export default UserMessage;
