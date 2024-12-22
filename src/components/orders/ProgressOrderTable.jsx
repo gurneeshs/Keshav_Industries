@@ -136,14 +136,14 @@ const ProgressOrderTable = () => {
                 const orderData = orderDoc.data();
                 const currentTime = Timestamp.now();
 
-                // Add the document to the progress collection with the updated fields
-                // await addDoc(completeCollectionRef, {
-                //     ...orderData,
-                //     Status: "Completed",
-                //     shipmentID: shipmentId,
-                //     completedAt:currentTime,
-                // });
-                // await deleteDoc(orderRef);
+                // Add the document to the complete collection with the updated fields
+                await addDoc(completeCollectionRef, {
+                    ...orderData,
+                    Status: "Completed",
+                    shipmentID: shipmentId,
+                    completedAt:currentTime,
+                });
+                await deleteDoc(orderRef);
 
                 const userDoc = userSnapshot.docs[0];
                 const userRef = doc(fireDB, "user", userDoc.id);
@@ -161,9 +161,9 @@ const ProgressOrderTable = () => {
                 });
 
                 // Update the user's document with the updated Orders array
-                // await updateDoc(userRef, {
-                //     Orders: updatedOrders,
-                // });
+                await updateDoc(userRef, {
+                    Orders: updatedOrders,
+                });
                 toast.success('Order Updated Successfully');
             }
             else{

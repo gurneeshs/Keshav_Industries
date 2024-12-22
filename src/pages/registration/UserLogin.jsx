@@ -34,6 +34,7 @@ const UserLogin = () => {
         setLoading(true);
         try {
             const users = await signInWithEmailAndPassword(auth, userLogin.email, userLogin.password);
+            
 
             const q = query(
                 collection(fireDB, "user"),
@@ -42,7 +43,6 @@ const UserLogin = () => {
             const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
                 let user;
                 QuerySnapshot.forEach((doc) => user = doc.data());
-                console.log(user);
                 localStorage.setItem("users", JSON.stringify({uid: user.uid, role:user.role, name:user.name, email:user.email, date:user.date}));
                 setUserLogin({ email: "", password: "" });
                 toast.success("Login Successfully");
@@ -75,7 +75,7 @@ const UserLogin = () => {
                     <div className="flex items-center justify-center mb-5">
                         <img src='../img/Logo_removebg.png' alt="logo" className="inline-block w-16 h-16 me-5" />
                         <h2 className='mx-3 inline-block text-center text-2xl font-bold text-gray-900'>
-                            User Login
+                            Login
                         </h2>
                     </div>
                     {/* <div className="mb-5">
