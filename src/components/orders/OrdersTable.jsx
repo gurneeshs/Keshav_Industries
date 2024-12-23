@@ -10,49 +10,6 @@ import 'reactjs-popup/dist/index.css';
 import toast from "react-hot-toast";
 import NewLoader from "../loader/NewLoader";
 
-const Popup = ({ show, onClose, onUpdate, orderId, loading, userEmail }) => {
-	const [shipmentID, setshipmentId] = useState("");
-	// console.log(orderId);
-
-	if (!show) return null;
-
-	return (
-		<div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-			<div className="bg-customGray bg-opacity-30 rounded-lg shadow-lg p-6 w-80">
-				<h2 className="text-xl font-bold mb-4 text-center">Order Update</h2>
-				<label htmlFor="orderId" className="block text-sm font-medium text-white">
-					Shipment ID:
-				</label>
-				<input
-					type="text"
-					id="orderId"
-					className="mt-1 p-2 text-black block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-					value={shipmentID}
-					onChange={(e) => setshipmentId(e.target.value)}
-					placeholder="Enter Order ID"
-				/>
-				<div className="mt-6 flex justify-end space-x-4">
-					<button
-						className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-						onClick={() => {
-							onUpdate(orderId, shipmentID, userEmail);
-							// onClose();
-						}}
-						disabled={loading}
-					>
-						{loading ? "Updating..." : "Update"}
-					</button>
-					<button
-						className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400"
-						onClick={onClose}
-					>
-						Close
-					</button>
-				</div>
-			</div>
-		</div>
-	);
-};
 
 const OrdersTable = () => {
 
@@ -63,9 +20,6 @@ const OrdersTable = () => {
 	const [orderData, setOrderData] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredOrders, setFilteredOrders] = useState([]);
-	const [isPopupVisible, setIsPopupVisible] = useState(false);
-	const [selectedOrderId, setSelectedOrderId] = useState(null);
-	const [selectedEmail, setSelectedEmail] = useState(null);
 	const [selectedStatus, setSelectedStatus] = useState("Pending");
 	const [loading, setLoading] = useState(false);
 
@@ -174,6 +128,7 @@ const OrdersTable = () => {
 				toast.success('Order Updated Successfully');
             }
 			else{
+				setLoading(false);
 				toast.error('Error in Updating Order. Invalid Data');
 			}
 
@@ -194,8 +149,6 @@ const OrdersTable = () => {
 		return timestamp.toDate().toLocaleString();
 	};
 
-
-
 	const handleSearch = (e) => {
 		const term = e.target.value.toLowerCase();
 		setSearchTerm(term);
@@ -208,11 +161,16 @@ const OrdersTable = () => {
 		setFilteredOrders(filtered);
 	};
 
-	const handleOrderPlaced = (orderId, email) => {
-		setSelectedEmail(email)
-		setSelectedOrderId(orderId);
-		setIsPopupVisible(true);
-	};
+    const handleOrderPlaced = (orderId,email) => {
+        setLoading(true);
+        const userInputCode = prompt("Enter Shipment ID:");
+        if(!userInputCode){
+            setLoading(false);
+            toast.error("Shipment ID Not Entered");
+            return;
+        }
+        handleUpdate(orderId, userInputCode, email);
+    };
 
 
 
@@ -342,16 +300,8 @@ const OrdersTable = () => {
 								</tbody>
 							</table>
 						</div>
-						<Button className="m-2 bg-green-500" onClick={() => handleOrderPlaced(order.id, order.billing_email)}>Order Placed</Button>
-						<Popup
-							show={isPopupVisible}
-							onClose={() => setIsPopupVisible(false)}
-							onUpdate={handleUpdate}
-							orderId={selectedOrderId}
-							userEmail={selectedEmail}
-							loading={loading}
-						/>
-						<Button className="m-2 bg-red-500">Cancel Order</Button>
+						<Button className="m-2 bg-green-500" disabled={loading} onClick={() => handleOrderPlaced(order.id, order.billing_email)}>{loading ? 'Updating....':'Order Completed'}</Button>
+						<Button className="m-2 bg-red-500" disabled={loading} >Cancel Order</Button>
 
 					</motion.div>
 				))}

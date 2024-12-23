@@ -37,8 +37,6 @@ const Signup = () => {
             return;
         }
         const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-        console.log(verificationCode);
         // setLoading(true);
         try {
             await emailjs.send("service_nxpm74r", "template_6paeh9u", {
