@@ -27,14 +27,14 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    addressLane: '',
-    city: '',
-    state: '',
-    country: '',
-    pincode: '',
+    name: userObject.name || '',
+    email: userObject.email || '',
+    phone: userObject.mobile || '',
+    addressLane: userObject.address || '',
+    city: userObject.city || '',
+    state: userObject.state || '',
+    country: userObject.country || '',
+    pincode: userObject.pincode || '',
   });
 
   // console.log(userObject)
@@ -67,8 +67,6 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
         });
       }
       // Update the admin dashboard data
-
-
       console.log('Firebase updated successfully!');
     } catch (error) {
       console.error('Error updating Firebase:', error);
@@ -88,7 +86,31 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
     });
   };
 
-  const createRazorpayOrder = async (amount) => {
+  const handleSubmit = (e) => {
+    setLoading(true);
+    e.preventDefault(); // Prevent any default action
+
+    const updatedFormData = {
+      ...formData,
+      addressLane: formData.addressLane.trim() || userObject.address,
+      city: formData.city.trim() || userObject.city,
+      state: formData.state.trim() || userObject.state,
+      country: formData.country.trim() || userObject.country,
+      pincode: formData.pincode.trim() || userObject.pincode,
+    };
+
+    if (isFormValid()) {
+      createRazorpayOrder(amount, updatedFormData);
+    }
+    else {
+      toast.error("Error in creating order");
+      setLoading(false);
+    }
+    // dispatch(clearCart());
+  };
+
+
+  const createRazorpayOrder = async (amount, updatedFormData) => {
     let data = JSON.stringify({
       amount: amount * 100, // Convert amount to paise
       currency: 'INR',
@@ -113,7 +135,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           selling_price: item.price,
           sku: item.sku,
         }));
-        handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems);
+        handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems, updatedFormData);
       })
       .catch((error) => {
         console.log('Error creating Razorpay order:', error);
@@ -122,7 +144,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
       });
   };
 
-  const handleRazorpayScreen = async (amount, orderid, orderItems) => {
+  const handleRazorpayScreen = async (amount, orderid, orderItems, updatedFormData) => {
     const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
     if (!res) {
@@ -149,13 +171,14 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
             Orders: arrayUnion({
               orderId: response.razorpay_order_id,
               PaymentID: response.razorpay_payment_id,
+              Total:amount,
               Time: currentTime,
               Status: 'Pending',
             }),
           });
 
           await addDoc(paymentRef, {
-            userInfo: formData,
+            userInfo: updatedFormData,
             PaymentID: response.razorpay_payment_id,
             OrderId: response.razorpay_order_id,
             Signature: response.razorpay_signature,
@@ -174,9 +197,9 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
         }
       },
       prefill: {
-        name: formData.name,
-        email: formData.email,
-        contact: formData.phone,
+        name: updatedFormData.name,
+        email: updatedFormData.email,
+        contact: updatedFormData.phone,
       },
       theme: {
         color: '#030F27',
@@ -187,18 +210,6 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
     paymentObject.open();
   };
 
-  const handleSubmit = (e) => {
-    setLoading(true);
-    e.preventDefault(); // Prevent any default action
-    if (isFormValid()) {
-      createRazorpayOrder(amount);
-    }
-    else {
-      toast.error("Error in creating order");
-      setLoading(false);
-    }
-    // dispatch(clearCart());
-  };
 
   if (!isOpen) return null;
 
