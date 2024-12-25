@@ -147,12 +147,12 @@ const UserDashboard = () => {
                     >
                       Date
                     </th>
-                    <th
+                    {/* <th
                       scope="col"
                       className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
                     >
                       Payment Status
-                    </th>
+                    </th> */}
                     <th
                       scope="col"
                       className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
@@ -182,9 +182,6 @@ const UserDashboard = () => {
                           </td>
                           <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
                             {Time.toDate().toLocaleString()}
-                          </td>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            Paid
                           </td>
                           <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
                             <span
