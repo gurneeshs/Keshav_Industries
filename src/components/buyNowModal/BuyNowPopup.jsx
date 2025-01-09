@@ -241,7 +241,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="tel"
             name="phone"
-            placeholder={userObject.mobile}
+            placeholder={'Phone Number'}
             value={formData.phone}
             onChange={handleChange}
             className="border p-2 w-full text-black"
@@ -251,7 +251,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="text"
             name="addressLane"
-            placeholder={userObject.address}
+            placeholder={'Address'}
             value={formData.addressLane}
             onChange={handleChange}
             className="border p-2 w-full text-black"
@@ -261,7 +261,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="text"
             name="city"
-            placeholder={userObject.city}
+            placeholder={'City'}
             value={formData.city}
             onChange={handleChange}
             className="border p-2 w-full text-black"
@@ -272,7 +272,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="text"
             name="state"
-            placeholder={userObject.state}
+            placeholder={'State'}
             value={formData.state}
             onChange={handleChange}
             className="border p-2 w-full text-black"
@@ -282,7 +282,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="text"
             name="country"
-            placeholder={userObject.country}
+            placeholder={'Country'}
             value={formData.country}
             onChange={handleChange}
             className="border p-2 w-full text-black"
@@ -293,7 +293,7 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
           <input
             type="text"
             name="pincode"
-            placeholder={userObject.pincode}
+            placeholder={'Pincode'}
             value={formData.pincode}
             onChange={handleChange}
             className="border p-2 w-full text-black"
