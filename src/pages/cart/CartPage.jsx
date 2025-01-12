@@ -25,6 +25,7 @@ const CartPage = () => {
     const dispatch = useDispatch();
     const [isPopupOpen, setPopupOpen] = useState(false);
     const user = JSON.parse(localStorage.getItem('users'));
+    // console.log(user);
     const [userObject, setUserObject] = useState();
   
     const fetchDocumentByUIDField = async (uid) => {
@@ -263,7 +264,7 @@ const CartPage = () => {
                                         >
                                             Buy now
                                         </Button>
-                                        <BuyNowPopup isOpen={isPopupOpen} onClose={closePopup} amount={cartTotal} cartItems={cartItems} userObject = {userObject}/>
+                                        <BuyNowPopup isOpen={isPopupOpen} onClose={closePopup} amount={cartTotal} cartItems={cartItems} userObject = {user}/>
                                     </div>
                                     <div className="justify-center items-center flex">
                                         <Link className="text-center jusitfy-center mx-auto items-center" to={`/returns`}>Refund Policy</Link>
