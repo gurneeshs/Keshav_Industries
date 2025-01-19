@@ -79,7 +79,7 @@ const ProgressOrderTable = () => {
             // Reference to the specific document in the Firestore collection
             const orderRef = doc(fireDB, "progress", orderId);
             const completeCollectionRef = collection(fireDB, "completed");
-            const userQuery = query(collection(fireDB, "user"), where("email", "==", userEmail));
+            const userQuery = query(collection(fireDB, "users"), where("email", "==", userEmail));
             const userSnapshot = await getDocs(userQuery);
 
 
@@ -100,7 +100,7 @@ const ProgressOrderTable = () => {
                 await deleteDoc(orderRef);
 
                 const userDoc = userSnapshot.docs[0];
-                const userRef = doc(fireDB, "user", userDoc.id);
+                const userRef = doc(fireDB, "users", userDoc.id);
 
                 const userData = userDoc.data();
                 const updatedOrders = userData.Orders.map((order) => {
@@ -129,10 +129,10 @@ const ProgressOrderTable = () => {
             toast.error(`Error in updating Order : ${error}`)
             console.log(error);
         } finally {
-            setSelectedOrderId(null);
-            setSelectedEmail(null);
+            // setSelectedOrderId(null);
+            // setSelectedEmail(null);
             setLoading(false); // Set loading to false
-            setIsPopupVisible(false);
+            // setIsPopupVisible(false);
         }
     };
 

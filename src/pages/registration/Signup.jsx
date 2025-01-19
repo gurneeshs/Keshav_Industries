@@ -46,7 +46,7 @@ const Signup = () => {
 
         if (!validateEmail(email)) {
             setLoading(false);
-            toast.error("Invalid email address. Use @gmail.com, @yahoo.com, or @outlook.com domains.");
+            toast.error("Invalid email address.");
             return;
         }
 
@@ -58,7 +58,7 @@ const Signup = () => {
 
         if (!validatePassword(password)) {
             setLoading(false);
-            toast.error("Password must meet security requirements.");
+            toast.error("The password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one digit, and one special character from @$!%*?&#.");
             return;
         }
 

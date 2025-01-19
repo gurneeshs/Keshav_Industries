@@ -86,7 +86,7 @@ const OrdersTable = () => {
 			// Reference to the specific document in the Firestore collection
 			const orderRef = doc(fireDB, "payments", orderId);
 			const progressCollectionRef = collection(fireDB, "progress");
-			const userQuery = query(collection(fireDB, "user"), where("email", "==", userEmail));
+			const userQuery = query(collection(fireDB, "users"), where("email", "==", userEmail));
             const userSnapshot = await getDocs(userQuery);
 
 			// Get the document data
@@ -108,7 +108,7 @@ const OrdersTable = () => {
 				// Update the status field to "inProgress"
 			
                 const userDoc = userSnapshot.docs[0];
-                const userRef = doc(fireDB, "user", userDoc.id);
+                const userRef = doc(fireDB, "users", userDoc.id);
 
                 const userData = userDoc.data();
                 const updatedOrders = userData.Orders.map((order) => {
@@ -137,10 +137,10 @@ const OrdersTable = () => {
 			toast.error(`Error in updating Order : ${error}`)
 			console.log(error);
 		} finally {
-			setSelectedOrderId(null);
-			setSelectedEmail(null);
+			// setSelectedOrderId(null);
+			// setSelectedEmail(null);
 			setLoading(false); // Set loading to false
-			setIsPopupVisible(false);
+			// setIsPopupVisible(false);
 		}
 	};
 
@@ -300,6 +300,7 @@ const OrdersTable = () => {
 								</tbody>
 							</table>
 						</div>
+						{console.log(order)}
 						<Button className="m-2 bg-green-500" disabled={loading} onClick={() => handleOrderPlaced(order.id, order.billing_email)}>{loading ? 'Updating....':'Order Completed'}</Button>
 						<Button className="m-2 bg-red-500" disabled={loading} >Cancel Order</Button>
 
