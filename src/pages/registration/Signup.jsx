@@ -2,14 +2,9 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/myContext";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { auth, fireDB } from "../../firebase/FirebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
-import Loader from "../../components/loader/Loader";
 import Layout from '../../components/layout/Layout';
-import NewLoader from "../../components/loader/NewLoader";
-import emailjs from "@emailjs/browser";
+import emailjs from "@emailjs/browser";  // Import emailjs but won't use it
 import axios from "axios";
 import { BASE_URL } from "../../helper";
 
@@ -25,14 +20,16 @@ const Signup = () => {
         password: "",
         role: "user"
     });
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [verificationCode, setVerificationCode] = useState("");
-    const [userInputCode, setUserInputCode] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false); // Modal to input OTP
+    const [verificationCode, setVerificationCode] = useState(""); // Store generated OTP
+    const [userInputCode, setUserInputCode] = useState(""); // User input for OTP
 
     const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(email);
     const validateMobile = (mobile) => /^\d{10}$/.test(mobile);
+
+    // Updated password validation
     const validatePassword = (password) =>
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/.test(password);
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#_])[A-Za-z\d@$!%*?&#_]{8,}$/.test(password);
 
     const userSignupFunction = async () => {
         setLoading(true);
@@ -58,13 +55,16 @@ const Signup = () => {
 
         if (!validatePassword(password)) {
             setLoading(false);
-            toast.error("The password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one digit, and one special character from @$!%*?&#.");
+            toast.error("Password must be at least 8 characters, include uppercase, lowercase, numbers, and symbols.");
             return;
         }
 
+        // Generate OTP (the OTP logic is still here)
         const code = Math.floor(100000 + Math.random() * 900000).toString();
-        setVerificationCode(code);
+        setVerificationCode(code);  // Store OTP but won't send email for now
 
+        // --- Commented Out Email Sending Logic ---
+        /*
         try {
             setLoading(true);
             await emailjs.send("service_nxpm74r", "template_6paeh9u", {
@@ -79,34 +79,65 @@ const Signup = () => {
             setLoading(false);
             toast.error("Failed to send verification email.");
         }
+        */
+        
+        // Instead of waiting for OTP verification, let's directly create the user
+        try {
+            const response = await axios.post(`${BASE_URL}/user/createUser`, userSignup);
+            console.log("Backend response: ", response.data); // Log the backend response
+
+            if (response.data.success) {
+                toast.success("Signup Successful");
+                setLoading(false);
+                navigate('/userlogin');
+            } else {
+                setLoading(false);
+                toast.error('Error in Signing Up! Please Try Again');
+            }
+        } catch (err) {
+            setLoading(false);
+            console.error("Error during signup:", err);
+            toast.error("An error occurred during signup.");
+        } finally {
+            setUserSignup({
+                name: "",
+                mobile: "",
+                email: "",
+                password: "",
+                role: "user"
+            });
+        }
     };
 
+    // Handle OTP verification (though it's currently not required)
     const handleVerifyCode = async () => {
+        console.log("User input code: ", userInputCode);
+        console.log("Generated verification code: ", verificationCode);
+
+        // For now, we skip OTP verification and assume it's correct
         if (userInputCode === verificationCode) {
             try {
                 setIsModalOpen(false);
                 setLoading(true);
 
-                // const users = await createUserWithEmailAndPassword(auth, userSignup.email, userSignup.password);
                 const response = await axios.post(`${BASE_URL}/user/createUser`, userSignup);
-                if(response.data.success){
+                console.log("Backend response: ", response.data); // Log the backend response
+
+                if (response.data.success) {
                     toast.success("Signup Successfully");
                     setLoading(false);
                     setIsModalOpen(false);
-                    navigate('/userlogin');    
-                }
-                else{
+                    navigate('/userlogin');
+                } else {
                     setLoading(false);
                     setIsModalOpen(false);
-                    toast.error('Error in Signing Up!. Please Try Again')
+                    toast.error('Error in Signing Up! Please Try Again');
                 }
-                
             } catch (err) {
                 setLoading(false);
                 toast.error("An error occurred during signup.");
                 console.log(err);
-            }
-            finally {
+            } finally {
                 setVerificationCode("");
                 setUserInputCode("");
                 setUserSignup({
@@ -127,7 +158,6 @@ const Signup = () => {
         <Layout>
             <div className='flex justify-center items-center min-h-screen relative'>
                 <div className="absolute inset-0 bg-[url('../img/bg-image-1.jpg')] bg-cover bg-center "></div>
-                {/* {loading && <Loader />} */}
 
                 <div className="relative z-10 bg-eda72f px-6 py-8 border border-gray-100 rounded-xl shadow-md w-full max-w-lg mx-4 my-16">
                     <h2 className='text-center text-4xl font-bold mb-5'>Signup</h2>
@@ -161,15 +191,29 @@ const Signup = () => {
                         className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500 mb-4'
                     />
 
+                    <h5 className="ps-2 mb-5">
+                        <span className="text-sm">
+                            The password must meet all these conditions: <br />
+                            <ol className="list-disc pl-5">
+                                <li>At least 8 characters.</li>
+                                <li>At least one lowercase letter.</li>
+                                <li>At least one uppercase letter.</li>
+                                <li>At least one number.</li>
+                                <li>At least one special character (e.g. : m#P52s@ap$V )</li>
+                            </ol>
+                        </span>
+                    </h5>
+
                     <button
                         onClick={userSignupFunction}
                         className='bg-gray-900 hover:bg-black w-full text-white text-center py-2 font-bold rounded-md transition duration-300'
-                        disabled = {loading}
+                        disabled={loading}
                     >
                         {loading ? 'Signing Up .....' : 'Signup'}
                     </button>
                 </div>
 
+                {/* OTP Modal (still in place but doesn't trigger) */}
                 {isModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                         <div className="bg-white p-6 rounded-lg shadow-lg w-96">
