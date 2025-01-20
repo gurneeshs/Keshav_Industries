@@ -6,10 +6,11 @@ export default defineConfig({
   plugins: [react()],
   // server: {
   //   proxy: {
-  //     '/orders': {
-  //       target: 'https://razorpay-server-henna.vercel.app',
+  //     '/user': {
+  //       target: 'https://razorpayserver-production.up.railway.app',
   //       changeOrigin: true,
-  //       secure: false,
+  //       rewrite: (path) => path.replace(/^\/user/, '/user'),
+  //       // secure: false,
   //     },
   //   },
   // },

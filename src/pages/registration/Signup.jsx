@@ -43,7 +43,7 @@ const Signup = () => {
 
         if (!validateEmail(email)) {
             setLoading(false);
-            toast.error("Invalid email address. Use @gmail.com, @yahoo.com, or @outlook.com domains.");
+            toast.error("Invalid email address.");
             return;
         }
 
