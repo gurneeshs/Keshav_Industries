@@ -2,7 +2,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 // Import your icons
 import { Clock, Phone, Mail, Home, Briefcase, Box, FileText, ShoppingCart, User, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import SearchBar from "../searchBar/SearchBar";
+import user_logo_male from "/img/profile-pic-male.png";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -126,40 +126,56 @@ const Navbar = () => {
 
     return (
         <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeInDown}
-            transition={{ duration: 0.9 }}
-            className="px-5 bg-orange-500 z-40"
-        >
-            <h1 className="font-bold text-3xl py-4 text-center md:text-left md:flex md:flex-col md:items-start md:space-y-1">
-        <span className="block">Keshav Industries</span>
-    </h1>
-            {/* Main Content */}
-            <motion.nav
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={fadeInUp}
-                transition={{ duration: 0.9 }}
-                className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center"
-            >
-                <div className="lg:flex lg:justify-between items-center py-3 lg:px-3">
-                    <div className="lg:hidden flex justify-center items-center">
-                        <button onClick={toggleMenu} className="text-white focus:outline-none">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-                        </button>
-                    </div>
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+    variants={fadeInDown}
+    transition={{ duration: 0.9 }}
+    className="px-5 bg-orange-500 z-40"
+>
+    <div className="flex items-center justify-between py-4 px-5">
+        {/* Keshav Industries */}
+        <h1 className="text-white font-bold text-2xl sm:text-3xl md:text-4xl text-left md:ps-5">
+            <span className="block">Keshav Industries</span>
+        </h1>
 
-                    <div className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block space-y-3 lg:space-y-0 lg:space-x-3 text-center lg:text-left items-center justify-center mx-auto`}>
-                        {navList}
-                    </div>
-                </div>
-            </motion.nav>
-        </motion.div>
+        {/* User Login Name - Visible on larger screens */}
+        <div className="hidden sm:block text-white text-sm sm:text-base md:text-lg md:pe-5">
+            {/* Replace with dynamic user login name */}
+            <span>Welcome, User</span>
+        </div>
+
+        {/* Logo - Visible on mobile screens */}
+        <div className="sm:hidden">
+            <img src={user_logo_male} alt="Logo" className="w-8 h-8" />
+        </div>
+    </div>
+
+    {/* Main Content (Nav) */}
+    <motion.nav
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+        transition={{ duration: 0.9 }}
+        className="bg-customBlue mx-10 sticky top-0 z-50 items-center justify-center"
+    >
+        <div className="lg:flex lg:justify-between items-center py-3 lg:px-3">
+            <div className="lg:hidden flex justify-center items-center">
+                <button onClick={toggleMenu} className="text-white focus:outline-none">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div className={`lg:flex ${isOpen ? "block" : "hidden"} lg:block space-y-3 lg:space-y-0 lg:space-x-3 text-center lg:text-left items-center justify-center mx-auto`}>
+                {navList}
+            </div>
+        </div>
+    </motion.nav>
+</motion.div>
+
     );
 }
 

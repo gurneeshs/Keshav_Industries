@@ -4,60 +4,42 @@ import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
-import user_logo from "/img/User_Logo.png";
-import { motion } from "framer-motion";
+import user_logo_male from "/img/profile-pic-male.png";
+import account_icon from "/img/account-icon.png";
+import order_img from "../../../public/img/purchase-order.png";
+import logout_img from "../../../public/img/Logout.png";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { BASE_URL } from "../../helper";
 
+
 const UserDashboard = () => {
   const navigate = useNavigate();
   const [userObject, setUserObject] = useState();
-  const [loading, setLoading] = useState(true); // Set loading to true initially
+  const [loading, setLoading] = useState(true);
 
-  const formatDateTime = (timestamp) => {
-    if (!timestamp) return "N/A"; // Handle null/undefined timestamp
-    
-    // If it's a Firestore Timestamp object (contains _seconds and _nanoseconds)
-    if (timestamp._seconds) {
-      const date = new Date(timestamp._seconds * 1000); // Convert seconds to milliseconds
-      return date.toLocaleString(); // Format the date as a local string
-    }
-  
-    // If it's already a JavaScript Date object or string, handle accordingly
-    if (timestamp instanceof Date) {
-      return timestamp.toLocaleString(); // If it's a native Date object
-    }
-  
-    // Handle other unexpected formats or string timestamps
-    return "Invalid Timestamp";
-  };
-  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Get token from localStorage
         const token = localStorage.getItem("authToken");
         if (!token) {
-          console.error("No token found. Redirecting to login...");
-          toast.error("No token found. Redirecting to login...")
+          toast.error("No token found. Redirecting to login...");
           navigate("/userlogin");
           return;
         }
 
-        // Make a request to fetch user data using the token
         const response = await axios.get(`${BASE_URL}/user/getUser`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Pass token in headers
+            Authorization: `Bearer ${token}`,
           },
         });
 
-        setUserObject(response.data.userData); // Set the user data from the response
+        setUserObject(response.data.userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        navigate("/userlogin"); // Redirect to login on error
+        navigate("/userlogin");
       } finally {
-        setLoading(false); // Stop the loader
+        setLoading(false);
       }
     };
     fetchUserData();
@@ -65,161 +47,173 @@ const UserDashboard = () => {
 
   const userLogout = () => {
     localStorage.removeItem("authToken");
-    localStorage.removeItem("user");
     navigate("/");
-  };
-
-  const animationVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0 },
   };
 
   return (
     <Layout>
-      <div className="mx-auto px-4 py-6 bg-customNewBack my-0">
-        {/* Account Details Section */}
-        <motion.div
-          className="text-center py-16 bg-eda72f"
-          initial="hidden"
-          animate="visible"
-          variants={animationVariants}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
-            User Dashboard
-          </h1>
-        </motion.div>
-
-        {/* Main Content Section */}
-        <div className="flex flex-col lg:flex-row justify-between py-10 gap-3">
-          {/* Account Details */}
-          <motion.div
-            className="bg-white p-8 shadow-lg rounded-lg w-full"
-            initial="hidden"
-            animate="visible"
-            variants={animationVariants}
-            transition={{ duration: 1, delay: 0.4 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-800 mb-5"> <img src={user_logo} alt="User Icon" className="w-6 h-auto inline-block pb-2" /> Account Details</h2>
-            <div className="text-start space-y-4">
-              <h1 className="text-sm">
-                <span className="font-bold">Name : </span>
-                {userObject?.name}
-              </h1>
-              <h1 className="text-sm">
-                <span className="font-bold">Email : </span>
-                {userObject?.email}
-              </h1>
-              <h1 className="text-sm">
-                <span className="font-bold">Phone : </span>
-                {userObject?.mobile}
-              </h1>
-              <Button onClick={userLogout} className="mt-4">
-                Logout
-              </Button>
-            </div>
-          </motion.div>
-
-          {/* Order Details */}
-          <motion.div
-            className="bg-white p-8 shadow-lg rounded-lg flex-1"
-            initial="hidden"
-            animate="visible"
-            variants={animationVariants}
-            transition={{ duration: 1, delay: 0.6 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-800 mb-5">Order Details</h2>
-            {/* Loader */}
-            <div className="flex justify-center relative top-10">
-              {loading && <Loader />}
+      <div className="bg-gray-100 min-h-screen ">
+        <div className="flex mx-auto">
+          {/* Left Plane */}
+          <div className="w-1/4 bg-gray-100 p-6 space-y-6">
+            {/* User Info */}
+            <div className="bg-white p-4 rounded-sm shadow-md flex items-center space-x-4">
+              <div className="w-12 h-12rounded-full flex items-center justify-center">
+                <img src={user_logo_male} alt="Logo" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Hello,</p>
+                <h2 className="text-lg font-semibold text-gray-800">Divyansh Rana</h2>
+              </div>
             </div>
 
-            {/* Order Table */}
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-700 border border-black overflow-x-scroll">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      S.No.
-                    </th>
-                    <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      Order ID
-                    </th>
-                    <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      Date
-                    </th>
-                    {/* <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      Payment Status
-                    </th> */}
-                    <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      Fulfillment Status
-                    </th>
-
-                    <th
-                      scope="col"
-                      className="h-12 px-6 text-sm md:text-md text-slate-700 bg-slate-100 font-bold border-b border-black text-center"
-                    >
-                      Total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userObject?.Orders &&
-                    Object.values(userObject.Orders).map((order, index) => {
-                      const { orderId, PaymentID, Status, Time, Total } = order;
-                      return (
-                        <tr key={index}>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            {index + 1}.
-                          </td>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            {orderId}
-                          </td>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            {formatDateTime(Time)}
-                          </td>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            <span
-                              className={`px-3 py-1 rounded-lg ${Status.toLowerCase() === "pending"
-                                ? "bg-red-200 text-red-600"
-                                : Status.toLowerCase() === "inprogress"
-                                  ? "bg-yellow-200 text-yellow-900"
-                                  : "bg-green-200 text-green-600"
-                                }`}
-                            >
-                              {Status.charAt(0).toUpperCase() + Status.slice(1)}
-                            </span>
-                          </td>
-                          <td className="h-12 px-6 text-sm text-slate-500 border-b border-black text-center">
-                            Rs. {Total}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
+            {/* Options */}
+            <div className="bg-white p-4 rounded-sm shadow-md border-b-4 border-blue-500">
+              <ul className="space-y-4 text-gray-700">
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                  <img src={order_img} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">My Orders</span>
+                </li>
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                  <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">Account Settings</span>
+                </li>
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
+                  <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">Log Out</span>
+                </li>
+              </ul>
             </div>
-          </motion.div>
+          </div>
+
+          {/* Right Plane */}
+          <div className="flex-1 bg-gray-100 p-6 space-y-6">
+            {/* Personal Information Section */}
+            <div className="bg-white p-6 rounded-sm shadow-md">
+              {/* Section Header */}
+              <div className="flex justify-start items-center mb-4">
+                <h2 className="text-xl font-semibold">Personal Information</h2>
+                <h2><a href="#" className="text-blue-500 font-semibold ps-5">Edit</a></h2>
+              </div>
+
+              <div className="space-y-6">
+                {/* Name Fields */}
+                <div className="flex space-x-4">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      value="Divyansh"
+                      className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      value="Rana"
+                      className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                    />
+                  </div>
+                </div>
+
+                {/* Gender */}
+                <div>
+                  <div className="flex space-x-6 mt-2">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        name="gender"
+                        className="form-radio text-blue-500"
+                        defaultChecked
+                      />
+                      <span className="ml-2">Male</span>
+                    </label>
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        name="gender"
+                        className="form-radio text-blue-500"
+                      />
+                      <span className="ml-2">Female</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Email Address */}
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Email Address</h2>
+                  <input
+                    type="email"
+                    value="rdev6365@gmail.com"
+                    className="mt-1 block w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                  />
+                </div>
+
+                {/* Mobile Number */}
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Mobile Number</h2>
+                  <input
+                    type="text"
+                    value="+919074106177"
+                    className="mt-1 block w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                  />
+                </div>
+
+                {/* Address */}
+                <div>
+                  <h2 className="text-xl font-semibold mb-4">Address</h2>
+                  <div className="flex space-x-4">
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="Address"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="City"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="State"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="Country"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="Pincode"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Save Button */}
+                <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  Save
+                </button>
+                
+                <p><span className="text-red-700 font-semibold"><a href="">Delete Account</a></span></p>
+
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </Layout>
-
-
   );
 };
 
