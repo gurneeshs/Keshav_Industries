@@ -15,6 +15,7 @@ import Login from "./pages/registration/Login";
 import Contacts from "./components/Contact/Contact-Us";
 import ThankYouPage from "./components/thankyou/ThankYouPage";
 import UserDashboard from "./pages/user/UserDashboard";
+import UserTable from "./pages/user/UserTable";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProductPage from "./pages/admin/AddProductPage";
 import UpdateProductPage from "./pages/admin/UpdateProductPage";
@@ -78,9 +79,8 @@ const App = () => {
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/spicesProduct" element={<SpicesProduct />} />
           <Route path="/lecithinProduct" element={<LecithinProduct />} />
-          <Route path="/user-dashboard" element={
-            <UserDashboard />
-          } />
+          <Route path="/user-dashboard" element={<UserDashboard />} />
+          <Route path="/UserTable" element={<UserTable />} />
           <Route path="/admin-dashboard" element={
             <ProtectedRouteForAdmin>
               <OverviewPage />
