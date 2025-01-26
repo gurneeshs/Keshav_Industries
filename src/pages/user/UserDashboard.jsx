@@ -2,14 +2,15 @@ import { useContext, useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import user_logo_male from "/img/profile-pic-male.png";
 import account_icon from "/img/account-icon.png";
 import order_img from "/img/purchase-order.png";
 import logout_img from "/public/img/logout.png";
 import axios from "axios";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { BASE_URL } from "../../helper";
 
 const UserDashboard = () => {
@@ -54,6 +55,7 @@ const UserDashboard = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="bg-gray-100 min-h-screen">
         <div className="flex flex-col lg:flex-row mx-auto">
           {/* Left Pane */}
@@ -98,17 +100,17 @@ const UserDashboard = () => {
                   <ul className="mt-2 space-y-4 text-gray-700">
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                      <span className="text-lg font-semibold ps-4">My Orders</span>
+                      <span className="text-lg font-semibold ps-4"><Link to={'/UserTable'}>My Orders</Link></span>
                     </li>
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
                       <span className="text-lg font-semibold ps-4">
-                        Account Settings
+                        <Link to={'/user-dashboard'}>Account Settings</Link>
                       </span>
                     </li>
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                      <span className="text-lg font-semibold ps-4">Log Out</span>
+                      <span className="text-lg font-semibold ps-4"><button onClick={userLogout}>Logout</button></span>
                     </li>
                   </ul>
                 )}
@@ -118,11 +120,11 @@ const UserDashboard = () => {
               <ul className="hidden lg:block space-y-4 text-gray-700">
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">My Orders</span>
+                  <span className="text-lg font-semibold ps-4"><Link to={'/UserTable'}>My Orders</Link></span>
                 </li>
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">Account Settings</span>
+                  <span className="text-lg font-semibold ps-4"><Link to={'/user-dashboard'}>Account Settings</Link></span>
                 </li>
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
@@ -149,7 +151,7 @@ const UserDashboard = () => {
                     <div className="flex-1">
                       <input
                         type="text"
-                        value="Divyansh"
+                        value={userObject?.name}
                         className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
                       />
                     </div>
@@ -190,7 +192,7 @@ const UserDashboard = () => {
                     <h2 className="text-xl font-semibold mb-4">Email Address</h2>
                     <input
                       type="email"
-                      value="rdev6365@gmail.com"
+                      value={userObject?.email}
                       className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
                     />
                   </div>
@@ -200,7 +202,7 @@ const UserDashboard = () => {
                     <h2 className="text-xl font-semibold mb-4">Mobile Number</h2>
                     <input
                       type="text"
-                      value="+919074106177"
+                      value={userObject?.mobile}
                       className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
                     />
                   </div>
