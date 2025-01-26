@@ -133,23 +133,19 @@ const Navbar = () => {
     transition={{ duration: 0.9 }}
     className="px-5 bg-orange-500 z-40"
 >
-    <div className="flex items-center justify-between py-4 px-5">
-        {/* Keshav Industries */}
-        <h1 className="text-white font-bold text-2xl sm:text-3xl md:text-4xl text-left md:ps-5">
-            <span className="block">Keshav Industries</span>
-        </h1>
+<div className="flex items-center justify-between py-4 px-5">
+  {/* Keshav Industries */}
+  <h1 className="text-white font-bold text-2xl sm:text-3xl md:text-4xl text-center sm:text-left md:ps-5">
+    <span className="block">Keshav Industries</span>
+  </h1>
 
-        {/* User Login Name - Visible on larger screens */}
-        <div className="hidden sm:block text-white text-sm sm:text-base md:text-lg md:pe-5">
-            {/* Replace with dynamic user login name */}
-            <span>Welcome, User</span>
-        </div>
+  {/* User Login Name - Visible on larger screens */}
+  <div className="hidden sm:block text-white text-sm sm:text-base md:text-lg md:pe-5">
+    {/* Replace with dynamic user login name */}
+    <span>Welcome, User</span>
+  </div>
+</div>
 
-        {/* Logo - Visible on mobile screens */}
-        <div className="sm:hidden">
-            <img src={user_logo_male} alt="Logo" className="w-8 h-8" />
-        </div>
-    </div>
 
     {/* Main Content (Nav) */}
     <motion.nav

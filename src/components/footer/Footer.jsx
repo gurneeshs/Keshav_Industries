@@ -52,6 +52,7 @@ const Footer = () => {
                                         <ul className="mt-2 space-y-2">
                                             <li><a href="/" className="text-blue-400 hover:underline">Home</a></li>
                                             <li><a href="/allproduct" className="text-blue-400 hover:underline">Products</a></li>
+                                            <li><a href="/UserTable" className="text-blue-400 hover:underline">Order Table</a></li>
                                             <li><a href="/export" className="text-blue-400 hover:underline">Export</a></li>
                                             <li><a href="/contact" className="text-blue-400 hover:underline">Contact</a></li>
                                         </ul>
