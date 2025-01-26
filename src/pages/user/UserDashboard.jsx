@@ -35,6 +35,7 @@ const UserDashboard = () => {
         });
 
         setUserObject(response.data.userData);
+        console.log(response.data.userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
         navigate("/userlogin");
@@ -47,23 +48,24 @@ const UserDashboard = () => {
 
   const userLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user")
     navigate("/");
   };
 
   return (
     <Layout>
       <div className="bg-gray-100 min-h-screen ">
-        <div className="flex mx-auto">
+        <div className="flex mx-auto px-7">
           {/* Left Plane */}
-          <div className="w-1/4 bg-gray-100 p-6 space-y-6">
+          <div className="w-1/4 bg-gray-100 py-6 px-4 space-y-6">
             {/* User Info */}
             <div className="bg-white p-4 rounded-sm shadow-md flex items-center space-x-4">
               <div className="w-12 h-12rounded-full flex items-center justify-center">
-                <img src={user_logo_male} alt="Logo" />
+                <img src={`../img/profile-pic-male.png`} alt="Logo" />
               </div>
               <div>
                 <p className="text-sm text-gray-600">Hello,</p>
-                <h2 className="text-lg font-semibold text-gray-800">Divyansh Rana</h2>
+                <h2 className="text-lg font-semibold text-gray-800">{userObject?.name}</h2>
               </div>
             </div>
 
@@ -80,7 +82,7 @@ const UserDashboard = () => {
                 </li>
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer">
                   <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">Log Out</span>
+                  <span className="text-lg font-semibold ps-4"><button onClick={userLogout}>Logout</button></span>
                 </li>
               </ul>
             </div>
