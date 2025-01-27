@@ -1,14 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import user_logo_male from "/img/profile-pic-male.png";
 import account_icon from "/img/account-icon.png";
 import order_img from "/img/purchase-order.png";
 import logout_img from "/public/img/Logout.png";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../helper";
 
 
 const UserTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false); // Added missing state
+  const navigate = useNavigate();
+  const [userObject, setUserObject] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          toast.error("No token found. Redirecting to login...");
+          navigate("/userlogin");
+          return;
+        }
+
+        const response = await axios.get(`${BASE_URL}/user/getUser`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUserObject(response.data.userData);
+        console.log(response.data.userData);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        navigate("/userlogin");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUserData();
+  }, [navigate]);
+
+  const userLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user")
+    navigate("/");
+  };
+
 
   // Sample Orders
   const orders = [
@@ -80,7 +121,7 @@ const UserTable = () => {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Hello,</p>
-                <h2 className="text-lg font-semibold text-gray-800">Divyansh Rana</h2>
+                <h2 className="text-lg font-semibold text-gray-800">{userObject?.name}</h2>
               </div>
             </div>
 
@@ -114,17 +155,17 @@ const UserTable = () => {
                   <ul className="mt-2 space-y-4 text-gray-700">
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                      <span className="text-lg font-semibold ps-4">My Orders</span>
+                      <span className="text-lg font-semibold ps-4"><Link to={'/UserTable'}>My Orders</Link></span>
                     </li>
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
                       <span className="text-lg font-semibold ps-4">
-                        Account Settings
+                        <Link to={'/user-dashboard'}>Account Settings</Link>
                       </span>
                     </li>
                     <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                       <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                      <span className="text-lg font-semibold ps-4">Log Out</span>
+                      <span className="text-lg font-semibold ps-4"><button onClick={userLogout}>Logout</button></span>
                     </li>
                   </ul>
                 )}
@@ -134,15 +175,15 @@ const UserTable = () => {
               <ul className="hidden lg:block space-y-4 text-gray-700">
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">My Orders</span>
+                  <span className="text-lg font-semibold ps-4"><Link to={'/UserTable'}>My Orders</Link></span>
                 </li>
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">Account Settings</span>
+                  <span className="text-lg font-semibold ps-4"><Link to={'/user-dashboard'}>Account Settings</Link></span>
                 </li>
                 <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
                   <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                  <span className="text-lg font-semibold ps-4">Log Out</span>
+                  <span className="text-lg font-semibold ps-4"><button onClick={userLogout}>Logout</button></span>
                 </li>
               </ul>
             </div>

@@ -2,14 +2,15 @@ import { useContext, useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
 import Loader from "../../components/loader/Loader";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import user_logo_male from "/img/profile-pic-male.png";
 import account_icon from "/img/account-icon.png";
 import order_img from "/img/purchase-order.png";
 import logout_img from "/public/img/logout.png";
 import axios from "axios";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { BASE_URL } from "../../helper";
 
 const UserDashboard = () => {
@@ -37,6 +38,7 @@ const UserDashboard = () => {
         });
 
         setUserObject(response.data.userData);
+        console.log(response.data.userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
         navigate("/userlogin");
@@ -49,6 +51,7 @@ const UserDashboard = () => {
 
   const userLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("user")
     navigate("/");
   };
 
@@ -84,6 +87,7 @@ const UserDashboard = () => {
 
   return (
     <Layout>
+      <Toaster />
       <div className="bg-gray-100 min-h-screen">
         {loading ? (
           <Loader />
@@ -99,148 +103,144 @@ const UserDashboard = () => {
                 <div>
                 <p className="text-sm text-gray-600">Hello,</p>
                 <h2 className="text-lg font-semibold text-gray-800">Divyansh Rana</h2>
-                </div>
-              </div>
-
-              {/* Options */}
-              <div className="bg-white p-4 rounded-sm shadow-md border-b-4 border-blue-500">
-                {/* Dropdown Button for Mobile */}
-                <div className="block lg:hidden">
-                  <button
-                    className="w-full flex items-center justify-between p-2 text-gray-700 font-semibold bg-gray-200 rounded-md"
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                  >
-                    More Options
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className={`h-5 w-5 transform transition-transform ${dropdownOpen ? "rotate-180" : "rotate-0"}`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {/* Dropdown Content */}
-                  {dropdownOpen && (
-                    <ul className="mt-2 space-y-4 text-gray-700">
-                      <li
-                        className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center"
-                        onClick={() => navigate("/UserTable")}
-                      >
-                        <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                        <span className="text-lg font-semibold ps-4">My Orders</span>
-                      </li>
-                      <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center" onClick={() => navigate("/user-dashboard")}>
-                        <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
-                        <span className="text-lg font-semibold ps-4">Account Settings</span>
-                      </li>
-                      <li
-                        className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center"
-                        onClick={userLogout}
-                      >
-                        <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                        <span className="text-lg font-semibold ps-4">Log Out</span>
-                      </li>
-                    </ul>
-                  )}
-                </div>
-
-                {/* Static Options for Larger Screens */}
-                <ul className="hidden lg:block space-y-4 text-gray-700">
-                  <li
-                    className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center"
-                    onClick={() => navigate("/UserTable")}
-                  >
-                    <img src={order_img} alt="" className="w-8 h-8 inline-block" />
-                    <span className="text-lg font-semibold ps-4">My Orders</span>
-                  </li>
-                  <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center"
-                  onClick={() => navigate("/user-dashboard")} >
-                    <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
-                    <span className="text-lg font-semibold ps-4">Account Settings</span>
-                  </li>
-                  <li
-                    className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center"
-                    onClick={userLogout}
-                  >
-                    <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
-                    <span className="text-lg font-semibold ps-4">Log Out</span>
-                  </li>
-                </ul>
               </div>
             </div>
 
-            {/* Right Pane */}
-            <div className="flex-1 bg-gray-100 p-6 space-y-6">
-              {/* Personal Information Section */}
-              <div className="bg-white">
-                <div className="p-6 rounded-sm shadow-md">
-                  {/* Section Header */}
-                  <div className="flex justify-start items-center mb-4">
-                    <h2 className="text-xl font-semibold">Personal Information</h2>
-                    <h2><a href="#" className="text-blue-500 font-semibold ps-5">Edit</a></h2>
-                  </div>
-                  <div className="space-y-6">
-                    {/* Name Fields */}
-                    <div className="flex flex-wrap space-x-4 gap-4">
-                      <div className="flex-1">
-                        <input
-                          type="text"
-                          value={userObject?.firstName || "Divyansh"}
-                          className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <input
-                          type="text"
-                          value={userObject?.lastName || "Rana"}
-                          className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
-                        />
-                      </div>
-                    </div>
-                    {/* Gender */}
-                    <div>
-                      <div className="flex space-x-6 mt-2">
-                        <label className="inline-flex items-center">
-                          <input
-                            type="radio"
-                            name="gender"
-                            className="form-radio text-blue-500"
-                            defaultChecked={userObject?.gender === "Male"}
-                          />
-                          <span className="ml-2">Male</span>
-                        </label>
-                        <label className="inline-flex items-center">
-                          <input
-                            type="radio"
-                            name="gender"
-                            className="form-radio text-blue-500"
-                            defaultChecked={userObject?.gender === "Female"}
-                          />
-                          <span className="ml-2">Female</span>
-                        </label>
-                      </div>
-                    </div>
-                    {/* Email Address */}
-                    <div>
-                      <h2 className="text-xl font-semibold mb-4">Email Address</h2>
-                      <input
-                        type="email"
-                        value={userObject?.email || "rdev6365@gmail.com"}
-                        className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
-                      />
-                    </div>
+            {/* Options */}
+            <div className="bg-white p-4 rounded-sm shadow-md border-b-4 border-blue-500">
+              {/* Dropdown Button for Mobile */}
+              <div className="block lg:hidden">
+                <button
+                  className="w-full flex items-center justify-between p-2 text-gray-700 font-semibold bg-gray-200 rounded-md"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                >
+                  More Options
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-5 w-5 transform transition-transform ${dropdownOpen ? "rotate-180" : "rotate-0"
+                      }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                {/* Dropdown Content */}
+                {dropdownOpen && (
+                  <ul className="mt-2 space-y-4 text-gray-700">
+                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                      <img src={order_img} alt="" className="w-8 h-8 inline-block" />
+                      <span className="text-lg font-semibold ps-4">My Orders</span>
+                    </li>
+                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                      <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
+                      <span className="text-lg font-semibold ps-4">
+                        Account Settings
+                      </span>
+                    </li>
+                    <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                      <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
+                      <span className="text-lg font-semibold ps-4">Log Out</span>
+                    </li>
+                  </ul>
+                )}
+              </div>
 
-                    {/* Mobile Number */}
-                    <div>
-                      <h2 className="text-xl font-semibold mb-4">Mobile Number</h2>
+              {/* Static Options for Larger Screens */}
+              <ul className="hidden lg:block space-y-4 text-gray-700">
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                  <img src={order_img} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">My Orders</span>
+                </li>
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                  <img src={account_icon} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">Account Settings</span>
+                </li>
+                <li className="hover:bg-gray-200 p-2 rounded-md cursor-pointer flex items-center">
+                  <img src={logout_img} alt="" className="w-8 h-8 inline-block" />
+                  <span className="text-lg font-semibold ps-4">Log Out</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Right Plane */}
+          <div className="flex-1 bg-gray-100 p-6 space-y-6">
+            {/* Personal Information Section */}
+            <div className="bg-white">
+              <div className=" p-6 rounded-sm shadow-md">
+                {/* Section Header */}
+                <div className="flex justify-start items-center mb-4">
+                  <h2 className="text-xl font-semibold">Personal Information</h2>
+                  <h2><a href="#" className="text-blue-500 font-semibold ps-5">Edit</a></h2>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Name Fields */}
+                  <div className="flex flex-wrap space-x-4 gap-4">
+                    <div className="flex-1">
                       <input
                         type="text"
-                        value={userObject?.phone || "+919074106177"}
-                        className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                        value="Divyansh"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
                       />
                     </div>
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        value="Rana"
+                        className="mt-1 block w-full border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Gender */}
+                  <div>
+                    <div className="flex space-x-6 mt-2">
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="gender"
+                          className="form-radio text-blue-500"
+                          defaultChecked
+                        />
+                        <span className="ml-2">Male</span>
+                      </label>
+                      <label className="inline-flex items-center">
+                        <input
+                          type="radio"
+                          name="gender"
+                          className="form-radio text-blue-500"
+                        />
+                        <span className="ml-2">Female</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Email Address */}
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Email Address</h2>
+                    <input
+                      type="email"
+                      value="rdev6365@gmail.com"
+                      className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                    />
+                  </div>
+
+                  {/* Mobile Number */}
+                  <div>
+                    <h2 className="text-xl font-semibold mb-4">Mobile Number</h2>
+                    <input
+                      type="text"
+                      value="+919074106177"
+                      className="mt-1 block w-full sm:w-1/2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 text-gray-700 p-2"
+                    />
+                  </div>
 
                     {/* Address */}
                     <div>

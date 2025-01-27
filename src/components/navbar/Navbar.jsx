@@ -4,10 +4,15 @@ import { Clock, Phone, Mail, Home, Briefcase, Box, FileText, ShoppingCart, User,
 import { motion } from "framer-motion";
 import user_logo_male from "/img/profile-pic-male.png";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+// import { Navigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../helper";
 const Navbar = () => {
+    const navigate = useNavigate();
     const [showInfo, setShowInfo] = useState({ hours: false, call: false, email: false });
+    const [userObject, setUserObject] = useState();
+    const [loading, setLoading] = useState(true);
 
     const toggleInfo = (type) => {
         setShowInfo((prev) => ({
@@ -18,10 +23,37 @@ const Navbar = () => {
 
     // get user from localStorage 
     const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
 
-    // navigate 
-    const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+              toast.error("No token found. Redirecting to login...");
+            //   navigate("/userlogin");
+              return;
+            }
+    
+            const response = await axios.get(`${BASE_URL}/user/getUser`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            setUserObject(response.data.userData);
+            console.log(userObject)
+          } catch (error) {
+            console.error("Error fetching user data:", error);
+            // navigate("/userlogin");
+          } finally {
+            setLoading(false);
+          }
+        };
+        fetchUserData();
+      }, [navigate]);
+    
     // logout function 
     const logout = () => {
         localStorage.clear('user');
@@ -142,7 +174,7 @@ const Navbar = () => {
   {/* User Login Name - Visible on larger screens */}
   <div className="hidden sm:block text-white text-sm sm:text-base md:text-lg md:pe-5">
     {/* Replace with dynamic user login name */}
-    <span>Welcome, User</span>
+    <span>Welcome, {userObject?userObject?.name:'user'}</span>
   </div>
 </div>
 
