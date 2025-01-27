@@ -7,7 +7,7 @@ import { Button } from "@material-tailwind/react";
 import user_logo_male from "/img/profile-pic-male.png";
 import account_icon from "/img/account-icon.png";
 import order_img from "/img/purchase-order.png";
-import logout_img from "/public/img/logout.png";
+import logout_img from "/img/logout.png";
 import axios from "axios";
 // import toast from "react-hot-toast";
 import { Toaster, toast } from "react-hot-toast";
