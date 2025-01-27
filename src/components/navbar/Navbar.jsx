@@ -174,7 +174,7 @@ const Navbar = () => {
   {/* User Login Name - Visible on larger screens */}
   <div className="hidden sm:block text-white text-sm sm:text-base md:text-lg md:pe-5">
     {/* Replace with dynamic user login name */}
-    <span>Welcome, {userObject?userObject?.name:'user'}</span>
+    <span>Welcome, {userObject?userObject?.fname:'user'}</span>
   </div>
 </div>
 
