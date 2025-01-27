@@ -32,11 +32,11 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
     name: userObject?.name,
     email: userObject?.email,
     phone: userObject?.mobile,
-    addressLane: '',
-    city: '',
-    state: '',
-    country:  '',
-    pincode: '',
+    addressLane: ' ',
+    city: ' ',
+    state: ' ',
+    country:  ' ',
+    pincode: ' ',
   });
 
   console.log(userObject)

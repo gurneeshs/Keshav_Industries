@@ -14,7 +14,9 @@ const Signup = () => {
     const navigate = useNavigate();
 
     const [userSignup, setUserSignup] = useState({
-        name: "",
+        fname: "",
+        lname:"",
+        gender:"",
         mobile: "",
         email: "",
         password: "",
@@ -33,11 +35,17 @@ const Signup = () => {
 
     const userSignupFunction = async () => {
         setLoading(true);
-        const { name, mobile, email, password } = userSignup;
+        const { fname, lname, mobile, email, password, gender } = userSignup;
 
-        if (!name || !mobile || !email || !password) {
+        if (!fname || !lname || !gender ||!mobile || !email || !password) {
             setLoading(false);
             toast.error("All fields are required.");
+            return;
+        }
+
+        if(gender == "Select Gender"){
+            setLoading(false);
+            toast.error("All fields are required");
             return;
         }
 
@@ -83,6 +91,7 @@ const Signup = () => {
         
         // Instead of waiting for OTP verification, let's directly create the user
         try {
+            console.log(userSignup);
             const response = await axios.post(`${BASE_URL}/user/createUser`, userSignup);
             console.log("Backend response: ", response.data); // Log the backend response
 
@@ -100,7 +109,9 @@ const Signup = () => {
             toast.error("An error occurred during signup.");
         } finally {
             setUserSignup({
-                name: "",
+                fname: "",
+                lname: "",
+                gender: "",
                 mobile: "",
                 email: "",
                 password: "",
@@ -141,7 +152,9 @@ const Signup = () => {
                 setVerificationCode("");
                 setUserInputCode("");
                 setUserSignup({
-                    name: "",
+                    fname: "",
+                    lname:"",
+                    gender: "",
                     mobile: "",
                     email: "",
                     password: "",
@@ -164,11 +177,27 @@ const Signup = () => {
 
                     <input
                         type="text"
-                        placeholder='Full Name'
-                        value={userSignup.name}
-                        onChange={(e) => setUserSignup({ ...userSignup, name: e.target.value })}
+                        placeholder='First Name'
+                        value={userSignup.fname}
+                        onChange={(e) => setUserSignup({ ...userSignup, fname: e.target.value })}
                         className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500 mb-4'
                     />
+                    <input
+                        type="text"
+                        placeholder='Last Name'
+                        value={userSignup.lname}
+                        onChange={(e) => setUserSignup({ ...userSignup, lname: e.target.value })}
+                        className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500 mb-4'
+                    />
+                    <select
+                        value={userSignup.gender}
+                        onChange={(e) => setUserSignup({ ...userSignup, gender: e.target.value })}
+                        className='bg-fafafa border border-black px-2 py-2 w-full rounded-md outline-none placeholder-gray-500 mb-4'
+                    >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
                     <input
                         type="text"
                         placeholder='Mobile Number'
