@@ -118,7 +118,7 @@ const UserTable = () => {
             {/* User Info */}
             <div className="bg-white p-4 rounded-sm shadow-md flex items-center space-x-4">
               <div className="w-12 h-12 flex items-center justify-center">
-                  {userObject?.gender == 'male' ? <img src={user_logo_male} alt="Logo" /> : <img src={user_logo_female} alt="Logo" /> }
+                  {userObject?.gender == 'Male' ? <img src={user_logo_male} alt="Logo" /> : <img src={user_logo_female} alt="Logo" /> }
               </div>
               <div>
                 <p className="text-sm text-gray-600">Hello,</p>
