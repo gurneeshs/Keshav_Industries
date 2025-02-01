@@ -20,6 +20,7 @@ import { query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../../helper";
 import axios from "axios";
+
 const CartPage = () => {
     const cartItems = useSelector((state) => state.cart);
     const navigate = useNavigate();
