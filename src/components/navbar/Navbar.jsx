@@ -43,7 +43,7 @@ const Navbar = () => {
             });
     
             setUserObject(response.data.userData);
-            console.log(userObject)
+            // console.log(userObject)
           } catch (error) {
             console.error("Error fetching user data:", error);
             // navigate("/userlogin");

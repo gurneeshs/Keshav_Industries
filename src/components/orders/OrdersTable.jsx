@@ -80,19 +80,19 @@ const OrdersTable = () => {
 
 
 
-	const handleUpdate = async (orderId, shipmentId,userEmail) => {
+	const handleUpdate = async (orderId, shipmentId, userEmail) => {
 		setLoading(true);
 		try {
 			// Reference to the specific document in the Firestore collection
 			const orderRef = doc(fireDB, "payments", orderId);
 			const progressCollectionRef = collection(fireDB, "progress");
 			const userQuery = query(collection(fireDB, "users"), where("email", "==", userEmail));
-            const userSnapshot = await getDocs(userQuery);
+			const userSnapshot = await getDocs(userQuery);
 
 			// Get the document data
 			const orderDoc = await getDoc(orderRef);
 
-			
+
 			if (orderDoc.exists() && !userSnapshot.empty) {
 				const orderData = orderDoc.data();
 				const currentTime = Timestamp.now();
@@ -102,32 +102,33 @@ const OrdersTable = () => {
 					...orderData,
 					Status: "InProgress",
 					shipmentID: shipmentId,
-					updatedAt:currentTime,
+					updatedAt: currentTime,
 				});
 				await deleteDoc(orderRef);
 				// Update the status field to "inProgress"
-			
-                const userDoc = userSnapshot.docs[0];
-                const userRef = doc(fireDB, "users", userDoc.id);
 
-                const userData = userDoc.data();
-                const updatedOrders = userData.Orders.map((order) => {
-                    if (order.orderId === orderData.OrderId && order.Status === "Pending") {
-                        return {
-                            ...order,
-                            Status: "InProgress",
-                        };
-                    }
-                    return order;
-                });
-                // Update the user's document with the updated Orders array
-                await updateDoc(userRef, {
-                    Orders: updatedOrders,
-                });
+				const userDoc = userSnapshot.docs[0];
+				const userRef = doc(fireDB, "users", userDoc.id);
+
+				const userData = userDoc.data();
+				const updatedOrders = userData.Orders.map((order) => {
+					if (order.orderId === orderData.OrderId && order.Status === "Pending") {
+						return {
+							...order,
+							Status: "InProgress",
+							Time: currentTime,
+						};
+					}
+					return order;
+				});
+				// Update the user's document with the updated Orders array
+				await updateDoc(userRef, {
+					Orders: updatedOrders,
+				});
 
 				toast.success('Order Updated Successfully');
-            }
-			else{
+			}
+			else {
 				setLoading(false);
 				toast.error('Error in Updating Order. Invalid Data');
 			}
@@ -161,16 +162,16 @@ const OrdersTable = () => {
 		setFilteredOrders(filtered);
 	};
 
-    const handleOrderPlaced = (orderId,email) => {
-        setLoading(true);
-        const userInputCode = prompt("Enter Shipment ID:");
-        if(!userInputCode){
-            setLoading(false);
-            toast.error("Shipment ID Not Entered");
-            return;
-        }
-        handleUpdate(orderId, userInputCode, email);
-    };
+	const handleOrderPlaced = (orderId, email) => {
+		setLoading(true);
+		const userInputCode = prompt("Enter Shipment ID:");
+		if (!userInputCode) {
+			setLoading(false);
+			toast.error("Shipment ID Not Entered");
+			return;
+		}
+		handleUpdate(orderId, userInputCode, email);
+	};
 
 
 
@@ -301,7 +302,7 @@ const OrdersTable = () => {
 							</table>
 						</div>
 						{console.log(order)}
-						<Button className="m-2 bg-green-500" disabled={loading} onClick={() => handleOrderPlaced(order.id, order.billing_email)}>{loading ? 'Updating....':'Order Completed'}</Button>
+						<Button className="m-2 bg-green-500" disabled={loading} onClick={() => handleOrderPlaced(order.id, order.billing_email)}>{loading ? 'Updating....' : 'Order Completed'}</Button>
 						<Button className="m-2 bg-red-500" disabled={loading} >Cancel Order</Button>
 
 					</motion.div>
