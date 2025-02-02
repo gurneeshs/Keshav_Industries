@@ -53,56 +53,14 @@ const UserTable = () => {
 
 
   // Sample Orders
-  const orders = [
-    {
-      title: "The Compound Effect Book By Darren Hardy",
-      price: 285,
-      status: "delivered",
-      date: "Mar 19, 2024",
-    },
-    {
-      title: "The Seven Spiritual Laws Of Success (English)",
-      price: 297,
-      status: "delivered",
-      date: "Mar 17, 2024",
-    },
-    {
-      title: "MyTech With Charger M3 Smart Band Fitness",
-      price: 410,
-      status: "cancelled",
-      date: "Oct 23, 2020",
-    },
-    {
-      title: "Realme 7 Pro (Mirror Silver, 128 GB)",
-      price: 19999,
-      status: "cancelled",
-      date: "Oct 21, 2020",
-    },
-    {
-        title: "The Compound Effect Book By Darren Hardy",
-        price: 285,
-        status: "delivered",
-        date: "Mar 19, 2024",
-      },
-      {
-        title: "The Seven Spiritual Laws Of Success (English)",
-        price: 297,
-        status: "delivered",
-        date: "Mar 17, 2024",
-      },
-      {
-        title: "MyTech With Charger M3 Smart Band Fitness",
-        price: 410,
-        status: "cancelled",
-        date: "Oct 23, 2020",
-      },
-      {
-        title: "Realme 7 Pro (Mirror Silver, 128 GB)",
-        price: 19999,
-        status: "cancelled",
-        date: "Oct 21, 2020",
-      },
-  ];
+  const orders = userObject?.Orders?.map(order => ({
+    title: `Order ID: ${order.orderId}`,
+    price: order.Total || 0,
+    status: order.Status?.toLowerCase() || "unknown",
+    date: new Date(order.Time._seconds * 1000).toDateString(), // Convert timestamp to readable format
+    paymentId: order.PaymentID || "N/A",
+  })) || [];
+
 
   // Filter orders based on search term
   const filteredOrders = orders.filter((order) =>
@@ -118,7 +76,7 @@ const UserTable = () => {
             {/* User Info */}
             <div className="bg-white p-4 rounded-sm shadow-md flex items-center space-x-4">
               <div className="w-12 h-12 flex items-center justify-center">
-                  {userObject?.gender == 'Male' ? <img src={user_logo_male} alt="Logo" /> : <img src={user_logo_female} alt="Logo" /> }
+                {userObject?.gender == 'Male' ? <img src={user_logo_male} alt="Logo" /> : <img src={user_logo_female} alt="Logo" />}
               </div>
               <div>
                 <p className="text-sm text-gray-600">Hello,</p>
@@ -137,9 +95,8 @@ const UserTable = () => {
                   More Options
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-5 w-5 transform transition-transform ${
-                      dropdownOpen ? "rotate-180" : "rotate-0"
-                    }`}
+                    className={`h-5 w-5 transform transition-transform ${dropdownOpen ? "rotate-180" : "rotate-0"
+                      }`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -244,8 +201,12 @@ const UserTable = () => {
                     {/* Third Column: Status and Cancellation Info */}
                     <div className="text-left lg:text-right">
                       <p className="text-sm flex items-center lg:justify-end mb-1">
-                        {order.status === "delivered" ? (
-                          <span className="text-green-500 font-medium mr-2">● Delivered</span>
+                        {order.status === "completed" ? (
+                          <span className="text-green-500 font-medium mr-2">● Completed</span>
+                        ) : order.status === "inprogress" ? (
+                          <span className="text-yellow-800 font-medium mr-2">● In Progress</span>
+                        ) : order.status === "pending" ? (
+                          <span className="text-blue-500 font-medium mr-2">● Created</span>
                         ) : (
                           <span className="text-red-500 font-medium mr-2">● Cancelled</span>
                         )}

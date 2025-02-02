@@ -109,6 +109,7 @@ const ProgressOrderTable = () => {
                         return {
                             ...order,
                             Status: "Completed",
+                            Time: currentTime,
                         };
                     }
                     return order;

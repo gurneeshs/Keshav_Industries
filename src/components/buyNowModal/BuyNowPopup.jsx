@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 
 
 const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
-  // console.log(userObject)
+  console.log(userObject)
   const context = useContext(myContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,24 +29,24 @@ const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
   const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(email);
   const validateMobile = (mobile) => /^\d{10}$/.test(mobile);
   const [formData, setFormData] = useState({
-    name: userObject?.name,
-    email: userObject?.email,
-    phone: userObject?.mobile,
-    addressLane: ' ',
-    city: ' ',
-    state: ' ',
-    country:  ' ',
-    pincode: ' ',
+    name: userObject?.fname || "",
+    email: userObject?.email || "",
+    phone: userObject?.mobile || "",
+    addressLane: userObject?.addressStreet || "",
+    city: userObject?.addressCity || "",
+    state: userObject?.addressState || "",
+    country: userObject?.country || "India",
+    pincode: userObject?.addressZip || "",
   });
 
-  console.log(userObject)
+  // console.log(userObject)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const isFormValid = () => {
-    return Object.values(formData).every((value) => value.trim() !== '');
+    return Object.values(formData).every((value) => value.trim() != '');
   };
 
   async function updateFirebaseAfterPayment(cartItems, totalAmount) {
