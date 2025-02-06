@@ -198,7 +198,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
                     Description: item.description,
                     Price: item.price,
                 }));
-                console.log(JSON.stringify(response.data))
+                // console.log(JSON.stringify(response.data))
                 handleRazorpayScreen(response.data.amount, response.data.order_id, orderItems)
             })
             .catch((error) => {
@@ -248,7 +248,7 @@ const BuyNowModal = ({ amounttoPay, cartItems }) => {
 
         axios.get(`${BASE_URL}/payment/${paymentId}`)
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 setResponseState(response.data)
             })
             .catch((error) => {

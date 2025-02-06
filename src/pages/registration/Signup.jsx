@@ -91,9 +91,9 @@ const Signup = () => {
         
         // Instead of waiting for OTP verification, let's directly create the user
         try {
-            console.log(userSignup);
+            // console.log(userSignup);
             const response = await axios.post(`${BASE_URL}/user/createUser`, userSignup);
-            console.log("Backend response: ", response.data); // Log the backend response
+            // console.log("Backend response: ", response.data); // Log the backend response
 
             if (response.data.success) {
                 toast.success("Signup Successful");
@@ -122,8 +122,8 @@ const Signup = () => {
 
     // Handle OTP verification (though it's currently not required)
     const handleVerifyCode = async () => {
-        console.log("User input code: ", userInputCode);
-        console.log("Generated verification code: ", verificationCode);
+        // console.log("User input code: ", userInputCode);
+        // console.log("Generated verification code: ", verificationCode);
 
         // For now, we skip OTP verification and assume it's correct
         if (userInputCode === verificationCode) {
@@ -132,7 +132,7 @@ const Signup = () => {
                 setLoading(true);
 
                 const response = await axios.post(`${BASE_URL}/user/createUser`, userSignup);
-                console.log("Backend response: ", response.data); // Log the backend response
+                // console.log("Backend response: ", response.data); // Log the backend response
 
                 if (response.data.success) {
                     toast.success("Signup Successfully");

@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 
 
 const BuyNowPopup = ({ isOpen, onClose, amount, cartItems, userObject }) => {
-  console.log(userObject)
+  // console.log(userObject)
   const context = useContext(myContext);
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -104,7 +104,7 @@ const ProgressOrderTable = () => {
 
                 const userData = userDoc.data();
                 const updatedOrders = userData.Orders.map((order) => {
-                    console.log(order.orderId, orderData.OrderId)
+                    // console.log(order.orderId, orderData.OrderId)
                     if (order.orderId === orderData.OrderId && order.Status === "InProgress") {
                         return {
                             ...order,

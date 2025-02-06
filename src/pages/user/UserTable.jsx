@@ -34,7 +34,7 @@ const UserTable = () => {
         });
 
         setUserObject(response.data.userData);
-        console.log(response.data.userData);
+        // console.log(response.data.userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
         navigate("/userlogin");
